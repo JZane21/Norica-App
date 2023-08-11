@@ -18,10 +18,5 @@ export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);
 export const passwordReset = async (email:string) => {
-  await sendPasswordResetEmail(auth,email).then(() => {
-    alert(`Se envió al email: ${email} los pasos para recuperar su contraseña`);
-  }).catch((err) => {
-    alert("Usuario inexistente");
-    console.error(err);
-  });
+  await sendPasswordResetEmail(auth,email);
 };
