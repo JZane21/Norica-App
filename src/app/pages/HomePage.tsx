@@ -1,17 +1,17 @@
 // src/app/pages/HomePage.tsx
-import React from 'react';
-import Navbar from '../../auth/components/Navbar';
-import Footer from '../../auth/components/Footer';
+import React from "react";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import { HomePageInformation } from "../components/HomePageInformation";
 
 export const HomePage: React.FC = () => {
   return (
-    <div>
+    <div className="flex flex-col">
+      {/* barra de navegacion */}
       <Navbar />
-      <main className="p-4">
-        {/* Contenido de la página */}
-        <h1 className="text-2xl font-bold">¡Bienvenidos cacas!</h1>
-        <p>Esta es la página de homepage.</p>
-      </main>
+      {/* informacion en el HomePage */}
+      <HomePageInformation />
+      {/* Footer con redes sociales */}
       <Footer />
     </div>
   );
