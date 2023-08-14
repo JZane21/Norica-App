@@ -1,3 +1,5 @@
+import { SoonPage } from "./SoonPage";
+
 export const ProductosPage = () => {
-  return <div>ProductosPage</div>;
+  return <SoonPage />;
 };

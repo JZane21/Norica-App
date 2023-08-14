@@ -1,3 +1,5 @@
+import { SoonPage } from "./SoonPage";
+
 export const ContactoPage = () => {
-  return <div>ContactoPage</div>;
+  return <SoonPage />;
 };

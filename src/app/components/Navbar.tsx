@@ -4,7 +4,7 @@ import { LogoApp } from "./LogoApp";
 import { OptionsNavBar } from "../../models/navbarModel";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalConfirmation } from "../../modals/ModalConfirmation";
-import { useDispatch, useStore } from "../../store/StoreProvider";
+import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
 
 const Navbar: React.FC = () => {
@@ -17,6 +17,10 @@ const Navbar: React.FC = () => {
   const HOME_PATH: string = "/app/home";
 
   const OPTION_LIST: OptionsNavBar[] = [
+    {
+      option: "Home",
+      path: `${HOME_PATH}`,
+    },
     {
       option: "Nosotros",
       path: `${HOME_PATH}/nosotros`,
@@ -66,7 +70,7 @@ const Navbar: React.FC = () => {
       )}
       <nav
         className={`p-4 flex items-center
-        ${width > 425 ? "flex-row" : "flex-col"} flex-wrap justify-between`}
+        ${width > 530 ? "flex-row" : "flex-col"} flex-wrap justify-between`}
       >
         <section className="flex items-center">
           <button className="ml-5 mr-5 p-1" onClick={() => setAskLogOut(true)}>
@@ -87,8 +91,8 @@ const Navbar: React.FC = () => {
           >
             <ul
               className={`text-white flex 
-              ${width < 660 && "mt-5"}
-              ${width > 425 ? "flex-row" : "flex-col"}
+              ${width < 743 && "mt-5"}
+              ${width > 530 ? "flex-row" : "flex-col"}
             flex-row flex-wrap w-max`}
             >
               {OPTION_LIST.map((option) => (

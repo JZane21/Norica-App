@@ -1,3 +1,5 @@
+import { SoonPage } from "./SoonPage";
+
 export const TrabajosPage = () => {
-  return <div>TrabajosPage</div>;
+  return <SoonPage />;
 };
