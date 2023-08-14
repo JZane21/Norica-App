@@ -5,11 +5,26 @@ import { FieldValues, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
+import { DataInput } from "../components/DataInput";
+import { useState } from "react";
+import { ModalPage } from "../../modals/ModalPage";
+import { ModalMessage } from "../../modals/ModalMessage";
+
+interface formValues {
+  email: string;
+  password: string;
+}
 
 export const LoginPage = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<formValues>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [error, setError] = useState<boolean>(false);
 
   const signInWithGoogle = async () => {
     try {
@@ -17,7 +32,7 @@ export const LoginPage = () => {
       dispatch({ type: types.login });
       navigate("/app/home");
     } catch (err) {
-      console.error(err);
+      setError(true);
     }
   };
 
@@ -27,22 +42,41 @@ export const LoginPage = () => {
       dispatch({ type: types.login });
       navigate("/app/home");
     } catch (err) {
-      alert("Usuario o Contraseña incorrectos");
+      setError(true);
     }
   };
 
   const whensubmit = (data: FieldValues) => {
     const { email, password } = data;
-    if (![email, password].includes("")) {
-      alert("ingreso correcto");
-      signIn(email, password);
-    } else {
-      alert("usuario o contraseña faltantes");
-    }
+    signIn(email, password);
   };
+
+  const LOGIN_DATA = [
+    {
+      order: "Ingrese su email",
+      typeInput: "email",
+      placeHolder: "name@company.com",
+      error: errors.email,
+    },
+    {
+      order: "Ingrese su contraseña",
+      typeInput: "password",
+      placeHolder: "contraseña",
+      error: errors.password,
+    },
+  ];
 
   return (
     <>
+      {error && (
+        <ModalPage>
+          <ModalMessage
+            action={setError}
+            title="Sign In Error"
+            message="Usuario y/o contraseña incorrectos"
+          />
+        </ModalPage>
+      )}
       <section className="bg-gray-50 dark:bg-gray-900">
         <div
           className="flex flex-col justify-center items-center px-6 py-8 mx-auto
@@ -67,52 +101,30 @@ export const LoginPage = () => {
               >
                 Bienvenido
               </h1>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-gray-900
-                dark:text-white w-full"
-                >
-                  Ingrese su email
-                </label>
-                <input
-                  type="email"
-                  {...register("email", { required: true })}
-                  id="email"
-                  className="bg-gray-50 border border-gray-300
-                text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600
-                focus:border-primary-600 block w-full p-2.5
-                dark:bg-gray-700 dark:border-gray-600
-                dark:placeholder-gray-400 dark:text-white
-                dark:focus:ring-blue-500 dark:focus:border-blue-500
-                outline-none"
-                  placeholder="name@company.com"
-                  required={true}
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm
-                font-medium text-gray-900 dark:text-white"
-                >
-                  Ingrese su contraseña
-                </label>
-                <input
-                  type="password"
-                  {...register("password", { required: true })}
-                  id="password"
-                  placeholder="contraseña"
-                  className="bg-gray-50 border
-                border-gray-300 text-gray-900 sm:text-sm rounded-lg
-                focus:ring-primary-600 focus:border-primary-600 block
-                w-full p-2.5 dark:bg-gray-700 dark:border-gray-600
-                dark:placeholder-gray-400 dark:text-white
-                dark:focus:ring-blue-500 dark:focus:border-blue-500
-                outline-none"
-                  required={true}
-                />
-              </div>
+              <>
+                {LOGIN_DATA.map((item) => (
+                  <div key={item.order}>
+                    <DataInput order={item.order} typeInput={item.typeInput} />
+                    <input
+                      type={item.typeInput}
+                      {...register(
+                        item.typeInput === "email" ? "email" : "password",
+                        { required: true }
+                      )}
+                      id={item.typeInput}
+                      className="bg-gray-50 border border-gray-300
+                      text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600
+                      focus:border-primary-600 block w-full p-2.5
+                      dark:bg-gray-700 dark:border-gray-600
+                      dark:placeholder-gray-400 dark:text-white
+                      dark:focus:ring-blue-500 dark:focus:border-blue-500
+                      outline-none"
+                      placeholder={item.placeHolder}
+                      required={true}
+                    />
+                  </div>
+                ))}
+              </>
               {/* login with Google */}
               <div
                 className="flex flex-row flex-wrap justify-center
@@ -142,14 +154,14 @@ export const LoginPage = () => {
                     viewBox="0 0 18 19"
                   >
                     <path
-                      fill-rule="evenodd"
+                      fillRule="evenodd"
                       d="M8.842 18.083a8.8 8.8 0 0 1-8.65-8.948 8.841
                       8.841 0 0 1 8.8-8.652h.153a8.464 8.464 0 0 1 5.7
                       2.257l-2.193 2.038A5.27 5.27 0 0 0 9.09 3.4a5.882
                       5.882 0 0 0-.2 11.76h.124a5.091 5.091 0 0 0
                       5.248-4.057L14.3 11H9V8h8.34c.066.543.095 1.09.088
                       1.636-.086 5.053-3.463 8.449-8.4 8.449l-.186-.002Z"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                     />
                   </svg>
                   Ingresar con Google
