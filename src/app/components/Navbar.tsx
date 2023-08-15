@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { OptionNavbar } from "./OptionNavbar";
 import { LogoApp } from "./LogoApp";
 import { OptionsNavBar } from "../../models/navbarModel";
@@ -8,22 +8,11 @@ import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
 
 interface Props {
-  setNavbarHeight: (param: number) => void;
   width: number;
-  height: number;
-  setMenu: (param: boolean) => void;
 }
 
-const Navbar = ({ setNavbarHeight, width, height, setMenu }: Props) => {
+const Navbar = ({ width }: Props) => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-
-  const element = useRef(null);
-
-  useEffect(() => {
-    const height = element.current?.getBoundingClientRect();
-    setNavbarHeight(height.height);
-    setMenu(sidebarOpen);
-  }, [width, height, sidebarOpen]);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -70,7 +59,6 @@ const Navbar = ({ setNavbarHeight, width, height, setMenu }: Props) => {
         </ModalPage>
       )}
       <nav
-        ref={element}
         className={`p-4 flex items-center
         ${width > 530 ? "flex-row" : "flex-col"} flex-wrap justify-between`}
       >
