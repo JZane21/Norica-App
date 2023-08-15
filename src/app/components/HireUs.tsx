@@ -19,7 +19,7 @@ function HireUs({ width }: Props) {
         cursor: pointer;
         text-decoration: none;
       }
-    `}</style>
+      `}</style>
       <section
         className={`text-white bg-transparent bg-slate-400
         ${width >= 467 && "mr-5"}

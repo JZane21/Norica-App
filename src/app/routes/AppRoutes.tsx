@@ -2,7 +2,6 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { GuardRoute } from "../../guards/GuardRoute";
 import { useStore } from "../../store/StoreProvider";
 import { HomePage } from "../pages/HomePage";
-import { NosotrosPage } from "../pages/NosotrosPage";
 import { ContactoPage } from "../pages/ContactoPage";
 import { ProductosPage } from "../pages/ProductosPage";
 import { TrabajosPage } from "../pages/TrabajosPage";
@@ -28,7 +27,6 @@ export const AppRoutes = () => {
         }
         children={
           <>
-            <Route path="nosotros" element={<NosotrosPage />} />
             <Route path="contacto" element={<ContactoPage />} />
             <Route path="productos" element={<ProductosPage />} />
             <Route path="trabajos" element={<TrabajosPage />} />

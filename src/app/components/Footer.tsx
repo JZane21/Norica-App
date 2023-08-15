@@ -26,7 +26,7 @@ const Footer = ({ setFooterHeight, width, height, menu }: Props) => {
     {
       socialNetworkName: "facebook",
       icon: faFacebook,
-      socialNetworkLink: "https://www.facebook.com",
+      socialNetworkLink: "https://www.facebook.com/noricasrl?mibextid=LQQJ4d",
     },
     {
       socialNetworkName: "instagram",

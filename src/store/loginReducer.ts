@@ -7,7 +7,7 @@ export const loginTypes = {
 export const loginInitialValues = {
   // asignando el valor inicial de las variables globales
   // cuando se incia la aplicacion
-  auth: true
+  auth: false
 };
 
 export const loginReducer = (state:any, type:string) => {

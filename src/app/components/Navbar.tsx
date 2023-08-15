@@ -37,10 +37,6 @@ const Navbar = ({ setNavbarHeight, width, height, setMenu }: Props) => {
       path: `${HOME_PATH}`,
     },
     {
-      option: "Nosotros",
-      path: `${HOME_PATH}/nosotros`,
-    },
-    {
       option: "Trabajos",
       path: `${HOME_PATH}/trabajos`,
     },
