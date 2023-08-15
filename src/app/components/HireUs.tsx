@@ -1,30 +1,41 @@
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const hireUsStyles = {
-  color: 'var(--primary-white, #FFF)',
-  fontFamily: 'Manrope',
-  fontSize: '18px',
-  fontWeight: 500,
-  lineHeight: '120%', /* 21.6px */
-  display: 'flex',
-  height: '61px',
-  padding: '24px 40px 24px 48px',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: '4px',
-  borderRadius: '16px',
-  background: '#FF001D',
-  cursor: 'pointer', // Agregar cursor apuntador al botón
-  textDecoration: 'none', // Eliminar subrayado del enlace
-};
+interface Props {
+  width: number;
+}
 
-function HireUs() {
+function HireUs({ width }: Props) {
+  const navigate = useNavigate();
+
   return (
-    <Link to="/contacto" style={hireUsStyles}>
-      <h1>Contrátanos</h1>
-      <p>Puedes contratar nuestros servicios...</p>
-      <p>Ir al formulario de contratación</p>
-    </Link>
+    <>
+      <style>{`
+      .buttonStyle{
+        font-size: 16px;
+        font-weight: 100;
+        height: max-content;
+        padding: 14px 30px 14px 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+    `}</style>
+      <section
+        className={`text-white bg-transparent bg-slate-400
+        ${width >= 467 && "mr-5"}
+        flex flex-col items-center`}
+      >
+        <p className="mb-3 font-thin">Contratar nuestros servicios</p>
+        <button
+          onClick={() => navigate("")}
+          className="buttonStyle bg-primary-600 hover:bg-primary-500
+          active:bg-primary-700"
+        >
+          Contrátanos
+        </button>
+      </section>
+    </>
   );
 }
 
