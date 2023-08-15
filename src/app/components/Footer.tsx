@@ -1,10 +1,10 @@
-import { useEffect, useRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useRef, useState } from "react";
 import {
   faFacebook,
   faInstagram,
-  faTwitter,
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { SocialNetworkButton } from "./SocialNetworkButton";
 
 interface Props {
   setFooterHeight: (param: number) => void;
@@ -15,31 +15,76 @@ interface Props {
 
 const Footer = ({ setFooterHeight, width, height, menu }: Props) => {
   const element = useRef(null);
+  const [showSocialNetworks, setShowSocialNetworks] = useState<boolean>(false);
 
   useEffect(() => {
     const height = element.current?.getBoundingClientRect();
     setFooterHeight(height.height);
-  }, [width, height, menu]);
+  }, [width, height, menu, showSocialNetworks]);
+
+  const REDES_SOCIALES = [
+    {
+      socialNetworkName: "facebook",
+      icon: faFacebook,
+      socialNetworkLink: "https://www.facebook.com",
+    },
+    {
+      socialNetworkName: "instagram",
+      icon: faInstagram,
+      socialNetworkLink: "https://www.instagram.com",
+    },
+    {
+      socialNetworkName: "youtube",
+      icon: faYoutube,
+      socialNetworkLink: "https://www.youtube.com",
+    },
+  ];
 
   return (
-    <footer ref={element} className="bg-slate-300 h-max p-4 w-max">
-      <div className="flex justify-center">
-        <a href="https://www.facebook.com" className="mr-4">
-          <FontAwesomeIcon
-            icon={faFacebook}
-            className="text-blue-600 text-lg"
-          />
-        </a>
-        <a href="https://www.instagram.com" className="mr-4">
-          <FontAwesomeIcon
-            icon={faInstagram}
-            className="text-pink-600 text-lg"
-          />
-        </a>
-        <a href="https://www.twitter.com">
-          <FontAwesomeIcon icon={faTwitter} className="text-blue-400 text-lg" />
-        </a>
-      </div>
+    <footer ref={element} className="bg-transparent p-4 w-full h-max">
+      {!showSocialNetworks && (
+        <div className="p-5">
+          <a
+            onClick={() => setShowSocialNetworks(true)}
+            className="w-max p-[6px] pl-3 pr-3 hover:bg-slate-700
+              active:bg-slate-800 text-base font-semibold leading-relaxed
+              rounded-lg text-sky-400"
+          >
+            Visite nuestras redes sociales dando click aquí
+          </a>
+        </div>
+      )}
+      {showSocialNetworks && (
+        <div
+          className="w-full h-max p-10 bg-transparent rounded-3xl flex
+          justify-between items-center text-white border-[0.5px]
+          border-white"
+        >
+          <div
+            className="grow shrink basis-0 h-max justify-around items-center
+          flex flex-wrap"
+          >
+            <button
+              onClick={() => setShowSocialNetworks(false)}
+              className="w-max p-[6px] pl-3 pr-3 hover:bg-slate-700
+              active:bg-slate-800 text-base font-semibold leading-relaxed
+              rounded-lg border-[0.5px] border-white m-3"
+            >
+              Cerrar
+            </button>
+            <>
+              {REDES_SOCIALES.map((item) => (
+                <SocialNetworkButton
+                  key={item.socialNetworkName}
+                  socialNetworkName={item.socialNetworkName}
+                  socialNetworkLink={item.socialNetworkLink}
+                  icon={item.icon}
+                />
+              ))}
+            </>
+          </div>
+        </div>
+      )}
     </footer>
   );
 };

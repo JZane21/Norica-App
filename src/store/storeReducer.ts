@@ -1,6 +1,5 @@
 import { loginInitialValues, loginReducer, loginTypes } from "./loginReducer";
 
-
 export const types = {
   ...loginTypes
 };
