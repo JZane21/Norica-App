@@ -139,15 +139,16 @@ export const RegisterPage = () => {
   useEffect(() => {
     if (clickTwo) {
       const passwordVerificator =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{8,}$/;
-      const lengthPassword = /^.{8,}$/;
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z0-9]{8,16}$/;
+      const lengthPassword = /^.{8,16}$/;
       const oneSmallLetter = /[a-z]/;
       const oneBigLetter = /[A-Z]/;
       const oneNumber = /\d/;
       if (!passwordVerificator.test(password)) {
         let auxTextError = "";
         if (!lengthPassword.test(password)) {
-          auxTextError = "* La contraseña debe contener al menos 8 caracteres";
+          auxTextError = `* La contraseña debe contener al menos 8 caracteres
+          y máximo 16`;
         } else if (!oneSmallLetter.test(password)) {
           auxTextError = "* La contraseña debe tener al menos 1 minúscula";
         } else if (!oneBigLetter.test(password)) {
@@ -235,8 +236,8 @@ export const RegisterPage = () => {
               <ModalMessage
                 action={setExistError}
                 title="Error de Registro"
-                message={`Los campos no fueron llenados correctamente\m
-                O el usuario ya existe`}
+                message={`Los campos no fueron llenados correctamente
+                o el usuario ya existe`}
               />
             )}
             {created && (
