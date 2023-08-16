@@ -7,6 +7,8 @@ interface Props {
   children: JSX.Element;
 }
 
+// useReducer, y el useContext
+
 export const StoreProvider = ({ children }: Props) => {
   return (
     <StoreContext.Provider value={useReducer(storeReducer, initialValues)}>
