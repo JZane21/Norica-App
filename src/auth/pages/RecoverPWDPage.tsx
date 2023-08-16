@@ -122,7 +122,7 @@ export const RecoverPWDPage = () => {
               onClick={resetPassword}
               className="w-full text-white bg-red-600 hover:bg-red-500
               font-medium rounded-lg text-sm px-5 py-2.5 text-center
-              active:bg-red-700 mt-4"
+              active:bg-red-700 mt-4 shadow-md"
             >
               Recuperar contraseña
             </button>
@@ -131,7 +131,7 @@ export const RecoverPWDPage = () => {
               onClick={() => navigate("/auth/login")}
               className="w-full text-white bg-red-600 hover:bg-red-500
               font-medium rounded-lg text-sm px-5 py-2.5 text-center
-              active:bg-red-700 mt-4"
+              active:bg-red-700 mt-4 shadow-md"
             >
               Volver
             </button>
