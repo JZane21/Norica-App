@@ -14,7 +14,7 @@ function CompanyDescription() {
 
   return (
     <section className="flex flex-col m-3 text-white">
-      <h1 className="text-3xl font-bold mb-5">NODICA</h1>
+      <h1 className="text-3xl font-bold mb-5">NORICA</h1>
       <h2 className="text-xl font-semibold mb-3">¿Quienes somos?</h2>
       <p className="text-center font-thin">
         Somos una empresa comprometida en la satisfacción de las necesidades de
