@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
 import { DataInput } from "../components/DataInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalMessage } from "../../modals/ModalMessage";
 
@@ -29,6 +29,7 @@ export const LoginPage = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+      localStorage.setItem("userLogIn", JSON.stringify(true));
       dispatch({ type: types.login });
       navigate("/app/home");
     } catch (err) {
@@ -39,12 +40,17 @@ export const LoginPage = () => {
   const signIn = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem("userLogIn", JSON.stringify(true));
       dispatch({ type: types.login });
       navigate("/app/home");
     } catch (err) {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    dispatch({ type: types.logout });
+  }, []);
 
   const whensubmit = (data: FieldValues) => {
     const { email, password } = data;
