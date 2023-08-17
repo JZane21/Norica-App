@@ -7,7 +7,7 @@ export const loginTypes = {
 export const loginInitialValues = {
   // asignando el valor inicial de las variables globales
   // cuando se incia la aplicacion
-  auth: localStorage.getItem("userLogIn")!==null ? JSON.parse(localStorage.getItem("userLogIn")) : false
+  auth: false
 };
 
 export const loginReducer = (state:any, type:string) => {
@@ -21,7 +21,7 @@ export const loginReducer = (state:any, type:string) => {
       ...state,
       auth: false
     };
-  } else{
+  }else{
     return state;
   }
 };

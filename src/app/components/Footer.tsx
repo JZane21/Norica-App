@@ -28,9 +28,9 @@ const Footer = () => {
   ];
 
   return (
-    <footer ref={element} className="bg-transparent w-full h-max m-3">
+    <footer ref={element} className="bg-transparent w-full h-max">
       <div
-        className="w-full h-max p-7 bg-transparent rounded-3xl flex
+        className="w-full h-max p-10 bg-transparent rounded-3xl flex
         justify-between items-center text-white border-[0.5px]
         border-white"
       >
