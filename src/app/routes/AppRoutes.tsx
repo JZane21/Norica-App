@@ -2,6 +2,9 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { GuardRoute } from "../../guards/GuardRoute";
 import { useStore } from "../../store/StoreProvider";
 import { HomePage } from "../pages/HomePage";
+import { ContactoPage } from "../pages/ContactoPage";
+import { ProductosPage } from "../pages/ProductosPage";
+import { TrabajosPage } from "../pages/TrabajosPage";
 
 export const AppRoutes = () => {
   const { auth } = useStore();
@@ -21,6 +24,13 @@ export const AppRoutes = () => {
           <GuardRoute auth={auth}>
             <HomePage />
           </GuardRoute>
+        }
+        children={
+          <>
+            <Route path="contacto" element={<ContactoPage />} />
+            <Route path="productos" element={<ProductosPage />} />
+            <Route path="trabajos" element={<TrabajosPage />} />
+          </>
         }
       />
       <Route path="/*" element={<Navigate to="/" />} />

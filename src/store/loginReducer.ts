@@ -3,9 +3,12 @@ export const loginTypes = {
   logout: "logout user"
 };
 
+// global varaibles, 
 export const loginInitialValues = {
-  auth: false
-}
+  // asignando el valor inicial de las variables globales
+  // cuando se incia la aplicacion
+  auth: localStorage.getItem("userLogIn")!==null ? JSON.parse(localStorage.getItem("userLogIn")) : false
+};
 
 export const loginReducer = (state:any, type:string) => {
   if(type === loginTypes.login){
@@ -18,7 +21,7 @@ export const loginReducer = (state:any, type:string) => {
       ...state,
       auth: false
     };
-  }else{
+  } else{
     return state;
   }
 };
