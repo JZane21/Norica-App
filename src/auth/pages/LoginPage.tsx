@@ -29,6 +29,7 @@ export const LoginPage = () => {
   const signInWithGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+      localStorage.setItem("userLogIn", JSON.stringify(true));
       dispatch({ type: types.login });
       navigate("/app/home");
     } catch (err) {
@@ -39,6 +40,7 @@ export const LoginPage = () => {
   const signIn = async (email: string, password: string) => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem("userLogIn", JSON.stringify(true));
       dispatch({ type: types.login });
       navigate("/app/home");
     } catch (err) {

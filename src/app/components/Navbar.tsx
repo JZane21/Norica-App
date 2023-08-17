@@ -49,6 +49,7 @@ const Navbar = ({ width }: Props) => {
           <ModalConfirmation
             actionOne={() => {
               setAskLogOut(false);
+              localStorage.setItem("userLogIn", JSON.stringify(false));
               dispatch({ type: types.logout });
             }}
             actionTwo={() => setAskLogOut(false)}
