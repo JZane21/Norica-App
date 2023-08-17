@@ -1,1 +1,1 @@
-# Nodica-App
+# Norica-App
