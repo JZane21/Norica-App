@@ -1,63 +1,36 @@
 import React, { useState } from "react";
-import Slider from "react-slick";
 import { Image } from "./Image";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 
 interface Props {
   productName: string;
   productImage: string;
   productDescription: string;
+  isZoomed: boolean;
+  onZoomToggle: () => void;
 }
 
 export const FinishedProductCard = ({
   productName,
   productImage,
   productDescription,
+  isZoomed,
+  onZoomToggle,
 }: Props) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-  };
-
-  const [isZoomed, setIsZoomed] = useState(false);
-
-  const handleZoomClick = () => {
-    setIsZoomed(!isZoomed);
-  };
 
   const handleCloseClick = () => {
-    setIsZoomed(false);
+    onZoomToggle();
   };
-
   return (
-    <div
-      className={`w-[300px] h-[500px] bg-black bg-opacity-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-900 ${
-        isZoomed ? "z-10 fixed inset-0 flex justify-center items-center bg-opacity-90 backdrop-blur" : ""
-      }`}
+    <div onClick={onZoomToggle}
+      className={`w-[303px] h-[450px] bg-black bg-opacity-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-900
+       `}
     >
-      <Slider {...settings}>
-        <div onClick={handleZoomClick}>
+        <div>
           <Image urlImg={productImage} widthLogo={"big"} />
         </div>
-        {/* Agrega más elementos aquí para cada tarjeta de trabajo */}
-      </Slider>
-      {isZoomed && (
-        <div className="absolute top-0 right-0 m-2">
-          <button
-            className="text-white text-xl bg-gray-800 p-1 rounded"
-            onClick={handleCloseClick}
-          >
-            X
-          </button>
-        </div>
-      )}
-      <div className={`p-5 ${isZoomed ? "hidden" : ""}`}>
+      
+      <div className={`p-5`}>
         <a href="#">
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-white dark:text-gray-900">
             {productName}
