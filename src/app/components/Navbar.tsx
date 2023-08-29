@@ -6,6 +6,7 @@ import { ModalPage } from "../../modals/ModalPage";
 import { ModalConfirmation } from "../../modals/ModalConfirmation";
 import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface Props {
   width: number;
@@ -40,6 +41,8 @@ const Navbar = ({ width }: Props) => {
   const dispatch = useDispatch();
   const [askLogOut, setAskLogOut] = useState<boolean>(false);
 
+  const { saveDataLS } = useLocalStorage();
+
   return (
     <>
       {askLogOut && (
@@ -47,7 +50,7 @@ const Navbar = ({ width }: Props) => {
           <ModalConfirmation
             actionOne={() => {
               setAskLogOut(false);
-              localStorage.setItem("userLogIn", JSON.stringify(false));
+              saveDataLS("userLogIn", { auth: false });
               dispatch({ type: types.logout });
             }}
             actionTwo={() => setAskLogOut(false)}
