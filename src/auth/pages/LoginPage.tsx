@@ -6,9 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
 import { DataInput } from "../components/DataInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalMessage } from "../../modals/ModalMessage";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface formValues {
   email: string;
@@ -26,10 +27,14 @@ export const LoginPage = () => {
 
   const [error, setError] = useState<boolean>(false);
 
+  const { saveDataLS } = useLocalStorage();
+
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      dispatch({ type: types.login });
+      const { user } = await signInWithPopup(auth, googleProvider);
+      saveDataLS("userLogIn", { auth: true });
+      dispatch({ type: types.login, value: "" });
+      dispatch({ type: types.getUserEmail, value: user.email });
       navigate("/app/home");
     } catch (err) {
       setError(true);
@@ -38,13 +43,19 @@ export const LoginPage = () => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      dispatch({ type: types.login });
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      saveDataLS("userLogIn", { auth: true });
+      dispatch({ type: types.login, value: "" });
+      dispatch({ type: types.getUserEmail, value: user.email });
       navigate("/app/home");
     } catch (err) {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    dispatch({ type: types.logout, value: "" });
+  }, []);
 
   const whensubmit = (data: FieldValues) => {
     const { email, password } = data;

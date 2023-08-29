@@ -12,6 +12,7 @@ import { ModalMessage } from "../../modals/ModalMessage";
 import { formValuesRegister } from "../../models/registerModels";
 import { RegisterQuestion } from "../components/RegisterQuestion";
 import { ModalConfirmation } from "../../modals/ModalConfirmation";
+import { testEmail } from "../../helpers/testerEmail";
 
 export const RegisterPage = () => {
   const { register, handleSubmit, watch } = useForm<formValuesRegister>();
@@ -111,8 +112,7 @@ export const RegisterPage = () => {
 
   useEffect(() => {
     if (clickOne) {
-      const emailTester = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailTester.test(email)) {
+      if (!testEmail(email)) {
         if (!registerError.email.state) {
           setRegisterError({
             ...registerError,
