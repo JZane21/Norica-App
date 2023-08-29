@@ -39,9 +39,9 @@ export default class SimpleSlider extends Component <SimpleSliderProps>{
     };
     return (
         <div>
-            <div style={{ textAlign: "right" }}>
-        <button className="w-[60px] h-[40px] text-white bg-red-600 hover:bg-red-500
-          active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-md" onClick={this.previous}>
+            <div style={{ textAlign: "right",  margin:10 }}>
+        <button className="w-[60px] h-[40px] text-gray-400 hover:bg-red-600 
+          active:bg-red-700 active:text-white hover:text-white text-base font-thin p-2 pl-3 pr-3 rounded-md m-2 " onClick={this.previous}>
          <svg
           className="w-3.5 h-3.5 ml-2 transform rotate-180"
           aria-hidden="true"
@@ -58,8 +58,8 @@ export default class SimpleSlider extends Component <SimpleSliderProps>{
           />
         </svg>
         </button>
-        <button className="w-[60px] h-[40px] text-white bg-red-600 hover:bg-red-500
-          active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-md" onClick={this.next}>
+        <button className="w-[60px] h-[40px] text-gray-400 hover:bg-red-600 
+          active:bg-red-700 active:text-white hover:text-white text-base font-thin p-2 pl-3 pr-3 rounded-md" onClick={this.next}>
            <svg
           className="w-3.5 h-3.5 ml-2"
           aria-hidden="true"
@@ -77,10 +77,11 @@ export default class SimpleSlider extends Component <SimpleSliderProps>{
         </svg>
         </button>
         </div>
+        <div className="m-5">
         <Slider ref={c => (this.slider = c)} {...settings}>
         {this.props.children}
         </Slider>
-        
+        </div>
         </div>
     );
   };
