@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, sendPasswordResetEmail } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZq76UZIrjhA1z6OGZuwxqyTOxW3jbk1Y",
@@ -19,4 +19,21 @@ export const googleProvider = new GoogleAuthProvider();
 export const db = getFirestore(app);
 export const passwordReset = async (email:string) => {
   await sendPasswordResetEmail(auth,email);
+};
+
+const previusWorks = collection(db,"previus-works");
+
+export const getPreviusWorks = async () => {
+  let data;
+  try{
+    data = await getDocs(previusWorks);
+    const filterData = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id
+    }));
+    return filterData;
+  }catch(err){
+    console.error(err);
+    return null;
+  }
 };
