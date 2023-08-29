@@ -35,6 +35,7 @@ export default class SimpleSlider extends Component <SimpleSliderProps>{
         autoplay: true,
         autoplaySpeed: 3000,
         arrows: false,
+        swipe: false,
         
     };
     return (

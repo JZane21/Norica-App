@@ -5,8 +5,9 @@ import { Image } from "./Image";
 interface Props {
   productName: string;
   productImage: string;
-  productDescription1: string;
-  productDescription2: string;
+  productDescription: string;
+  productDescriptionZone: string;
+  productDescriptionDuration: string;
   isZoomed: boolean;
   onZoomToggle: () => void;
 }
@@ -14,7 +15,7 @@ interface Props {
 export const FinishedProductCard = ({
   productName,
   productImage,
-  productDescription2,
+  productDescriptionDuration,
   onZoomToggle,
 }: Props) => {
 
@@ -50,7 +51,7 @@ export const FinishedProductCard = ({
         </svg>
         </div>
         <p className=" font-normal text-black-400 dark:text-gray-700">
-          {productDescription2}
+          {productDescriptionDuration}
         </p>
       </div>
     </div>

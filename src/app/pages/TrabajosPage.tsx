@@ -26,41 +26,47 @@ export const TrabajosPage = () => {
   
   const projectData = [
     {
-      productName: 'Proyecto Fundación Alalay',
-      productDescription1: "Construcción para fundación Alalay Huajchilla diseñada para una capacidad de 24 niños con todos los requerimientos, materiales duraderos de primera Duración: 5 meses y medio (2019)",
+      productName: 'Fundación Alalay',
+      productDescription: "Construcción para fundación Alalay con capacidad de 24 niños con todos los requerimientos, materiales duraderos de primera",
       productImage: picTrabajo1,
-      productDescription2:'5 meses y medio (2019)'
+      productDescriptionZone:'Zona de Huajchilla',
+      productDescriptionDuration:'Duración: 5 meses y medio (2019)'
     },
     {
-      productName: 'Edificio Lomas de Achumani',
-      productDescription1: "Edificio ubicado en la calle 21 de junio Lomas de Achumani. Terreno 550 metros 6 niveles 9 departamentos 2 locales comerciales cuenta con parques y bauleras, material de primera. Duración: 8 meses y medio (2017)",
+      productName: 'Edificio Lomas Achumani',
+      productDescription: "Edificio con terreno de 550m, 9 departamentos, 2 locales, parqueo y bauleras.",
       productImage: picTrabajo2,
-      productDescription2:' 8 meses y medio (2017)'
+      productDescriptionZone:'Calle 21 de junio Lomas de Achumani',
+      productDescriptionDuration:' Duración: 8 meses y medio (2017)'
     },
     {
       productName: 'Condominio Cipreses',
-      productDescription1: "Condominios cipreses de 16 casas (casa modelo) 3 niveles, 3 dormitorios en suit y todas las comodidades  Ubicado en la calle 11 de alto irpavi. Duración: Actualmente construyendo (2023)",
+      productDescription: "Condominios cipreses de 16 casas (casa modelo) 3 niveles, 3 dormitorios en suit y todas las comodidades",
       productImage: picTrabajo3,
-      productDescription2:' Actualmente construyendo (2023)'
+      productDescriptionZone:'Calle 11 Zona de Alto Irpavi',
+      productDescriptionDuration:' Actualmente construyendo (2023)'
     },
     {
       productName: 'Casa Serranías Club Golf',
-      productDescription1: "Casa unifamiliar de 3 niveles ubicado en Serranías del Golf Mallasilla, material de primera. Duración: 4 meses y medio (2018)",
+      productDescription: "Casa unifamiliar de 3 niveles, material de primera.",
       productImage: picTrabajo4,
-      productDescription2:'4 meses y medio (2018)'
+      productDescriptionZone:'Serranías del Club Golf Mallasilla',
+      productDescriptionDuration:'Duración: 4 meses y medio (2018)'
     },
     {
       productName: 'Casa Obrajes',
-      productDescription1: "Casa unifamiliar 4 niveles, 4 dormitorios en suit con todas las comodidades, material de primera y obra fina de lujo. Ubicada en la calle 5 de obrajes. Duración: 7 meses (2021)",
+      productDescription: "Casa unifamiliar 4 niveles, 4 dormitorios en suit con todas las comodidades, material de primera y obra fina de lujo.  ",
       productImage: picTrabajo5,
-      productDescription2:' Duración: 7 meses (2021)'
+      productDescriptionZone:'Calle 5 Zona de obrajes',
+      productDescriptionDuration:' Duración: 7 meses (2021)'
 
     },
     {
-      productName: 'Departamentos Meseta de Achumani',
-      productDescription1: "Construcción de 3 niveles de departamentos multi familiares. Ubicado en la meseta de Achumani. Duración: 5 meses (2018)",
+      productName: 'Departamentos Meseta Achumani',
+      productDescription: "Construcción de 3 niveles de departamentos multi familiares.",
       productImage: picTrabajo6,
-      productDescription2:'Duración: 5 meses (2018)'
+      productDescriptionZone:'Zona Meseta de Achumani',
+      productDescriptionDuration:'Duración: 5 meses (2018)'
     },
  
   ];
@@ -73,8 +79,9 @@ export const TrabajosPage = () => {
           <FinishedProductCard
             key={item.productName}
             productName={item.productName}
-            productDescription1={item.productDescription1}
-            productDescription2={item.productDescription2}
+            productDescription={item.productDescription}
+            productDescriptionZone={item.productDescriptionZone}
+            productDescriptionDuration={item.productDescriptionDuration}
             productImage={item.productImage}
             isZoomed={zoomedIndex === index}
             onZoomToggle={() => handleZoomToggle(index)}
@@ -92,19 +99,26 @@ export const TrabajosPage = () => {
           <div>
           <h5 className=" text-7xl mt-7 ml-12 mb-12  tracking-tight text-black dark:text-gray-900 flex flex-col" >
             {projectData[zoomedIndex].productName}
-          </h5><hr style={{ borderColor: "#999", margin:10 }} /><p className=" font-normal text-5xl ml-10 text-end text-gray-900 dark:text-gray-200">
-          {projectData[zoomedIndex].productDescription1}
+          </h5><hr style={{ borderColor: "#999", margin:10 }} />
+          <p className=" p-10 font-normal text-4xl ml-10 text-end text-gray-900 dark:text-gray-200">
+          {projectData[zoomedIndex].productDescription}
+        </p>
+        <p className="p-10 font-normal text-4xl ml-10 text-end text-gray-900 dark:text-gray-200">
+          {projectData[zoomedIndex].productDescriptionZone}
+        </p>
+        <p className=" -mb-10 p-10 font-normal text-4xl ml-10 text-end text-gray-900 dark:text-gray-200">
+          {projectData[zoomedIndex].productDescriptionDuration}
         </p>
           </div>
           </div>
-          <div className=" w-[47%] "style={{ display: "flex", justifyContent: "space-between" }}>
-          <button className="w-[125px] h-[45px] text-white bg-red-600 hover:bg-gray-500
+          <div className=" -mt-12 w-[50%] "style={{ display: "flex", justifyContent: "space-between" }}>
+          <button className="w-[150px] h-[45px] text-white bg-red-600 hover:bg-gray-500
           active:bg-gray-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11" onClick={() => setZoomedIndex(null)}>
           Volver
         </button>
         <a>
         <Link className="w-max h-max ml-3 mr-3" to={`/app/home/contacto`}>
-        <button className="w-[125px] h-[45px] text-white bg-gray-600 hover:bg-red-700
+        <button className="w-[150px] h-[45px] text-white bg-gray-600 hover:bg-red-700
           active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11" >
           Contratanos
         </button>
