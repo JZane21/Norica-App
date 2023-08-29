@@ -5,6 +5,7 @@ import { HomePage } from "../pages/HomePage";
 import { ContactoPage } from "../pages/ContactoPage";
 import { ProductosPage } from "../pages/ProductosPage";
 import { TrabajosPage } from "../pages/TrabajosPage";
+import { FinishedProjects } from "../pages/FinishedProjects";
 
 export const AppRoutes = () => {
   const { auth } = useStore();
