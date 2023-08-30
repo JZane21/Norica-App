@@ -8,8 +8,13 @@ import { getPreviusWorks } from "../../firebase/firebase";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalLoading } from "../../modals/ModalLoading";
 import { ErrorPage } from "./ErrorPage";
+import { useDispatch, useStore } from "../../store/StoreProvider";
+import { types } from "../../store/storeReducer";
 
 export const TrabajosPage = () => {
+  const { workList } = useStore();
+  const dispatch = useDispatch();
+
   const [zoomedIndex, setZoomedIndex] = useState<number | null>(null);
 
   const handleZoomToggle = (index: number) => {
@@ -27,6 +32,7 @@ export const TrabajosPage = () => {
     try {
       const listWorks = await getPreviusWorks();
       setProjectData(listWorks);
+      dispatch({ type: types.setWorkList, value: listWorks });
     } catch (err) {
       setErrorLoading(true);
     }
@@ -35,10 +41,17 @@ export const TrabajosPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getWorks();
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    if (workList.length === 0) {
+      getWorks();
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      setProjectData(workList);
+    }
   }, []);
 
   return (
@@ -108,19 +121,17 @@ export const TrabajosPage = () => {
                   >
                     Volver
                   </button>
-                  <a>
-                    <Link
-                      className="w-max h-max ml-3 mr-3"
-                      to={`/app/home/contacto`}
+                  <Link
+                    className="w-max h-max ml-3 mr-3"
+                    to={`/app/home/contratanos`}
+                  >
+                    <button
+                      className="w-[150px] h-[45px] text-white bg-gray-600 hover:bg-red-700
+            active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11"
                     >
-                      <button
-                        className="w-[150px] h-[45px] text-white bg-gray-600 hover:bg-red-700
-              active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11"
-                      >
-                        Contratanos
-                      </button>
-                    </Link>
-                  </a>
+                      Contratanos
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
