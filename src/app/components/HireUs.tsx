@@ -27,7 +27,7 @@ function HireUs({ width }: Props) {
       >
         <p className="mb-3 font-thin">Contrata nuestros servicios</p>
         <button
-          onClick={() => navigate("")}
+          onClick={() => navigate("/app/home/contratanos")}
           className="buttonStyle bg-primary-600 hover:bg-primary-500
           active:bg-primary-700 text-center"
         >

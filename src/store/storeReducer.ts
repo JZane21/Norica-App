@@ -1,22 +1,25 @@
+import { Action } from "../models/dataReducer";
+import { hireFormTypes, hireFormInitialValues, hireFormReducer } from "./hireFormReducer";
 import { loginInitialValues, loginReducer, loginTypes } from "./loginReducer";
 
 export const types = {
-  ...loginTypes
+  ...loginTypes,
+  ...hireFormTypes
 };
 
 export const initialValues = {
-  ...loginInitialValues
+  ...loginInitialValues,
+  ...hireFormInitialValues
 }
 
-interface action{
-  type:string
-}
-
-export const storeReducer = (state:any, action:action) => {
+export const storeReducer = (state:any, action:Action) => {
   const type:string = action.type;
   if(type === types.login || type === types.logout){
-    return loginReducer(state,type);
-  }else{
+    return loginReducer(state,action);
+  }else if(type === types.getUserEmail || types.eraseUserEmail){
+    return hireFormReducer(state,action);
+  }
+  else{
     return state;
   }
 };

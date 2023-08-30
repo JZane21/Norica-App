@@ -9,6 +9,7 @@ import { DataInput } from "../components/DataInput";
 import { useEffect, useState } from "react";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalMessage } from "../../modals/ModalMessage";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface formValues {
   email: string;
@@ -26,11 +27,14 @@ export const LoginPage = () => {
 
   const [error, setError] = useState<boolean>(false);
 
+  const { saveDataLS } = useLocalStorage();
+
   const signInWithGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
-      localStorage.setItem("userLogIn", JSON.stringify(true));
-      dispatch({ type: types.login });
+      const { user } = await signInWithPopup(auth, googleProvider);
+      saveDataLS("userLogIn", { auth: true });
+      dispatch({ type: types.login, value: "" });
+      dispatch({ type: types.getUserEmail, value: user.email });
       navigate("/app/home");
     } catch (err) {
       setError(true);
@@ -39,9 +43,10 @@ export const LoginPage = () => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      localStorage.setItem("userLogIn", JSON.stringify(true));
-      dispatch({ type: types.login });
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      saveDataLS("userLogIn", { auth: true });
+      dispatch({ type: types.login, value: "" });
+      dispatch({ type: types.getUserEmail, value: user.email });
       navigate("/app/home");
     } catch (err) {
       setError(true);
@@ -49,7 +54,7 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
-    dispatch({ type: types.logout });
+    dispatch({ type: types.logout, value: "" });
   }, []);
 
   const whensubmit = (data: FieldValues) => {
