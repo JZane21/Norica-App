@@ -8,8 +8,13 @@ import { getPreviusWorks } from "../../firebase/firebase";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalLoading } from "../../modals/ModalLoading";
 import { ErrorPage } from "./ErrorPage";
+import { useDispatch, useStore } from "../../store/StoreProvider";
+import { types } from "../../store/storeReducer";
 
 export const TrabajosPage = () => {
+  const { workList } = useStore();
+  const dispatch = useDispatch();
+
   const [zoomedIndex, setZoomedIndex] = useState<number | null>(null);
 
   const handleZoomToggle = (index: number) => {
@@ -27,6 +32,7 @@ export const TrabajosPage = () => {
     try {
       const listWorks = await getPreviusWorks();
       setProjectData(listWorks);
+      dispatch({ type: types.setWorkList, value: listWorks });
     } catch (err) {
       setErrorLoading(true);
     }
@@ -35,10 +41,17 @@ export const TrabajosPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getWorks();
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    if (workList.length === 0) {
+      getWorks();
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      setProjectData(workList);
+    }
   }, []);
 
   return (
