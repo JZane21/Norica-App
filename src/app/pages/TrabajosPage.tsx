@@ -108,19 +108,17 @@ export const TrabajosPage = () => {
                   >
                     Volver
                   </button>
-                  <a>
-                    <Link
-                      className="w-max h-max ml-3 mr-3"
-                      to={`/app/home/contacto`}
+                  <Link
+                    className="w-max h-max ml-3 mr-3"
+                    to={`/app/home/contratanos`}
+                  >
+                    <button
+                      className="w-[150px] h-[45px] text-white bg-gray-600 hover:bg-red-700
+            active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11"
                     >
-                      <button
-                        className="w-[150px] h-[45px] text-white bg-gray-600 hover:bg-red-700
-              active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11"
-                      >
-                        Contratanos
-                      </button>
-                    </Link>
-                  </a>
+                      Contratanos
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
