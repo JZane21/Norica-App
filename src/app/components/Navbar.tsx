@@ -52,6 +52,7 @@ const Navbar = ({ width }: Props) => {
               setAskLogOut(false);
               saveDataLS("userLogIn", { auth: false });
               dispatch({ type: types.logout });
+              dispatch({ type: types.clearWorkList, value: [] });
             }}
             actionTwo={() => setAskLogOut(false)}
             title={"¿Cerrar sesión?"}
