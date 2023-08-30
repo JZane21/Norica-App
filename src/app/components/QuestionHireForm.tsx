@@ -13,9 +13,16 @@ interface Props {
     setOnClick: (value: boolean) => void;
   };
   register: UseFormRegister<HireForm>;
+  minDate?: string;
+  maxDate?: string;
 }
 
-export const QuestionHireForm = ({ item, register }: Props) => {
+export const QuestionHireForm = ({
+  item,
+  register,
+  minDate,
+  maxDate,
+}: Props) => {
   const {
     id,
     order,
@@ -40,6 +47,12 @@ export const QuestionHireForm = ({ item, register }: Props) => {
         >
           {order}
         </p>
+        {id === "date" && (
+          <p className="text-slate-400 font-semibold mb-3 w-max m-2">
+            Debe escoger la fecha en el siguiente rango:
+            <br /> {minDate} al {maxDate}
+          </p>
+        )}
         {error && <ErrorMessage message={messsageError} />}
         {id === "email" ? (
           <input

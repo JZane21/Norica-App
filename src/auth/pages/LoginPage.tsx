@@ -54,6 +54,7 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
+    saveDataLS("userLogIn", { auth: false });
     dispatch({ type: types.logout, value: "" });
   }, []);
 
