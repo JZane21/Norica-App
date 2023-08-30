@@ -1,4 +1,3 @@
-import { useLocalStorage } from "../hooks/useLocalStorage";
 import { Action } from "../models/dataReducer";
 
 export const loginTypes = {

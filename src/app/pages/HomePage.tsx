@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import ContactUs from "../components/ContactUs";
 import HireUs from "../components/HireUs";
 import CompanyDescription from "../components/CompanyDescription";
-import BGHomePage from "../../assets/background-home-page.jpeg";
+import BGHomePage from "../../assets/background-home-page.jpeg.jpg";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
