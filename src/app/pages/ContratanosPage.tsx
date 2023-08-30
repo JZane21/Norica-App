@@ -132,7 +132,7 @@ export const ContratanosPage = () => {
   const [findedError, setFindedError] = useState<boolean>(false);
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [wrongInputData, setWrongInputData] = useState<boolean>(false);
-  const [formAlreadySent, setFormAlreadySent] = useState<boolean>(false);
+  const [formAlreadySentToday, setFormAlreadySentToday] = useState<boolean>(false);
 
   const email = watch("email");
   const contactNumber = watch("contactNumber");
@@ -193,6 +193,7 @@ export const ContratanosPage = () => {
       date,
       organizationName,
     } = data;
+    
     if (
       [
         email,
@@ -208,14 +209,14 @@ export const ContratanosPage = () => {
     } else {
       const todayDate = new Date();
       const NEW_DATE: string = setDateToString(todayDate);
-
+  
       const userDataForm = await getFormDate();
-
+  
       if (userDataForm !== null) {
-        if (NEW_DATE === userDataForm?.userFormDate) {
-          setFormAlreadySent(true);
+        if (NEW_DATE === userDataForm.userFormDate) {
+          setFormAlreadySentToday(true);
         } else {
-          await updateEmailFormDate(userDataForm?.id, NEW_DATE);
+          await updateEmailFormDate(userDataForm.id, NEW_DATE);
           if (!findedError) {
             sendEmail();
           }
@@ -344,7 +345,7 @@ export const ContratanosPage = () => {
 
   return (
     <>
-      {(findedError || emailSent || wrongInputData) && (
+      {(findedError || emailSent || wrongInputData || formAlreadySentToday) ? (
         <ModalPage>
           {findedError ? (
             <ModalMessage
@@ -367,9 +368,16 @@ export const ContratanosPage = () => {
               title={"Error en el formulario"}
               message={`Los datos del formulario no se llenaron correctamente`}
             />
-          )}
-        </ModalPage>
-      )}
+          )} : formAlreadySentToday ? (
+            <ModalMessage
+              action={() => setFormAlreadySentToday(false)}
+              title={"Envío Restringido"}
+              message={"Ya has enviado un formulario hoy. Por favor, intenta nuevamente mañana."}
+            />
+            ) : null
+          </ModalPage>
+        ) : null} 
+
       <section className="flex w-full justify-center">
         <form
           ref={form}
@@ -402,5 +410,7 @@ export const ContratanosPage = () => {
         </form>
       </section>
     </>
-  );
-};
+);
+
+
+        
