@@ -14,6 +14,8 @@ import {
   postUserFormDate,
   updateUserFormDate,
 } from "../../firebase/firebase";
+import { ModalConfirmation } from "../../modals/ModalConfirmation";
+import { ModalLoading } from "../../modals/ModalLoading";
 
 export const ContratanosPage = () => {
   const { register, handleSubmit, resetField, setValue, watch } =
@@ -145,6 +147,7 @@ export const ContratanosPage = () => {
     try {
       return await getUserFormDate(email);
     } catch (err) {
+      setLoading(false);
       setFindedError(true);
     }
   };
@@ -153,6 +156,7 @@ export const ContratanosPage = () => {
     try {
       return await postUserFormDate(email, NEW_DATE);
     } catch (err) {
+      setLoading(false);
       setFindedError(true);
     }
   };
@@ -161,6 +165,7 @@ export const ContratanosPage = () => {
     try {
       return await updateUserFormDate(id, newDateForm);
     } catch (err) {
+      setLoading(false);
       setFindedError(true);
     }
   };
@@ -174,15 +179,21 @@ export const ContratanosPage = () => {
         "ofLm4bGwFujNzVYd8"
       )
       .then(() => {
+        setLoading(false);
         setEmailSent(true);
         clearData();
       })
       .catch((err) => {
         if (err) {
+          setLoading(false);
           setFindedError(true);
         }
       });
   };
+
+  const [confirmation, setConfirmation] = useState<boolean>(false);
+  const [dataForm, setDataForm] = useState<FieldValues>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const whenSubmit = async (data: FieldValues) => {
     const {
@@ -193,6 +204,7 @@ export const ContratanosPage = () => {
       date,
       organizationName,
     } = data;
+    setLoading(true);
     if (
       [
         email,
@@ -204,6 +216,7 @@ export const ContratanosPage = () => {
       ].includes("") ||
       dataHireForm.filter((item) => item.error).length !== 0
     ) {
+      setLoading(false);
       setWrongInputData(true);
     } else {
       const todayDate = new Date();
@@ -213,6 +226,7 @@ export const ContratanosPage = () => {
 
       if (userDataForm !== null) {
         if (NEW_DATE === userDataForm?.userFormDate) {
+          setLoading(false);
           setFormAlreadySent(true);
         } else {
           await updateEmailFormDate(userDataForm?.id, NEW_DATE);
@@ -227,6 +241,11 @@ export const ContratanosPage = () => {
         }
       }
     }
+  };
+
+  const confirmSubmit = (data: FieldValues) => {
+    setConfirmation(false);
+    whenSubmit(data);
   };
 
   useEffect(() => {
@@ -344,7 +363,12 @@ export const ContratanosPage = () => {
 
   return (
     <>
-      {(findedError || emailSent || wrongInputData) && (
+      {(findedError ||
+        emailSent ||
+        wrongInputData ||
+        confirmation ||
+        loading ||
+        formAlreadySent) && (
         <ModalPage>
           {findedError ? (
             <ModalMessage
@@ -361,11 +385,28 @@ export const ContratanosPage = () => {
               title={"Solicitud Enviada!"}
               message={"El correo fue enviado exitosamente"}
             />
-          ) : (
+          ) : wrongInputData ? (
             <ModalMessage
               action={() => setWrongInputData(false)}
               title={"Error en el formulario"}
               message={`Los datos del formulario no se llenaron correctamente`}
+            />
+          ) : confirmation ? (
+            <ModalConfirmation
+              actionOne={() => confirmSubmit(dataForm)}
+              actionTwo={() => setConfirmation(false)}
+              title={"¿Confirmar envío?"}
+              message={`Se enviará el formulario para contratar a la empresa.
+              Una vez enviado con éxito, no podrá realizar más envíos de
+              formularios en este día`}
+            />
+          ) : loading ? (
+            <ModalLoading />
+          ) : (
+            <ModalMessage
+              action={() => setFormAlreadySent(false)}
+              title={"Ya realizó un envío"}
+              message={"Solo puede enviar un formulario una vez por día"}
             />
           )}
         </ModalPage>
@@ -373,7 +414,10 @@ export const ContratanosPage = () => {
       <section className="flex w-full justify-center">
         <form
           ref={form}
-          onSubmit={handleSubmit((data) => whenSubmit(data))}
+          onSubmit={handleSubmit((data) => {
+            setConfirmation(true);
+            setDataForm(data);
+          })}
           className="w-[936px] h-max bg-white flex flex-col p-2 rounded-2xl"
         >
           <p className="text-lg font-semibold text-slate-300 text-center mt-3">
