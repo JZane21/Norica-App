@@ -5,8 +5,6 @@ import { ButtonHireForm } from "../components/ButtonHireForm";
 import { useStore } from "../../store/StoreProvider";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { ModalPage } from "../../modals/ModalPage";
-import { ModalMessage } from "../../modals/ModalMessage";
 import { testEmail } from "../../helpers/testerEmail";
 import { setDateToString } from "../../helpers/dateHireForm";
 import {
@@ -14,8 +12,9 @@ import {
   postUserFormDate,
   updateUserFormDate,
 } from "../../firebase/firebase";
-import { ModalConfirmation } from "../../modals/ModalConfirmation";
-import { ModalLoading } from "../../modals/ModalLoading";
+import { MessagesHireForm } from "../components/MessagesHireForm";
+import { questionsArrayHireForm } from "../../helpers/questionsHireForm";
+import { buttonsHireForm } from "../../helpers/buttonsHireForm";
 
 export const ContratanosPage = () => {
   const { register, handleSubmit, resetField, setValue, watch } =
@@ -30,62 +29,20 @@ export const ContratanosPage = () => {
     useState<boolean>(false);
   const [clickDate, setClickDate] = useState<boolean>(false);
 
-  const [dataHireForm, setDataHireForm] = useState([
-    {
-      id: "email",
-      order: "Escriba su email",
-      placeholder: "email",
-      typeInput: "text",
-      error: false,
-      messsageError: "",
-      setOnClick: setClickEmail,
-    },
-    {
-      id: "contactNumber",
-      order: "Escriba su número de teléfono",
-      placeholder: "número teléfono",
-      typeInput: "number",
-      error: false,
-      messsageError: "",
-      setOnClick: setClickContactNumber,
-    },
-    {
-      id: "name",
-      order: "Escriba su nombre",
-      placeholder: "nombre",
-      typeInput: "text",
-      error: false,
-      messsageError: "",
-      setOnClick: setClickName,
-    },
-    {
-      id: "organizationName",
-      order: "Escriba el nombre de su organización/empresa",
-      placeholder: "empresa/organización",
-      typeInput: "text",
-      error: false,
-      messsageError: "",
-      setOnClick: setClickOrganizationName,
-    },
-    {
-      id: "constructionDescription",
-      order: "Escriba una breve descripción del trabajo",
-      placeholder: "descripción",
-      typeInput: "text",
-      error: false,
-      messsageError: "",
-      setOnClick: setClickConstructionDescription,
-    },
-    {
-      id: "date",
-      order: "Seleccione la fecha de inicio de la construcción",
-      placeholder: "dd-MM-YYYY",
-      typeInput: "date",
-      error: false,
-      messsageError: "",
-      setOnClick: setClickDate,
-    },
-  ]);
+  const SETTER_STATES = [
+    setClickEmail,
+    setClickContactNumber,
+    setClickName,
+    setClickOrganizationName,
+    setClickConstructionDescription,
+    setClickDate,
+  ];
+
+  const AUX_QUESTION_ARRAY = [...questionsArrayHireForm];
+  AUX_QUESTION_ARRAY.map((item, index) => {
+    item.setOnClick = SETTER_STATES[index];
+  });
+  const [dataHireForm, setDataHireForm] = useState(AUX_QUESTION_ARRAY);
 
   const clearData = () => {
     dataHireForm.map((item) =>
@@ -103,26 +60,8 @@ export const ContratanosPage = () => {
     );
   };
 
-  const BUTTONS = [
-    {
-      action: () => {},
-      textButton: "Enviar",
-      normalBg: "bg-red-600",
-      hoverBg: "hover:bg-red-500",
-      activeBg: "active:bg-red-700",
-      textColor: "text-white",
-      typeButton: "submit",
-    },
-    {
-      action: () => clearData(),
-      textButton: "Reiniciar",
-      normalBg: "bg-zinc-800",
-      hoverBg: "hover:bg-zinc-700",
-      activeBg: "active:bg-zinc-900",
-      textColor: "text-white",
-      typeButton: "button",
-    },
-  ];
+  const BUTTONS = buttonsHireForm;
+  BUTTONS[1].action = () => clearData();
 
   const { userEmail } = useStore();
 
@@ -293,10 +232,8 @@ export const ContratanosPage = () => {
         formData[2].error = false;
         formData[2].messsageError = "";
       }
-      setDataHireForm(formData);
-    } else {
-      setDataHireForm(formData);
     }
+    setDataHireForm(formData);
   }, [name, clickName]);
 
   useEffect(() => {
@@ -340,15 +277,16 @@ export const ContratanosPage = () => {
 
   useEffect(() => {
     const formData = [...dataHireForm];
+    const todayDate: Date = new Date();
     if (date) {
-      const todayDate: Date = new Date();
       const formDate: Date = new Date(date);
       const differenceDays: number =
         (formDate.getTime() - todayDate.getTime()) / 1000 / 60 / 60 / 24;
-      if (differenceDays < 30) {
+      if (differenceDays < 30 || differenceDays > 90) {
         formData[5].error = true;
         formData[5].messsageError = `* La fecha de inicio de la construcción
-          debe ser al menos 30 días después de la fecha de envío de formulario`;
+          debe ser mínimo 30 y máximo 90 días después de la fecha de envío
+          de formulario`;
       } else {
         formData[5].error = false;
         formData[5].messsageError = "";
@@ -363,54 +301,22 @@ export const ContratanosPage = () => {
 
   return (
     <>
-      {(findedError ||
-        emailSent ||
-        wrongInputData ||
-        confirmation ||
-        loading ||
-        formAlreadySent) && (
-        <ModalPage>
-          {findedError ? (
-            <ModalMessage
-              action={() => setFindedError(false)}
-              title={"Error de envío"}
-              message={`Ocurrió un error inesperado, vuelva a intentarlo más tarde`}
-            />
-          ) : emailSent ? (
-            <ModalMessage
-              action={() => {
-                clearData();
-                setEmailSent(false);
-              }}
-              title={"Solicitud Enviada!"}
-              message={"El correo fue enviado exitosamente"}
-            />
-          ) : wrongInputData ? (
-            <ModalMessage
-              action={() => setWrongInputData(false)}
-              title={"Error en el formulario"}
-              message={`Los datos del formulario no se llenaron correctamente`}
-            />
-          ) : confirmation ? (
-            <ModalConfirmation
-              actionOne={() => confirmSubmit(dataForm)}
-              actionTwo={() => setConfirmation(false)}
-              title={"¿Confirmar envío?"}
-              message={`Se enviará el formulario para contratar a la empresa.
-              Una vez enviado con éxito, no podrá realizar más envíos de
-              formularios en este día`}
-            />
-          ) : loading ? (
-            <ModalLoading />
-          ) : (
-            <ModalMessage
-              action={() => setFormAlreadySent(false)}
-              title={"Ya realizó un envío"}
-              message={"Solo puede enviar un formulario una vez por día"}
-            />
-          )}
-        </ModalPage>
-      )}
+      <MessagesHireForm
+        findedError={findedError}
+        emailSent={emailSent}
+        wrongInputData={wrongInputData}
+        confirmation={confirmation}
+        loading={loading}
+        formAlreadySent={formAlreadySent}
+        setFindedError={setFindedError}
+        clearData={clearData}
+        setEmailSent={setEmailSent}
+        setWrongInputData={setWrongInputData}
+        confirmSubmit={confirmSubmit}
+        setConfirmation={setConfirmation}
+        setFormAlreadySent={setFormAlreadySent}
+        dataForm={dataForm}
+      />
       <section className="flex w-full justify-center">
         <form
           ref={form}
@@ -425,9 +331,31 @@ export const ContratanosPage = () => {
             y El Atlo a nivel Bolivia
           </p>
           <div className="h-max flex flex-wrap justify-around">
-            {dataHireForm.map((item) => (
-              <QuestionHireForm key={item.id} item={item} register={register} />
-            ))}
+            {dataHireForm.map((item) => {
+              if (item.id !== "date") {
+                return (
+                  <QuestionHireForm
+                    key={item.id}
+                    item={item}
+                    register={register}
+                  />
+                );
+              } else {
+                let minDate: Date = new Date();
+                let maxDate: Date = new Date();
+                minDate.setDate(minDate.getDate() + 31);
+                maxDate.setDate(maxDate.getDate() + 90);
+                return (
+                  <QuestionHireForm
+                    key={item.id}
+                    item={item}
+                    register={register}
+                    minDate={setDateToString(minDate)}
+                    maxDate={setDateToString(maxDate)}
+                  />
+                );
+              }
+            })}
           </div>
           <div className="flex flex-row m-1 mt-4">
             {BUTTONS.map((item) => (
