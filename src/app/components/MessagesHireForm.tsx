@@ -4,6 +4,7 @@ import { ModalLoading } from "../../modals/ModalLoading";
 import { ModalMessage } from "../../modals/ModalMessage";
 import { ModalPage } from "../../modals/ModalPage";
 import { BooleanSetter } from "../../helpers/voidSetter";
+import { setDateToString } from "../../helpers/dateHireForm";
 
 interface Props {
   findedError: boolean;
@@ -73,9 +74,18 @@ export const MessagesHireForm = ({
               actionOne={() => confirmSubmit(dataForm)}
               actionTwo={() => setConfirmation(false)}
               title={"¿Confirmar envío?"}
-              message={`Se enviará el formulario para contratar a la empresa.
-              Una vez enviado con éxito, no podrá realizar más envíos de
-              formularios en este día`}
+              message={`Se enviará el formulario con los siguientes datos:\n
+              Email de contacto: ${dataForm.email}\n
+              Numero de contacto: ${dataForm.contactNumber}\n
+              Nombre del contacto: ${dataForm.name}\n
+              Nombre de la organizacion: ${dataForm.organizationName}\n
+              Descripción de la construcción: ${
+                dataForm.constructionDescription
+              }\n
+              Fecha de inicio de la construcción: ${setDateToString(
+                dataForm.date
+              )}
+              `}
             />
           ) : loading ? (
             <ModalLoading />

@@ -16,7 +16,7 @@ export const questionsArrayHireForm = [
     id: "contactNumber",
     order: "Escriba su número de teléfono",
     placeholder: "Número teléfono",
-    typeInput: "number",
+    typeInput: "text",
     error: false,
     messsageError: "",
     setOnClick: CLICK_EVENT,

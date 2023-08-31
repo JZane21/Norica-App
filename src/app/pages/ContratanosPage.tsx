@@ -216,7 +216,8 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (contactNumber) {
-      if (String(contactNumber).length !== 8) {
+      const expression = /^[0-9]{8}$/;
+      if (!expression.test(contactNumber)) {
         formData[1].error = true;
         formData[1].messsageError =
           "* El número telefónico no es valido, debe ser boliviano";
@@ -234,10 +235,23 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (name) {
-      if (name.length < 2 || name.length > 100) {
-        formData[2].error = true;
-        formData[2].messsageError =
-          "* El nombre debe de tener entre 2 - 100 caracteres";
+      const expression =
+        /^(?=.{2,100}$)[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/;
+      if (!expression.test(name)) {
+        const expr1 = /^.{2,100}$/;
+        const expr2 = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s)*$/;
+        if (!expr1.test(name)) {
+          formData[2].error = true;
+          formData[2].messsageError = `* El nombre de la organizacion debe de tener
+          entre 2 - 100 caracteres`;
+        } else if (expr2.test(name)) {
+          formData[2].error = true;
+          formData[2].messsageError = `* El nombre no puede terminar con espacios al final`;
+        } else {
+          formData[2].error = true;
+          formData[2].messsageError = `* El nombre debe estar compuesto por letras del
+            abecedario español, considerando que también puede agregar tildes`;
+        }
       } else {
         formData[2].error = false;
         formData[2].messsageError = "";
@@ -249,10 +263,23 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (organizationName) {
-      if (organizationName.length < 1 || organizationName.length > 100) {
-        formData[3].error = true;
-        formData[3].messsageError = `* El nombre de la organizacion debe de tener
+      const expression =
+        /^(?=.{1,100}$)[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/;
+      if (!expression.test(organizationName)) {
+        const expr1 = /^.{1,100}$/;
+        const expr2 = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s)*$/;
+        if (!expr1.test(organizationName)) {
+          formData[3].error = true;
+          formData[3].messsageError = `* El nombre de la organizacion debe de tener
           entre 1 - 100 caracteres`;
+        } else if (expr2.test(organizationName)) {
+          formData[3].error = true;
+          formData[3].messsageError = `* El nombre no puede terminar con espacios al final`;
+        } else {
+          formData[3].error = true;
+          formData[3].messsageError = `* El nombre debe estar compuesto por letras del
+            abecedario español, considerando que también puede agregar tildes`;
+        }
       } else {
         formData[3].error = false;
         formData[3].messsageError = "";

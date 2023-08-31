@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, sendPasswordResetEmail } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, getFirestore, updateDoc } from "firebase/firestore";
 import { FieldValues } from "react-hook-form";
+import { setDateToString } from "../helpers/dateHireForm";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZq76UZIrjhA1z6OGZuwxqyTOxW3jbk1Y",
@@ -66,8 +67,10 @@ export const getPreviusWorks = async () => {
 };
 
 export const postUserFormDate = async (authEmail:string, dateSubmit:string, data:FieldValues) => {
+  const newObject = {...data, dateSubmit};
+  newObject.date = setDateToString(data.date);
   await addDoc(usersFormsDate,{
-    userForms: [{...data, dateSubmit}],
+    userForms: [newObject],
     userEmail: authEmail,
     userId: auth?.currentUser?.uid,
   });
@@ -76,7 +79,9 @@ export const postUserFormDate = async (authEmail:string, dateSubmit:string, data
 export const updateUserFormDate = async (id:string, authEmail:string, dateSubmit:string, data:FieldValues) => {
   const user = await getUserFormDate(authEmail);
   if(user!==null){
+    const newObject = {...data,dateSubmit};
+    newObject.date = setDateToString(data.date);
     const userForm = doc(db,"users-emails-date",id);
-    await updateDoc(userForm, { userForms:[...user.userForms,{...data,dateSubmit}] });
+    await updateDoc(userForm, { userForms:[...user.userForms,newObject] });
   }
 };
