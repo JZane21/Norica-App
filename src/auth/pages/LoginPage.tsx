@@ -33,6 +33,7 @@ export const LoginPage = () => {
     try {
       const { user } = await signInWithPopup(auth, googleProvider);
       saveDataLS("userLogIn", { auth: true });
+      saveDataLS("userEmail", { userEmail: user.email });
       dispatch({ type: types.login, value: "" });
       dispatch({ type: types.getUserEmail, value: user.email });
       navigate("/app/home");
@@ -45,6 +46,7 @@ export const LoginPage = () => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
       saveDataLS("userLogIn", { auth: true });
+      saveDataLS("userEmail", { userEmail: user.email });
       dispatch({ type: types.login, value: "" });
       dispatch({ type: types.getUserEmail, value: user.email });
       navigate("/app/home");
@@ -55,6 +57,7 @@ export const LoginPage = () => {
 
   useEffect(() => {
     saveDataLS("userLogIn", { auth: false });
+    saveDataLS("userEmail", { userEmail: "" });
     dispatch({ type: types.logout, value: "" });
     dispatch({ type: types.clearWorkList, value: [] });
   }, []);

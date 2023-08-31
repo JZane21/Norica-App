@@ -6,7 +6,7 @@ export const hireFormTypes = {
 };
 
 export const hireFormInitialValues = {
-  userEmail:""
+  userEmail: localStorage.getItem("userEmail")!==null ? JSON.parse(localStorage.getItem("userEmail")).userEmail : ""
 };
 
 export const hireFormReducer = (state:any, action:Action) => {

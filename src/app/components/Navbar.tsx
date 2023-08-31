@@ -51,6 +51,8 @@ const Navbar = ({ width }: Props) => {
             actionOne={() => {
               setAskLogOut(false);
               saveDataLS("userLogIn", { auth: false });
+              saveDataLS("userEmail", { userEmail: "" });
+              dispatch({ type: types.eraseUserEmail, value: "" });
               dispatch({ type: types.logout });
               dispatch({ type: types.clearWorkList, value: [] });
             }}

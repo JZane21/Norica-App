@@ -55,7 +55,9 @@ export const ContratanosPage = () => {
           ? item.id
           : item.id === "contactNumber"
           ? item.id
-          : "constructionDescription"
+          : item.id === "constructionDescription"
+          ? item.id
+          : "date"
       )
     );
   };
@@ -84,25 +86,29 @@ export const ContratanosPage = () => {
 
   const getFormDate = async () => {
     try {
-      return await getUserFormDate(email);
+      return await getUserFormDate(userEmail);
     } catch (err) {
       setLoading(false);
       setFindedError(true);
     }
   };
 
-  const postEmailFormDate = async (email: string, NEW_DATE: string) => {
+  const postEmailFormDate = async (dateSubmit: string, data: FieldValues) => {
     try {
-      return await postUserFormDate(email, NEW_DATE);
+      return await postUserFormDate(userEmail, dateSubmit, data);
     } catch (err) {
       setLoading(false);
       setFindedError(true);
     }
   };
 
-  const updateEmailFormDate = async (id: string, newDateForm: string) => {
+  const updateEmailFormDate = async (
+    id: string,
+    dateSubmit: string,
+    data: FieldValues
+  ) => {
     try {
-      return await updateUserFormDate(id, newDateForm);
+      return await updateUserFormDate(id, userEmail, dateSubmit, data);
     } catch (err) {
       setLoading(false);
       setFindedError(true);
@@ -164,17 +170,20 @@ export const ContratanosPage = () => {
       const userDataForm = await getFormDate();
 
       if (userDataForm !== null) {
-        if (NEW_DATE === userDataForm?.userFormDate) {
+        const existFormDate: [] = userDataForm.userForms.filter(
+          (item) => item.dateSubmit === NEW_DATE
+        );
+        if (existFormDate.length !== 0) {
           setLoading(false);
           setFormAlreadySent(true);
         } else {
-          await updateEmailFormDate(userDataForm?.id, NEW_DATE);
+          await updateEmailFormDate(userDataForm?.id, NEW_DATE, data);
           if (!findedError) {
             sendEmail();
           }
         }
       } else {
-        await postEmailFormDate(email, NEW_DATE);
+        await postEmailFormDate(NEW_DATE, data);
         if (!findedError) {
           sendEmail();
         }
@@ -209,7 +218,8 @@ export const ContratanosPage = () => {
     if (contactNumber) {
       if (String(contactNumber).length !== 8) {
         formData[1].error = true;
-        formData[1].messsageError = "* El número telefónico no es valido";
+        formData[1].messsageError =
+          "* El número telefónico no es valido, debe ser boliviano";
       } else {
         formData[1].error = false;
         formData[1].messsageError = "";
@@ -285,8 +295,7 @@ export const ContratanosPage = () => {
       if (differenceDays < 30 || differenceDays > 90) {
         formData[5].error = true;
         formData[5].messsageError = `* La fecha de inicio de la construcción
-          debe ser mínimo 30 y máximo 90 días después de la fecha de envío
-          de formulario`;
+          debe respetar el rango especificado`;
       } else {
         formData[5].error = false;
         formData[5].messsageError = "";
