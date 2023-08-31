@@ -25,10 +25,10 @@ function HireUs({ width }: Props) {
         ${width >= 467 && "mr-5"}
         flex flex-col items-center`}
       >
-        <p className="mb-3 font-thin">Contrata nuestros servicios</p>
+        
         <button
-          onClick={() => navigate("")}
-          className="buttonStyle bg-primary-600 hover:bg-primary-500
+          onClick={() => navigate("/app/home/contratanos")}
+          className="buttonStyle bg-[#A40000] hover:bg-primary-500
           active:bg-primary-700 text-center"
         >
           Contrátanos

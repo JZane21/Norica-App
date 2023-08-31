@@ -5,6 +5,7 @@ import { HomePage } from "../pages/HomePage";
 import { ContactoPage } from "../pages/ContactoPage";
 import { ProductosPage } from "../pages/ProductosPage";
 import { TrabajosPage } from "../pages/TrabajosPage";
+import { ContratanosPage } from "../pages/ContratanosPage";
 
 export const AppRoutes = () => {
   const { auth } = useStore();
@@ -30,6 +31,7 @@ export const AppRoutes = () => {
             <Route path="contacto" element={<ContactoPage />} />
             <Route path="productos" element={<ProductosPage />} />
             <Route path="trabajos" element={<TrabajosPage />} />
+            <Route path="contratanos" element={<ContratanosPage />} />
           </>
         }
       />

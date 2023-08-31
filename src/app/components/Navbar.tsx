@@ -6,24 +6,23 @@ import { ModalPage } from "../../modals/ModalPage";
 import { ModalConfirmation } from "../../modals/ModalConfirmation";
 import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
+import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 interface Props {
   width: number;
 }
 
 const Navbar = ({ width }: Props) => {
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
-
   const HOME_PATH: string = "/app/home";
 
   const OPTION_LIST: OptionsNavBar[] = [
     {
       option: "Home",
       path: `${HOME_PATH}`,
+    },
+    {
+      option: "Contratanos",
+      path: `${HOME_PATH}/contratanos`,
     },
     {
       option: "Trabajos",
@@ -42,6 +41,8 @@ const Navbar = ({ width }: Props) => {
   const dispatch = useDispatch();
   const [askLogOut, setAskLogOut] = useState<boolean>(false);
 
+  const { saveDataLS } = useLocalStorage();
+
   return (
     <>
       {askLogOut && (
@@ -49,8 +50,11 @@ const Navbar = ({ width }: Props) => {
           <ModalConfirmation
             actionOne={() => {
               setAskLogOut(false);
-              localStorage.setItem("userLogIn", JSON.stringify(false));
+              saveDataLS("userLogIn", { auth: false });
+              saveDataLS("userEmail", { userEmail: "" });
+              dispatch({ type: types.eraseUserEmail, value: "" });
               dispatch({ type: types.logout });
+              dispatch({ type: types.clearWorkList, value: [] });
             }}
             actionTwo={() => setAskLogOut(false)}
             title={"¿Cerrar sesión?"}
@@ -67,38 +71,29 @@ const Navbar = ({ width }: Props) => {
           <button className="ml-5 mr-5 p-1" onClick={() => setAskLogOut(true)}>
             <LogoApp />
           </button>
-          <button
-            className="text-white bg-red-600 hover:bg-red-500
-          active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-md"
-            onClick={toggleSidebar}
-          >
-            ☰ Menu
-          </button>
         </section>
-        {sidebarOpen && (
-          <section
-            className="text-white relative top-0 right-0 bg-transparent
-            flex items-center flex-wrap"
+        <section
+          className="text-black relative top-0 right-0 bg-transparent
+          flex items-center flex-wrap"
+        >
+          <ul
+            className={`text-black flex 
+            ${width < 743 && "mt-5"}
+            ${width > 530 ? "flex-row" : "flex-col"}
+          flex-row flex-wrap w-max texto`}
           >
-            <ul
-              className={`text-white flex 
-              ${width < 743 && "mt-5"}
-              ${width > 530 ? "flex-row" : "flex-col"}
-            flex-row flex-wrap w-max`}
-            >
-              {OPTION_LIST.map((option) => (
-                <OptionNavbar
-                  key={option.option}
-                  option={option.option}
-                  path={option.path}
-                />
-              ))}
-            </ul>
-          </section>
-        )}
+            {OPTION_LIST.map((option) => (
+              <OptionNavbar
+                key={option.option}
+                option={option.option}
+                path={option.path}
+              />
+            ))}
+          </ul>
+        </section>
       </nav>
       <div
-        className="m-1 p-[0.1px] bg-white w-[90%] flex
+        className="m-1 p-[0.1px] bg-[#000] w-[90%] flex
       self-center"
       />
     </>
