@@ -13,9 +13,9 @@ export const SocialNetworkButton = ({
   socialNetworkLink,
 }: Props) => {
   let textColor: string =
-    socialNetworkName === "facebook"
+    socialNetworkName === "Facebook"
       ? "text-blue-600"
-      : socialNetworkName === "instagram"
+      : socialNetworkName === "Instagram"
       ? "text-pink-600"
       : "text-red-600";
 

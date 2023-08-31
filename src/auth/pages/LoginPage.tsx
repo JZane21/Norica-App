@@ -54,7 +54,9 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
+    saveDataLS("userLogIn", { auth: false });
     dispatch({ type: types.logout, value: "" });
+    dispatch({ type: types.clearWorkList, value: [] });
   }, []);
 
   const whensubmit = (data: FieldValues) => {

@@ -3,10 +3,10 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ContactUs from "../components/ContactUs";
 import HireUs from "../components/HireUs";
-import CompanyDescription from "../components/CompanyDescription";
-import BGHomePage from "../../assets/background-home-page.jpeg";
+import BGHomePage from "../../assets/background-home-page.jpeg.jpg";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import CompanyDescription from "../components/CompanyDescription";
 
 export const HomePage: React.FC = () => {
   const { pathname } = useLocation();
@@ -28,7 +28,7 @@ export const HomePage: React.FC = () => {
           background-position: center;
         }
       `}</style>
-      <section className="flex flex-col HomePageBackground">
+      <section className="h-[825px] flex flex-col HomePageBackground">
         <Navbar width={width} />
         <div className="overflow-auto h-full m-3">
           {pathname === "/app/home" ? (
@@ -37,7 +37,7 @@ export const HomePage: React.FC = () => {
               <div
                 className={`flex ${
                   width >= 467 ? "flex-row" : "flex-col"
-                } justify-center items-center flex-wrap mt-8`}
+                }  items-center flex-wrap mt-8`}
               >
                 <HireUs width={width} />
                 <ContactUs width={width} />

@@ -8,8 +8,13 @@ import { getPreviusWorks } from "../../firebase/firebase";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalLoading } from "../../modals/ModalLoading";
 import { ErrorPage } from "./ErrorPage";
+import { useDispatch, useStore } from "../../store/StoreProvider";
+import { types } from "../../store/storeReducer";
 
 export const TrabajosPage = () => {
+  const { workList } = useStore();
+  const dispatch = useDispatch();
+
   const [zoomedIndex, setZoomedIndex] = useState<number | null>(null);
 
   const handleZoomToggle = (index: number) => {
@@ -27,6 +32,7 @@ export const TrabajosPage = () => {
     try {
       const listWorks = await getPreviusWorks();
       setProjectData(listWorks);
+      dispatch({ type: types.setWorkList, value: listWorks });
     } catch (err) {
       setErrorLoading(true);
     }
@@ -35,10 +41,17 @@ export const TrabajosPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getWorks();
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    if (workList.length === 0) {
+      getWorks();
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+      setProjectData(workList);
+    }
   }, []);
 
   return (
@@ -54,7 +67,7 @@ export const TrabajosPage = () => {
         <ErrorPage errorText={"¡Error 404! Vuelva a intentarlo más tarde"} />
       )}
       <section className={`w-full ${loading && "h-[800px]"}`}>
-        <div className=" p-4 h-full w-full bg-white rounded-3xl">
+        <div className=" p-4 h-full w-full bg-gray rounded-3xl">
           <h2 className="p-5 text-5xl font-bold -mb-20 text-black   ">
             Nuestros Trabajos
           </h2>
@@ -102,25 +115,23 @@ export const TrabajosPage = () => {
                   style={{ display: "flex", justifyContent: "space-between" }}
                 >
                   <button
-                    className="w-[150px] h-[45px] text-white bg-red-600 hover:bg-gray-500
+                    className="w-[150px] h-[45px] text-white bg-red-600 hover:bg-black-500
               active:bg-gray-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11"
                     onClick={() => setZoomedIndex(null)}
                   >
                     Volver
                   </button>
-                  <a>
-                    <Link
-                      className="w-max h-max ml-3 mr-3"
-                      to={`/app/home/contacto`}
+                  <Link
+                    className="w-max h-max ml-3 mr-3"
+                    to={`/app/home/contratanos`}
+                  >
+                    <button
+                      className="w-[150px] h-[45px] text-white bg-gray-600 hover:bg-red-700
+            active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11"
                     >
-                      <button
-                        className="w-[150px] h-[45px] text-white bg-gray-600 hover:bg-red-700
-              active:bg-red-700 text-base font-thin p-2 pl-3 pr-3 rounded-xl m-5 ml-11"
-                      >
-                        Contratanos
-                      </button>
-                    </Link>
-                  </a>
+                      Contratanos
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -52,6 +52,7 @@ const Navbar = ({ width }: Props) => {
               setAskLogOut(false);
               saveDataLS("userLogIn", { auth: false });
               dispatch({ type: types.logout });
+              dispatch({ type: types.clearWorkList, value: [] });
             }}
             actionTwo={() => setAskLogOut(false)}
             title={"¿Cerrar sesión?"}
@@ -70,14 +71,15 @@ const Navbar = ({ width }: Props) => {
           </button>
         </section>
         <section
-          className="text-white relative top-0 right-0 bg-transparent
+          className="text-black relative top-0 right-0 bg-transparent
           flex items-center flex-wrap"
         >
           <ul
-            className={`text-white flex 
+            className={`text-black flex 
             ${width < 743 && "mt-5"}
             ${width > 530 ? "flex-row" : "flex-col"}
-          flex-row flex-wrap w-max`}
+          flex-row flex-wrap w-max texto`}
+
           >
             {OPTION_LIST.map((option) => (
               <OptionNavbar
@@ -90,9 +92,24 @@ const Navbar = ({ width }: Props) => {
         </section>
       </nav>
       <div
-        className="m-1 p-[0.1px] bg-white w-[90%] flex
+
+        className="m-1 p-[0.1px] bg-[#000] w-[90%] flex
       self-center"
       />
+
+    
+      <style>
+        {`.texto {
+            background-color: "#000";
+            color: "#FFF";
+            font-family:'Bruno Ace';
+            font-size: "16px";
+            font-style: "normal";
+            font-weight: 400;
+            line-height: "140%";
+       `}
+       
+      </style>
     </>
   );
 };
