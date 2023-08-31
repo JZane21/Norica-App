@@ -51,6 +51,8 @@ const Navbar = ({ width }: Props) => {
             actionOne={() => {
               setAskLogOut(false);
               saveDataLS("userLogIn", { auth: false });
+              saveDataLS("userEmail", { userEmail: "" });
+              dispatch({ type: types.eraseUserEmail, value: "" });
               dispatch({ type: types.logout });
               dispatch({ type: types.clearWorkList, value: [] });
             }}
@@ -71,14 +73,14 @@ const Navbar = ({ width }: Props) => {
           </button>
         </section>
         <section
-          className="text-white relative top-0 right-0 bg-transparent
+          className="text-black relative top-0 right-0 bg-transparent
           flex items-center flex-wrap"
         >
           <ul
-            className={`text-white flex 
+            className={`text-black flex 
             ${width < 743 && "mt-5"}
             ${width > 530 ? "flex-row" : "flex-col"}
-          flex-row flex-wrap w-max`}
+          flex-row flex-wrap w-max texto`}
           >
             {OPTION_LIST.map((option) => (
               <OptionNavbar
@@ -91,7 +93,7 @@ const Navbar = ({ width }: Props) => {
         </section>
       </nav>
       <div
-        className="m-1 p-[0.1px] bg-white w-[90%] flex
+        className="m-1 p-[0.1px] bg-[#000] w-[90%] flex
       self-center"
       />
     </>
