@@ -138,7 +138,6 @@ export const LoginPage = () => {
                   </div>
                 ))}
               </>
-              {/* login with Google */}
               <div
                 className="flex flex-row flex-wrap justify-center
               items-center"

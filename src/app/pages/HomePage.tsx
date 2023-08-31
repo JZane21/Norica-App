@@ -7,6 +7,8 @@ import BGHomePage from "../../assets/background-home-page.jpeg.jpg";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import CompanyDescription from "../components/CompanyDescription";
+import { ModalPage } from "../../modals/ModalPage";
+import { ModalLoading } from "../../modals/ModalLoading";
 
 export const HomePage: React.FC = () => {
   const { pathname } = useLocation();
@@ -19,6 +21,18 @@ export const HomePage: React.FC = () => {
     window.addEventListener("resize", handleResizeWidth);
   }, [window.innerWidth]);
 
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (pathname !== "/app/home") {
+      setLoading(false);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, []);
+
   return (
     <>
       <style>{`
@@ -28,11 +42,16 @@ export const HomePage: React.FC = () => {
           background-position: center;
         }
       `}</style>
-      <section className="h-[825px] flex flex-col HomePageBackground">
+      {loading && (
+        <ModalPage>
+          <ModalLoading />
+        </ModalPage>
+      )}
+      <section className="min-h-[825px] h-full flex flex-col HomePageBackground">
         <Navbar width={width} />
         <div className="overflow-auto h-full m-3">
           {pathname === "/app/home" ? (
-            <main className="p-4 flex flex-col">
+            <main className="p-4 h-full flex flex-col">
               <CompanyDescription />
               <div
                 className={`flex ${

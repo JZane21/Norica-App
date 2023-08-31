@@ -79,7 +79,6 @@ const Navbar = ({ width }: Props) => {
             ${width < 743 && "mt-5"}
             ${width > 530 ? "flex-row" : "flex-col"}
           flex-row flex-wrap w-max texto`}
-
           >
             {OPTION_LIST.map((option) => (
               <OptionNavbar
@@ -92,24 +91,9 @@ const Navbar = ({ width }: Props) => {
         </section>
       </nav>
       <div
-
         className="m-1 p-[0.1px] bg-[#000] w-[90%] flex
       self-center"
       />
-
-    
-      <style>
-        {`.texto {
-            background-color: "#000";
-            color: "#FFF";
-            font-family:'Bruno Ace';
-            font-size: "16px";
-            font-style: "normal";
-            font-weight: 400;
-            line-height: "140%";
-       `}
-       
-      </style>
     </>
   );
 };
