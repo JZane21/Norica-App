@@ -40,7 +40,7 @@ export const QuestionHireForm = ({
 
   return (
     <>
-      <div className="w-96 h-max m-2">
+      <div className="w-96 h-max m-2 ">
         <p
           className="w-max h-5 text-black text-base m-2 mb-4
           font-medium"

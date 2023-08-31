@@ -6,7 +6,7 @@ export const questionsArrayHireForm = [
   {
     id: "email",
     order: "Escriba su email",
-    placeholder: "email",
+    placeholder: "Email",
     typeInput: "text",
     error: false,
     messsageError: "",
@@ -15,7 +15,7 @@ export const questionsArrayHireForm = [
   {
     id: "contactNumber",
     order: "Escriba su número de teléfono",
-    placeholder: "número teléfono",
+    placeholder: "Número teléfono",
     typeInput: "number",
     error: false,
     messsageError: "",
@@ -24,7 +24,7 @@ export const questionsArrayHireForm = [
   {
     id: "name",
     order: "Escriba su nombre",
-    placeholder: "nombre",
+    placeholder: "Nombre",
     typeInput: "text",
     error: false,
     messsageError: "",
@@ -33,7 +33,7 @@ export const questionsArrayHireForm = [
   {
     id: "organizationName",
     order: "Escriba el nombre de su organización/empresa",
-    placeholder: "empresa/organización",
+    placeholder: "Empresa/Organización",
     typeInput: "text",
     error: false,
     messsageError: "",
@@ -42,7 +42,7 @@ export const questionsArrayHireForm = [
   {
     id: "constructionDescription",
     order: "Escriba una breve descripción del trabajo",
-    placeholder: "descripción",
+    placeholder: "Descripción",
     typeInput: "text",
     error: false,
     messsageError: "",
@@ -51,7 +51,7 @@ export const questionsArrayHireForm = [
   {
     id: "date",
     order: "Seleccione la fecha de inicio de la construcción",
-    placeholder: "dd-MM-YYYY",
+    placeholder: "DD-MM-YYYY",
     typeInput: "date",
     error: false,
     messsageError: "",

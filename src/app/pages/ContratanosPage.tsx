@@ -326,9 +326,9 @@ export const ContratanosPage = () => {
           })}
           className="w-[936px] h-max bg-white flex flex-col p-2 rounded-2xl"
         >
-          <p className="text-lg font-semibold text-slate-300 text-center mt-3">
+          <p className="text-lg font-semibold text-black text-center mt-3">
             Los servicios de la empresa operan unicamente en la ciudad de La Paz
-            y El Atlo a nivel Bolivia
+            y El Alto a nivel Bolivia
           </p>
           <div className="h-max flex flex-wrap justify-around">
             {dataHireForm.map((item) => {
