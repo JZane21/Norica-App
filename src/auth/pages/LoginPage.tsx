@@ -1,20 +1,22 @@
 import logoApp from "../../assets/logo-app.svg";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../firebase/firebase";
+import {
+  User,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth } from "../../firebase/firebase";
 import { FieldValues, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
-import { DataInput } from "../components/DataInput";
 import { useEffect, useState } from "react";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalMessage } from "../../modals/ModalMessage";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-
-interface formValues {
-  email: string;
-  password: string;
-}
+import { googleProvider } from "../../firebase/providers";
+import { LOGIN_DATA_QUESTIONS } from "../../data/loginData";
+import { LoginQuestions } from "../components/LoginQuestions";
+import { LoginQuestion, formValues } from "../../models/loginQuestion";
 
 export const LoginPage = () => {
   const {
@@ -24,19 +26,21 @@ export const LoginPage = () => {
   } = useForm<formValues>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [error, setError] = useState<boolean>(false);
-
   const { saveDataLS } = useLocalStorage();
+
+  const endLoginProcess = (user: User) => {
+    saveDataLS("userLogIn", { auth: true });
+    saveDataLS("userEmail", { userEmail: user.email });
+    dispatch({ type: types.login, value: "" });
+    dispatch({ type: types.getUserEmail, value: user.email });
+    navigate("/app/home");
+  };
 
   const signInWithGoogle = async () => {
     try {
       const { user } = await signInWithPopup(auth, googleProvider);
-      saveDataLS("userLogIn", { auth: true });
-      saveDataLS("userEmail", { userEmail: user.email });
-      dispatch({ type: types.login, value: "" });
-      dispatch({ type: types.getUserEmail, value: user.email });
-      navigate("/app/home");
+      endLoginProcess(user);
     } catch (err) {
       setError(true);
     }
@@ -45,11 +49,7 @@ export const LoginPage = () => {
   const signIn = async (email: string, password: string) => {
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-      saveDataLS("userLogIn", { auth: true });
-      saveDataLS("userEmail", { userEmail: user.email });
-      dispatch({ type: types.login, value: "" });
-      dispatch({ type: types.getUserEmail, value: user.email });
-      navigate("/app/home");
+      endLoginProcess(user);
     } catch (err) {
       setError(true);
     }
@@ -67,20 +67,9 @@ export const LoginPage = () => {
     signIn(email, password);
   };
 
-  const LOGIN_DATA = [
-    {
-      order: "Ingrese su email",
-      typeInput: "email",
-      placeHolder: "name@company.com",
-      error: errors.email,
-    },
-    {
-      order: "Ingrese su contraseña",
-      typeInput: "password",
-      placeHolder: "contraseña",
-      error: errors.password,
-    },
-  ];
+  const LOGIN_DATA: LoginQuestion[] = [...LOGIN_DATA_QUESTIONS];
+  LOGIN_DATA[0].error = errors.email;
+  LOGIN_DATA[1].error = errors.password;
 
   return (
     <>
@@ -118,28 +107,7 @@ export const LoginPage = () => {
                 Bienvenido
               </h1>
               <>
-                {LOGIN_DATA.map((item) => (
-                  <div key={item.order}>
-                    <DataInput order={item.order} typeInput={item.typeInput} />
-                    <input
-                      type={item.typeInput}
-                      {...register(
-                        item.typeInput === "email" ? "email" : "password",
-                        { required: true }
-                      )}
-                      id={item.typeInput}
-                      className="bg-gray-50 border border-gray-300
-                      text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600
-                      focus:border-primary-600 block w-full p-2.5
-                      dark:bg-gray-700 dark:border-gray-600
-                      dark:placeholder-gray-400 dark:text-white
-                      dark:focus:ring-blue-500 dark:focus:border-blue-500
-                      outline-none"
-                      placeholder={item.placeHolder}
-                      required={true}
-                    />
-                  </div>
-                ))}
+                <LoginQuestions LOGIN_DATA={LOGIN_DATA} register={register} />
               </>
               <div
                 className="flex flex-row flex-wrap justify-center

@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
-import { getPreviusWorks } from "../../firebase/firebase";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalLoading } from "../../modals/ModalLoading";
 import { ErrorPage } from "./ErrorPage";
 import { useDispatch, useStore } from "../../store/StoreProvider";
 import { types } from "../../store/storeReducer";
+import { getPreviusWorks } from "../../firebase/previusWorks";
 
 export const TrabajosPage = () => {
   const { workList } = useStore();

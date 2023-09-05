@@ -7,14 +7,14 @@ import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { testEmail } from "../../helpers/testerEmail";
 import { setDateToString } from "../../helpers/dateHireForm";
+import { MessagesHireForm } from "../components/MessagesHireForm";
+import { questionsArrayHireForm } from "../../helpers/questionsHireForm";
+import { buttonsHireForm } from "../../helpers/buttonsHireForm";
 import {
   getUserFormDate,
   postUserFormDate,
   updateUserFormDate,
-} from "../../firebase/firebase";
-import { MessagesHireForm } from "../components/MessagesHireForm";
-import { questionsArrayHireForm } from "../../helpers/questionsHireForm";
-import { buttonsHireForm } from "../../helpers/buttonsHireForm";
+} from "../../firebase/usersForms";
 
 export const ContratanosPage = () => {
   const { register, handleSubmit, resetField, setValue, watch } =
