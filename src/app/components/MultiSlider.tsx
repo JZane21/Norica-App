@@ -83,7 +83,7 @@ export default class MultiSlider extends Component<MultiSliderProps> {
             </svg>
           </button>
         </div>
-        <div className="p-8 ">
+        <div className="p-8">
           <Slider ref={(c) => (this.slider = c)} {...settings}>
             {this.props.children}
           </Slider>

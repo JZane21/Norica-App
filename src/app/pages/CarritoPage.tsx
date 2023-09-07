@@ -38,7 +38,7 @@ export const CarritoPage = () => {
       )}
       <>
         {cartProducts.length !== 0 ? (
-          <section className="bg-slate-100 flex flex-wrap m-1 p-2">
+          <section className="flex flex-wrap m-1 p-2">
             {cartProducts.map((item) => (
               <AddedProduct
                 key={item.name + Math.round(Math.random() * 1000000)}

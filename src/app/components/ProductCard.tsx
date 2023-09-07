@@ -16,18 +16,19 @@ export const ProductCard = ({
   const { name, price, quantity, description, imageUrl } = product;
   return (
     <Card
-      className="bg-gray-900 hover:bg-gray-600 rounded-[40px] m-2 mb-3 "
+      className="bg-gray-900 hover:bg-gray-600 rounded-[40px] m-2 mb-3
+      flex flex-col items-center"
       onClick={() => {
         setProductToBuy(product);
         setOpenModal(true);
       }}
     >
       <ImageProduct
-        styles={"w-[90%] h-[200px] rounded-lg"}
+        styles={"w-[250px] h-[250px] rounded-lg"}
         imageUrl={imageUrl || ""}
         name={name}
       />
-      <span className="-mt-10  text-xl  text-white dark:text-white">
+      <span className="text-xl text-white dark:text-white font-medium">
         {price} Bs.
       </span>
     </Card>

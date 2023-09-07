@@ -1,4 +1,3 @@
-
 import { Product } from "../models/productModel";
 import { useState } from "react";
 import { ButtonAddChartSection } from "../app/components/ButtonAddChartSection";
@@ -14,24 +13,27 @@ export const ModalBuyProduct = ({
   setOpenModal,
   addToChart,
 }: Props) => {
-  const {price, quantity, imageUrl, description, name } = product;
+  const { price, quantity, imageUrl, description, name } = product;
 
   const [amount, setAmount] = useState<number>(1);
 
   return (
     <>
-      <div className="w-[50%] bg-white rounded-[40px] shadow-lg p-3 flex flex-col">
+      <div className="w-[50%] bg-white rounded-[40px] shadow-lg p-3 flex flex-col h-max">
         <header className="text-base  m-3">COMPRAR PRODUCTO</header>
-        <div className="flex flex-row m-3">
-          <img className = "w-[60%] rounded-3xl"
+        <div className="flex flex-row m-3 items-center">
+          <img
+            className="w-[250px] h-[250px] rounded-3xl"
             src={imageUrl || ""}
           />
-          <section className="ml-5 flex flex-col">
-            <h2 className="mt-2 font-bold text-3xl mb-1 ">
-              {name}
-            </h2>
-          <h1 className=" mb-5">
-              {description}
+          <section className="ml-5 flex flex-col w-[60%]">
+            <h2 className="font-bold text-3xl mb-3">{name}</h2>
+            <h1 className="mb-2 h-24 w-full overflow-y-auto">
+              {description} Lorem ipsum dolor, sit amet consectetur adipisicing
+              elit. Pariatur amet itaque reprehenderit assumenda veritatis,
+              blanditiis accusantium corrupti voluptatibus voluptas possimus
+              magni non deleniti repudiandae quos excepturi, odit illo nulla
+              quae?
             </h1>
             <ButtonAddChartSection
               setAmount={setAmount}
@@ -43,17 +45,21 @@ export const ModalBuyProduct = ({
             </h5>
           </section>
         </div>
-        <footer className="flex flex-row justify-center m-3">
-        <button
-  className="w-[180px] h-[45px] text-white bg-red-600 hover:bg-black
-active:bg-gray-700 text-base font-thin rounded-xl " onClick={() => addToChart(product, amount)}>
-  Añadir a carrito
-</button>
-<button
-  className="w-[180px] ml-8 h-[45px] text-white bg-gray-600 hover:bg-black
-active:bg-gray-700 text-base font-thin rounded-xl " onClick={() => setOpenModal(false)}>
+        <footer className="flex flex-row justify-center m-2">
+          <button
+            className="w-[180px] h-[45px] text-white bg-red-600 hover:bg-black
+active:bg-gray-700 text-base font-thin rounded-xl "
+            onClick={() => addToChart(product, amount)}
+          >
+            Añadir a carrito
+          </button>
+          <button
+            className="w-[180px] ml-8 h-[45px] text-white bg-gray-600 hover:bg-black
+active:bg-gray-700 text-base font-thin rounded-xl "
+            onClick={() => setOpenModal(false)}
+          >
             Cancelar
-            </button>
+          </button>
         </footer>
       </div>
     </>

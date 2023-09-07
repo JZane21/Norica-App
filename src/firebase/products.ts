@@ -1,5 +1,6 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase";
+import { productInterfaceMaker } from "../interfaces/productInterface";
 
 const products = collection(db,"products");
 
@@ -10,7 +11,13 @@ export const getProducts = async () => {
       ...doc.data(),
       id: doc.id
     }));
-    return filterData ? filterData : null;
+    const productsGotten = [];
+    if(filterData){
+      filterData.map(item => productsGotten.push(productInterfaceMaker(item)));
+      return productsGotten;
+    }else{
+      return null;
+    }
   }catch(err){
     console.error(err);
     return null;
