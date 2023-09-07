@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { useMemo } from "react";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZq76UZIrjhA1z6OGZuwxqyTOxW3jbk1Y",
@@ -12,6 +13,18 @@ const firebaseConfig = {
   measurementId: "G-PL32BPCTG9"
 };
 
-export const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+const gettingApp = () => {
+  return initializeApp(firebaseConfig);
+}
+
+const instanceOfAuth = (app) => {
+  return getAuth(app);
+}
+
+const instanceOfFireStore = (app) => {
+  return getFirestore(app);
+}
+
+export const app = gettingApp();
+export const auth = instanceOfAuth(app);
+export const db = instanceOfFireStore(app);

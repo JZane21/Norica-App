@@ -6,6 +6,7 @@ import { ContactoPage } from "../pages/ContactoPage";
 import { ProductosPage } from "../pages/ProductosPage";
 import { TrabajosPage } from "../pages/TrabajosPage";
 import { ContratanosPage } from "../pages/ContratanosPage";
+import { CarritoPage } from "../pages/CarritoPage";
 
 export const AppRoutes = () => {
   const { auth } = useStore();
@@ -32,6 +33,7 @@ export const AppRoutes = () => {
             <Route path="productos" element={<ProductosPage />} />
             <Route path="trabajos" element={<TrabajosPage />} />
             <Route path="contratanos" element={<ContratanosPage />} />
+            <Route path="carrito" element={<CarritoPage />} />
           </>
         }
       />

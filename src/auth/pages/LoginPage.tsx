@@ -58,8 +58,12 @@ export const LoginPage = () => {
   useEffect(() => {
     saveDataLS("userLogIn", { auth: false });
     saveDataLS("userEmail", { userEmail: "" });
+    saveDataLS("addedProducts", { addedProducts: [] });
     dispatch({ type: types.logout, value: "" });
     dispatch({ type: types.clearWorkList, value: [] });
+    dispatch({ type: types.eraseAddedProducts });
+    dispatch({ type: types.eraseUserEmail, value: "" });
+    dispatch({ type: types.clearProductsList });
   }, []);
 
   const whensubmit = (data: FieldValues) => {

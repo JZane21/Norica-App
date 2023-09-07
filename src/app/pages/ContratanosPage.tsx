@@ -1,7 +1,7 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { QuestionHireForm } from "../components/QuestionHireForm";
 import { HireForm } from "../../models/formHireModel";
-import { ButtonHireForm } from "../components/ButtonHireForm";
+import { CustomButton } from "../components/CustomButton";
 import { useStore } from "../../store/StoreProvider";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
@@ -390,7 +390,7 @@ export const ContratanosPage = () => {
           </div>
           <div className="flex flex-row m-1 mt-4">
             {BUTTONS.map((item) => (
-              <ButtonHireForm
+              <CustomButton
                 key={item.textButton}
                 action={item.action}
                 textButton={item.textButton}
@@ -399,6 +399,8 @@ export const ContratanosPage = () => {
                 activeBg={item.activeBg}
                 textColor={item.textColor}
                 typeButton={item.typeButton}
+                width={"128px"}
+                height={"48px"}
               />
             ))}
           </div>

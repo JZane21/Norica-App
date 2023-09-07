@@ -14,7 +14,7 @@ export const ProductCard = ({
   setProductToBuy,
   setOpenModal,
 }: Props) => {
-  const { name, price, quantity, available, imageUrl } = product;
+  const { name, price, quantity, description, imageUrl } = product;
   return (
     <Card className="w-[325px] h-max">
       <ImageProduct

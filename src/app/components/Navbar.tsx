@@ -36,6 +36,10 @@ const Navbar = ({ width }: Props) => {
       option: "Contacto",
       path: `${HOME_PATH}/contacto`,
     },
+    {
+      option: "Carrito",
+      path: `${HOME_PATH}/carrito`,
+    },
   ];
 
   const dispatch = useDispatch();
@@ -52,9 +56,12 @@ const Navbar = ({ width }: Props) => {
               setAskLogOut(false);
               saveDataLS("userLogIn", { auth: false });
               saveDataLS("userEmail", { userEmail: "" });
+              saveDataLS("addedProducts", { addedProducts: [] });
               dispatch({ type: types.eraseUserEmail, value: "" });
               dispatch({ type: types.logout });
               dispatch({ type: types.clearWorkList, value: [] });
+              dispatch({ type: types.eraseAddedProducts });
+              dispatch({ type: types.clearProductsList });
             }}
             actionTwo={() => setAskLogOut(false)}
             title={"¿Cerrar sesión?"}
