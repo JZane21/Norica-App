@@ -8,17 +8,17 @@ interface Props {
 
 export const ImageProduct = ({ styles, imageUrl, name }: Props) => {
   return (
-    <div className="flex flex-col items-center">
-      <div className="w-full flex justify-center">
+    <div className="flex flex-row ">
+      <h5 className="text-3xl ml-2 mr-2  font-semibold tracking-tight text-white ">
+        <p>{name}</p>
+      </h5>
+      <div className=" mt-2 ">
         <EditableImage
           urlImg={imageUrl}
           styles={styles}
           imageTitle={"product"}
         />
       </div>
-      <h5 className="text-xl font-semibold mt-3 tracking-tight text-gray-900 dark:text-white">
-        <p>{name}</p>
-      </h5>
     </div>
   );
 };
