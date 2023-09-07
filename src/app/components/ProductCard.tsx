@@ -1,5 +1,4 @@
 import { Card } from "flowbite-react";
-import { EditableImage } from "./EditableImage";
 import { Product } from "../../models/productModel";
 import { ImageProduct } from "./ImageProduct";
 
@@ -14,31 +13,21 @@ export const ProductCard = ({
   setProductToBuy,
   setOpenModal,
 }: Props) => {
-  const { name, price, quantity, available, imageUrl } = product;
+  const { name, price, imageUrl } = product;
   return (
-    <Card className="w-[325px] h-max">
+    <Card className="bg-gray-900 hover:bg-gray-600 rounded-[40px] m-2 mb-3 "  onClick={() => {
+      setProductToBuy(product);
+      setOpenModal(true);
+    }}>
       <ImageProduct
-        styles={"w-max h-[300px] rounded-lg"}
+        styles={"w-[90%] h-[200px] rounded-lg"}
         imageUrl={imageUrl || ""}
         name={name}
       />
-      <div className="flex items-center justify-between">
-        <span className="text-3xl font-bold text-gray-900 dark:text-white">
+        <span className="-mt-10  text-xl  text-white dark:text-white">
           {price} Bs.
         </span>
-        <button
-          className="rounded-lg bg-cyan-700 px-5 py-2.5 text-center text-sm font-medium
-          text-white hover:bg-cyan-800 focus:outline-none focus:ring-2
-          focus:ring-cyan-300 dark:bg-cyan-600 dark:hover:bg-cyan-700
-          dark:focus:ring-cyan-800"
-          onClick={() => {
-            setProductToBuy(product);
-            setOpenModal(true);
-          }}
-        >
-          Añadir a Carrito
-        </button>
-      </div>
+       
     </Card>
   );
 };
