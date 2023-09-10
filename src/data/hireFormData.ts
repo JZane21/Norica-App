@@ -1,4 +1,4 @@
-import { BooleanSetter } from "./voidSetter"
+import { BooleanSetter } from "../helpers/voidSetter"
 
 const CLICK_EVENT:BooleanSetter = (param:boolean)=>{};
 

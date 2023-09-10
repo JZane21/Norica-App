@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { auth, passwordReset } from "../../firebase/firebase";
+import { auth } from "../../firebase/firebase";
 import { useNavigate } from "react-router-dom";
 import { fetchSignInMethodsForEmail } from "firebase/auth";
 import { ModalPage } from "../../modals/ModalPage";
 import { ModalMessage } from "../../modals/ModalMessage";
 import { ErrorFinded } from "../../models/errorModel";
+import { passwordReset } from "../../firebase/providers";
 
 export const RecoverPWDPage = () => {
   const [email, setEmail] = useState<string>("");

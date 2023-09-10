@@ -1,20 +1,25 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { QuestionHireForm } from "../components/QuestionHireForm";
 import { HireForm } from "../../models/formHireModel";
-import { ButtonHireForm } from "../components/ButtonHireForm";
+import { CustomButton } from "../components/CustomButton";
 import { useStore } from "../../store/StoreProvider";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { testEmail } from "../../helpers/testerEmail";
 import { setDateToString } from "../../helpers/dateHireForm";
+import { MessagesHireForm } from "../components/MessagesHireForm";
+import { questionsArrayHireForm } from "../../data/hireFormData";
+import { buttonsHireForm } from "../../helpers/buttonsHireForm";
 import {
   getUserFormDate,
   postUserFormDate,
   updateUserFormDate,
-} from "../../firebase/firebase";
-import { MessagesHireForm } from "../components/MessagesHireForm";
-import { questionsArrayHireForm } from "../../helpers/questionsHireForm";
-import { buttonsHireForm } from "../../helpers/buttonsHireForm";
+} from "../../firebase/usersForms";
+import {
+  evaluateLenght,
+  evaluateSpell,
+  evaluateWord,
+} from "../../helpers/validatorExpressionsHireForm";
 
 export const ContratanosPage = () => {
   const { register, handleSubmit, resetField, setValue, watch } =
@@ -166,9 +171,7 @@ export const ContratanosPage = () => {
     } else {
       const todayDate = new Date();
       const NEW_DATE: string = setDateToString(todayDate);
-
       const userDataForm = await getFormDate();
-
       if (userDataForm !== null) {
         const existFormDate: [] = userDataForm.userForms.filter(
           (item) => item.dateSubmit === NEW_DATE
@@ -235,16 +238,12 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (name) {
-      const expression =
-        /^(?=.{2,100}$)[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/;
-      if (!expression.test(name)) {
-        const expr1 = /^.{2,100}$/;
-        const expr2 = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s)*$/;
-        if (!expr1.test(name)) {
+      if (!evaluateWord(2, 100, name)) {
+        if (!evaluateLenght(2, 100, name)) {
           formData[2].error = true;
           formData[2].messsageError = `* El nombre de la organizacion debe de tener
           entre 2 - 100 caracteres`;
-        } else if (expr2.test(name)) {
+        } else if (evaluateSpell(name)) {
           formData[2].error = true;
           formData[2].messsageError = `* El nombre no puede terminar con espacios al final`;
         } else {
@@ -263,16 +262,12 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (organizationName) {
-      const expression =
-        /^(?=.{1,100}$)[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/;
-      if (!expression.test(organizationName)) {
-        const expr1 = /^.{1,100}$/;
-        const expr2 = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s)*$/;
-        if (!expr1.test(organizationName)) {
+      if (!evaluateWord(1, 100, organizationName)) {
+        if (!evaluateLenght(1, 100, organizationName)) {
           formData[3].error = true;
           formData[3].messsageError = `* El nombre de la organizacion debe de tener
           entre 1 - 100 caracteres`;
-        } else if (expr2.test(organizationName)) {
+        } else if (evaluateSpell(organizationName)) {
           formData[3].error = true;
           formData[3].messsageError = `* El nombre no puede terminar con espacios al final`;
         } else {
@@ -395,7 +390,7 @@ export const ContratanosPage = () => {
           </div>
           <div className="flex flex-row m-1 mt-4">
             {BUTTONS.map((item) => (
-              <ButtonHireForm
+              <CustomButton
                 key={item.textButton}
                 action={item.action}
                 textButton={item.textButton}
@@ -404,6 +399,8 @@ export const ContratanosPage = () => {
                 activeBg={item.activeBg}
                 textColor={item.textColor}
                 typeButton={item.typeButton}
+                width={"128px"}
+                height={"48px"}
               />
             ))}
           </div>

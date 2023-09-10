@@ -11,3 +11,11 @@ export interface formValuesRegister {
   password: string;
   confirm_password: string;
 }
+
+export interface REGISTER_QUESTIONS{
+  order:string;
+  typeInput:string;
+  placeHolder:string;
+  htmlFor:string;
+  id:string;
+};
