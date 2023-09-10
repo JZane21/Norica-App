@@ -1,8 +1,8 @@
 export const setDateToString = (date:string | Date):string => {
   const typeOf:string = typeof date;
   if(typeOf.toLowerCase() === "object"){
-    const day = date.getDate().toString().padStart(2, '0'); // Ensure 2-digit day
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month is 0-indexed
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     return `${day}-${month}-${year}`;
   }else{
