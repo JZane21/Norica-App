@@ -1,3 +1,6 @@
+
+  
+
 import { useEffect, useState } from "react";
 import { useDispatch, useStore } from "../../store/StoreProvider";
 import { Product } from "../../models/productModel";
@@ -53,3 +56,4 @@ export const CarritoPage = () => {
     </>
   );
 };
+
