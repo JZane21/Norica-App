@@ -39,7 +39,6 @@ const Navbar = ({ width }: Props) => {
       option: "Contacto",
       path: `${HOME_PATH}/contacto`,
     },
-   
   ];
 
   const dispatch = useDispatch();
@@ -64,8 +63,8 @@ const Navbar = ({ width }: Props) => {
             }}
             actionTwo={() => setAskLogOut(false)}
             title={"¿Cerrar sesión?"}
-            message={`La sesión se cerrará, y tendrá que ingresar
-            por email/contraseña o Google nuevamente`}
+            message={`La sesión se cerrará y perderá todos los productos agregados
+            en el carrito de compras`}
           />
         </ModalPage>
       )}
@@ -106,7 +105,10 @@ const Navbar = ({ width }: Props) => {
               />
             ))}
           </ul>
-          <Link to="/app/home/carrito" style={{ marginLeft: "20px", marginTop: "5px" }}>
+          <Link
+            to="/app/home/carrito"
+            style={{ marginLeft: "20px", marginTop: "5px" }}
+          >
             <img
               src={carritoImage}
               alt="Carrito"
@@ -115,9 +117,9 @@ const Navbar = ({ width }: Props) => {
                 height: "25px",
                 flexShrink: 0,
                 // Agrega propiedades de posición aquí, por ejemplo:
-                 position: "absolute",
-                 top: "5px",
-                 right: "80px",
+                position: "absolute",
+                top: "5px",
+                right: "80px",
               }}
             />
           </Link>
