@@ -1,6 +1,7 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import { productInterfaceMaker } from "../interfaces/productInterface";
+import { Product } from "../models/productModel";
 
 const products = collection(db,"products");
 
@@ -23,3 +24,13 @@ export const getProducts = async () => {
     return null;
   }
 };
+
+export const setProducts = async (product:Product, buyedQuantity:number) => {
+  try{
+    const newProductQuantity:number = product.quantity - buyedQuantity;
+    const productDoc = doc(db, "products", product.id);
+    await updateDoc(productDoc, { quantity:newProductQuantity });
+  }catch(err){
+    console.error(err);
+  }
+}

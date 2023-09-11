@@ -120,6 +120,7 @@ export const ProductosPage = () => {
   // ];
 
   const BASE_PRODUCT: Product = {
+    id: "",
     name: "",
     price: 0,
     quantity: 0,
@@ -152,12 +153,28 @@ export const ProductosPage = () => {
   const addToChat = (product: Product, quantity: number) => {
     setOpenModal(false);
     setProductToBuy(BASE_PRODUCT);
-    const NEW_LIST_ADDED_PRODUCTS: Product[] = [...addedProducts, product];
+
+    const findedAddedProduct: number = addedProducts.findIndex(
+      (item) => item.id === product.id
+    );
+
+    let newListAddedProducts: Product[] = [];
+
+    if (findedAddedProduct === -1) {
+      newListAddedProducts = [
+        ...addedProducts,
+        { ...product, quantityToBeBuyed: quantity },
+      ];
+    } else {
+      newListAddedProducts = [...addedProducts];
+      newListAddedProducts[findedAddedProduct].quantityToBeBuyed = quantity;
+    }
+
     dispatch({
       type: types.setAddedProducts,
-      value: NEW_LIST_ADDED_PRODUCTS,
+      value: newListAddedProducts,
     });
-    saveDataLS("addedProducts", { addedProducts: NEW_LIST_ADDED_PRODUCTS });
+    saveDataLS("addedProducts", { addedProducts: newListAddedProducts });
   };
 
   useEffect(() => {
