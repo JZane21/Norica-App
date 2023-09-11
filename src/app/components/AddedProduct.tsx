@@ -1,7 +1,6 @@
 import { Product } from "../../models/productModel";
 import { useDispatch } from "../../store/StoreProvider";
 import { CustomButton } from "./CustomButton";
-import { ImageProduct } from "./ImageProduct";
 import { types } from "../../store/storeReducer";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { memo, useEffect, useState } from "react";
@@ -67,20 +66,20 @@ export const AddedProduct = memo(
 
     return (
       <section
-        className="flex flex-col bg-slate-400 text-white font-medium rounded-lg shadow-md
-      w-[300px] h-max p-1"
-      >
-        <ImageProduct
-          styles={"w-[150x] h-[150px] rounded-md"}
-          imageUrl={imageUrl || ""}
-          name={name}
-        />
-        <h1 className="text-base font-thin m-1">
-          Cantidad a comprar: {quantityToBuy}
+      className="flex flex-col rounded-[40px] m-3
+    w-[40%] h-max items-center"
+    >
+       <img src={product.imageUrl} className="w-[220px] h-[150px] rounded-[40px]"/>
+       <h1 className="text-2xl font-extrabold -mt-8 bg-white p-1 text-red-700 rounded-full">
+          X{quantityToBuy}
         </h1>
+      <div style={{ display: "flex", justifyContent: "space-between",marginTop:5 }}>
+        <h1 className="text-lg">{product.name}</h1>
+        <h2 className="text-xl font-semibold ml-5">{product.price} Bs.</h2>
+      </div>
         <div className="flex flex-row justify-between flex-wrap m-1">
           <CustomButton
-            textButton={"delete"}
+            textButton={"borrar"}
             normalBg={"bg-red-500"}
             hoverBg={"hover:bg-red-400"}
             activeBg={"active:bg-red-600"}
