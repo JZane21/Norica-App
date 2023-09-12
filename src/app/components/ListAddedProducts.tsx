@@ -10,7 +10,7 @@ interface Props {
 export const ListAddedProducts = memo(
   ({ cartProducts, setCartProducts }: Props) => {
     return (
-      <section className="flex flex-wrap m-1 p-2">
+      <>
         {cartProducts.map((item, index) => (
           <AddedProduct
             key={item.name + Math.round(Math.random() * 1000000)}
@@ -21,7 +21,7 @@ export const ListAddedProducts = memo(
             setCartProducts={setCartProducts}
           />
         ))}
-      </section>
+      </>
     );
   },
   (prevProps, nextProps) => {

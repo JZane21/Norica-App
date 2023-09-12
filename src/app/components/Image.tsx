@@ -8,11 +8,11 @@ export const Image = ({urlImg,widthLogo}:Props) => {
     return (
       <figure className={`
       ${width==="small" ? "w-10 h-10 rounded-full" :
-      "w-[300px] h-[300px] rounded-2xl"} m-2"`}>
+      "w-[300px] h-[300px] rounded-[40px]"} m-2"`}>
         <img src={urlImg}
         className={`
         ${width==="small" ? "w-10 h-10 rounded-full" :
-        "w-[300px] h-[300px] rounded-2xl"}`}
+        "w-[300px] h-[300px] rounded-[40px]"}`}
         alt="logo"/>
       </figure>
     );

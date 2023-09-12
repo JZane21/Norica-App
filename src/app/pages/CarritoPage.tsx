@@ -11,6 +11,7 @@ import { getProducts, setProducts } from "../../firebase/products";
 import { types } from "../../store/storeReducer";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { ModalMessage } from "../../modals/ModalMessage";
+import { BuyForm } from "../components/BuyForm";
 
 export const CarritoPage = () => {
   const dispatch = useDispatch();
@@ -40,14 +41,14 @@ export const CarritoPage = () => {
   }, [confirmation]);
 
   const totalPrice: number = useMemo(() => {
-    if (cartProducts.length !== 0 && confirmation) {
+    if (cartProducts.length !== 0) {
       return cartProducts.reduce((a, b) => {
         return a + b.price * (b.quantityToBeBuyed || 1);
       }, 0);
     } else {
       return 0;
     }
-  }, [confirmation]);
+  }, [confirmation, cartProducts]);
 
   useEffect(() => {
     if (addedProducts.length !== 0) {
@@ -111,34 +112,49 @@ export const CarritoPage = () => {
       )}
       <>
         {cartProducts.length !== 0 ? (
-          <>
-            <h1 className="text-xl font-sans font-semibold">
-              Precio Total: {totalPrice}
-            </h1>
-            <ListAddedProducts
-              cartProducts={cartProducts}
-              setCartProducts={setCartProducts}
-            />
-          </>
+          <div className=" flex flex-wrap  justify-center  ">
+            <section className=" flex flex-row rounded-[40px] h-[650px] bg-neutral-200 w-[80%] ">
+              <section className=" w-[50%] flex flex-wrap max-h-[700px] overflow-auto justify-center bg-neutral-400 rounded-[40px] p-5">
+                <ListAddedProducts
+                  cartProducts={cartProducts}
+                  setCartProducts={setCartProducts}
+                />
+              </section>
+              <section className="w-[50%]">
+                <h1 className="text-3xl font-semibold mt-5 ml-8">
+                  Total: {totalPrice}Bs.
+                </h1>
+                <section className=" ml-8 mt-5 mb-0 p-5 h-[500px] mr-8 bg-white rounded-[40px]">
+                  <h3 className="text-2xl">Formulario</h3>
+                  <form>
+                    <BuyForm />
+                  </form>
+                </section>
+                {cartProducts.length !== 0 && (
+                  <div className="mr-6 flex flex-row justify-end mb-5">
+                    <CustomButton
+                      textButton={"Comprar"}
+                      normalBg={"bg-red-600 "}
+                      hoverBg={"hover:bg-black"}
+                      activeBg={"active:bg-gray-700"}
+                      textColor={"text-white"}
+                      typeButton={"button"}
+                      width={"150px"}
+                      height={"45px"}
+                      action={() => {
+                        setConfirmation(true);
+                      }}
+                    />
+                  </div>
+                )}
+              </section>
+            </section>
+          </div>
         ) : (
           <EmptyCartPage />
         )}
       </>
-      {cartProducts.length !== 0 && (
-        <CustomButton
-          textButton={"Comprar"}
-          normalBg={"bg-sky-500"}
-          hoverBg={"hover:bg-sky-400"}
-          activeBg={"active:bg-sky-600"}
-          textColor={"text-white"}
-          typeButton={"button"}
-          width={"100px"}
-          height={"25px"}
-          action={() => {
-            setConfirmation(true);
-          }}
-        />
-      )}
+      \
     </>
   );
 };

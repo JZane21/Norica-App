@@ -73,7 +73,7 @@ export const TrabajosPage = () => {
       <WorksPageMessages loading={loading} errorLoading={errorLoading} />
       <section className={`w-full ${loading && "h-[800px]"}`}>
         <div className=" p-4 h-full w-full bg-gray rounded-3xl">
-          <h2 className="p-5 text-5xl font-bold -mb-20 text-black   ">
+          <h2 className="p-5 texto text-5xl font-bold -mb-20 text-black   ">
             Nuestros Trabajos
           </h2>
 
@@ -92,8 +92,8 @@ export const TrabajosPage = () => {
             ))}
           </SimpleSlider>
           {zoomedIndex !== null && (
-            <div className="z-10 fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-90 backdrop-blur ">
-              <div className=" p-4 h-[95%] w-[90%] bg-white rounded-2xl flex flex-col ">
+            <div className="z-10 fixed inset-0 flex justify-center items-center bg-black bg-opacity-80 backdrop-blur ">
+              <div className=" h-[95%] w-[90%] bg-white rounded-[40px]  flex flex-col ">
                 <WorkInformation listProjectData={listProjectData} />
                 <WorksPageButtonSection setZoomedIndex={setZoomedIndex} />
               </div>
