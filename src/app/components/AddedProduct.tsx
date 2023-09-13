@@ -73,11 +73,11 @@ export const AddedProduct = memo(
        <h1 className="text-2xl font-extrabold -mt-8 bg-white p-1 text-red-700 rounded-full">
           X{quantityToBuy}
         </h1>
-      <div style={{ display: "flex", justifyContent: "space-between",marginTop:5 }}>
-        <h1 className="text-lg">{product.name}</h1>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h1 className="text-xl font-medium">{product.name}</h1>
         <h2 className="text-xl font-semibold ml-5">{product.price} Bs.</h2>
       </div>
-        <div className="flex flex-row justify-between flex-wrap m-1">
+        <div className="flex flex-row justify-between flex-wrap ">
           <CustomButton
             textButton={"borrar"}
             normalBg={"bg-red-500"}
@@ -86,7 +86,7 @@ export const AddedProduct = memo(
             textColor={"text-white"}
             typeButton={"button"}
             width={"48px"}
-            height={"25px"}
+            height={"30px"}
             action={deleteProduct}
           />
           <CustomButton
@@ -97,7 +97,7 @@ export const AddedProduct = memo(
             textColor={"text-white"}
             typeButton={"button"}
             width={"48px"}
-            height={"25px"}
+            height={"30px"}
             action={reduceQuantity}
           />
           <CustomButton
@@ -108,7 +108,7 @@ export const AddedProduct = memo(
             textColor={"text-white"}
             typeButton={"button"}
             width={"48px"}
-            height={"25px"}
+            height={"30px"}
             action={increaseQuantity}
           />
         </div>

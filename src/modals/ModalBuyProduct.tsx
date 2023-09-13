@@ -16,21 +16,16 @@ export const ModalBuyProduct = ({
 }: Props) => {
   const { id, price, quantity, imageUrl, description, name } = product;
 
-  const [amount, setAmount] = useState<number>(1);
-
   const { addedProducts } = useStore();
 
-  const verifyIfExists = () => {
-    const findedAddedProduct: Product = addedProducts.find(
-      (item) => item.id === id
-    );
-    if (findedAddedProduct !== undefined) {
-      setAmount(findedAddedProduct.quantityToBeBuyed || 1);
-    }
-  };
+  const findedAddedProduct = addedProducts.find((item) => item.id === id);
+  
+  const initialAmount = findedAddedProduct ? 1 : 1;
+  
+  const [amount, setAmount] = useState<number>(initialAmount);
+
 
   useEffect(() => {
-    verifyIfExists();
   }, []);
 
   return (

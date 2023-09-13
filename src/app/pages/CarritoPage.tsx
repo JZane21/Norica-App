@@ -11,7 +11,7 @@ import { getProducts, setProducts } from "../../firebase/products";
 import { types } from "../../store/storeReducer";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { ModalMessage } from "../../modals/ModalMessage";
-import { BuyForm } from "../components/buyForm";
+import { BuyForm } from "../components/BuyForm";
 
 export const CarritoPage = () => {
   const dispatch = useDispatch();
@@ -112,11 +112,14 @@ export const CarritoPage = () => {
       )}
       <>
         {cartProducts.length !== 0 ? (
-
-           
-           <div className=" flex flex-wrap  justify-center  "  >
-           <section className=" flex flex-row rounded-[40px] h-[650px] bg-neutral-200 w-[80%] " >
-             <section className =" w-[50%] flex flex-wrap max-h-[700px] overflow-auto justify-center bg-neutral-400 rounded-[40px] p-5">
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row w-[75%] m-4"> 
+            <h2 className=" texto text-2xl font-bold  text-black   ">
+            Carrito
+          </h2></div>
+           <div className=" flex flex-wrap w-[90%] justify-center  "  >
+           <section className=" flex flex-row rounded-[40px] h-[650px] bg-neutral-200 w-[90%] " >
+             <section className =" w-[50%] flex flex-wrap max-h-[700px] overflow-auto justify-center bg-neutral-500 rounded-[40px] p-5">
              <ListAddedProducts
               cartProducts={cartProducts}
               setCartProducts={setCartProducts}
@@ -152,6 +155,7 @@ export const CarritoPage = () => {
            </section>
            </section>
            </div>
+          </div>
         ) : (
           <EmptyCartPage />
         )}

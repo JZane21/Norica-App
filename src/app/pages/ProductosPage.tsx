@@ -10,6 +10,8 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { getProducts } from "../../firebase/products";
 import { ErrorPage } from "./ErrorPage";
 import MultiSlider from "../components/MultiSlider";
+import { EmptyStorePage } from "./EmptyStorePage";
+import { ModalMessage } from "../../modals/ModalMessage";
 
 export const ProductosPage = () => {
   const { addedProducts } = useStore();
@@ -19,105 +21,6 @@ export const ProductosPage = () => {
 
   const { saveDataLS } = useLocalStorage();
 
-  // const PRODUCTS_DATA = [
-  //   {
-  //     name: "producto 1",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description:
-  //       "descripcionhjrne  ijgbwibgfiebwdihgvbhi edhfebfgihgihgh bwihdbhisdbvifshd bvidsbivjb iuwreiugwrig buiwfuhewiufh iuuifegwifugbwuif sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 2",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 3",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 4",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 5",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 6",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 7",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 8",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 9",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 10",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 11",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 12",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  // ];
 
   const BASE_PRODUCT: Product = {
     id: "",
@@ -135,6 +38,7 @@ export const ProductosPage = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const [errorFinded, setErrorFinded] = useState<boolean>(false);
+  const [snoStock, setNoStock] = useState<boolean>(false);
 
   const setProducts = async () => {
     try {
@@ -158,15 +62,22 @@ export const ProductosPage = () => {
       (item) => item.id === product.id
     );
 
-    let newListAddedProducts: Product[] = [];
+    let newListAddedProducts: Product[] = [...addedProducts];
 
     if (findedAddedProduct === -1) {
-      newListAddedProducts = [
-        ...addedProducts,
-        { ...product, quantityToBeBuyed: quantity },
-      ];
+      newListAddedProducts.push({
+        ...product,
+        quantityToBeBuyed: quantity,
+      });
+    } else if (newListAddedProducts[findedAddedProduct].quantityToBeBuyed !== undefined) {
+      const existingProduct = newListAddedProducts[findedAddedProduct];
+      const newQuantity = existingProduct.quantityToBeBuyed + quantity;
+
+      if (newQuantity > product.quantity) {
+        return;
+      } else{newListAddedProducts[findedAddedProduct].quantityToBeBuyed += quantity;}
     } else {
-      newListAddedProducts = [...addedProducts];
+      // If the product is already in the cart but quantityToBeBuyed is undefined, set it to the specified quantity
       newListAddedProducts[findedAddedProduct].quantityToBeBuyed = quantity;
     }
 
@@ -191,6 +102,10 @@ export const ProductosPage = () => {
     }
   }, []);
 
+  
+  const numProductsToShow = productsList.filter((item) => item.quantity !== 0)
+  .length
+
   return (
     <>
       {(openModal || loading || errorFinded) && (
@@ -212,10 +127,12 @@ export const ProductosPage = () => {
           </>
         </ModalPage>
       )}
+      <>
+      {numProductsToShow !==0 ?(
       <div className=" p-5">
-        <MultiSlider>
+        <MultiSlider numItems={numProductsToShow}> 
           {productsList.map((item) => {
-            if (item.quantity !== 0) {
+            if (item.quantity !==0) {
               return (
                 <ProductCard
                   key={item.id}
@@ -227,7 +144,12 @@ export const ProductosPage = () => {
             }
           })}
         </MultiSlider>
+        
       </div>
+      ):(
+        <EmptyStorePage/>
+      )}
+      </>
     </>
   );
 };
