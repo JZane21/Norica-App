@@ -104,7 +104,9 @@ const Navbar = ({ width }: Props) => {
                   marginRight: "20px",
                 }}
               />
+              
             ))}
+           
           </ul>
           <Link to="/app/home/carrito" style={{ marginLeft: "20px", marginTop: "5px" }}>
             <img
@@ -128,6 +130,7 @@ const Navbar = ({ width }: Props) => {
       self-center"
       />
     </>
+    
   );
 };
 
