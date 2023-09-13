@@ -31,7 +31,7 @@ function CompanyDescription({width}:Props) {
        <div/>
       </div>
       </div>
-     <EditableImage urlImg={"https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} styles={"  w-1/2 h-[347px] rounded-[24px]"} imageTitle={""}/>
+     <EditableImage urlImg={"https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} styles={"  w-[579px] h-[347px] rounded-[24px]"} imageTitle={""}/>
      
     </div>
     <div className="flex flex-row gap-12 items-start">
@@ -58,7 +58,8 @@ function CompanyDescription({width}:Props) {
               <br />
               <br />
             </div>
-            <div className="bg-[#767272] mix-blend-difference relative mr-4 h-[347px] shrink-0 rounded-[24px]" />
+            <EditableImage urlImg={"https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} styles={"   w-[579px] 100 h-[347px] rounded-[24px]"} imageTitle={""}/>
+
           </div>
         </div>
         <div className="relative flex flex-col justify-end mr-1 pt-16 items-start">
@@ -110,7 +111,8 @@ function CompanyDescription({width}:Props) {
             <br />
             <br />
           </div>
-          <div className="bg-[#767272] mix-blend-difference relative mr-5 h-[347px] shrink-0 rounded-[24px]" />
+          <EditableImage urlImg={"https://images.pexels.com/photos/448828/pexels-photo-448828.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} styles={"  w-[579px] h-[347px] rounded-[24px]"} imageTitle={""}/>
+
         </div>
       </div>
     </div>
