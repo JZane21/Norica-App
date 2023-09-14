@@ -10,6 +10,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { getProducts } from "../../firebase/products";
 import { ErrorPage } from "./ErrorPage";
 import MultiSlider from "../components/MultiSlider";
+import { EmptyStorePage } from "./EmptyStorePage";
 
 export const ProductosPage = () => {
   const { addedProducts } = useStore();
@@ -58,15 +59,25 @@ export const ProductosPage = () => {
       (item) => item.id === product.id
     );
 
-    let newListAddedProducts: Product[] = [];
+    let newListAddedProducts: Product[] = [...addedProducts];
 
     if (findedAddedProduct === -1) {
-      newListAddedProducts = [
-        ...addedProducts,
-        { ...product, quantityToBeBuyed: quantity },
-      ];
+      newListAddedProducts.push({
+        ...product,
+        quantityToBeBuyed: quantity,
+      });
+    } else if (
+      newListAddedProducts[findedAddedProduct].quantityToBeBuyed !== undefined
+    ) {
+      const newQuantity = quantity;
+
+      if (newQuantity > product.quantity) {
+        return;
+      } else {
+        newListAddedProducts[findedAddedProduct].quantityToBeBuyed = quantity;
+      }
     } else {
-      newListAddedProducts = [...addedProducts];
+      // If the product is already in the cart but quantityToBeBuyed is undefined, set it to the specified quantity
       newListAddedProducts[findedAddedProduct].quantityToBeBuyed = quantity;
     }
 
@@ -91,6 +102,10 @@ export const ProductosPage = () => {
     }
   }, []);
 
+  const numProductsToShow = productsList.filter(
+    (item) => item.quantity !== 0
+  ).length;
+
   return (
     <>
       {(openModal || loading || errorFinded) && (
@@ -112,22 +127,28 @@ export const ProductosPage = () => {
           </>
         </ModalPage>
       )}
-      <div className=" p-5">
-        <MultiSlider>
-          {productsList.map((item) => {
-            if (item.quantity !== 0) {
-              return (
-                <ProductCard
-                  key={item.id}
-                  product={item}
-                  setProductToBuy={setProductToBuy}
-                  setOpenModal={setOpenModal}
-                />
-              );
-            }
-          })}
-        </MultiSlider>
-      </div>
+      <>
+        {numProductsToShow !== 0 ? (
+          <div className=" p-5">
+            <MultiSlider numItems={numProductsToShow}>
+              {productsList.map((item) => {
+                if (item.quantity !== 0) {
+                  return (
+                    <ProductCard
+                      key={item.id}
+                      product={item}
+                      setProductToBuy={setProductToBuy}
+                      setOpenModal={setOpenModal}
+                    />
+                  );
+                }
+              })}
+            </MultiSlider>
+          </div>
+        ) : (
+          <EmptyStorePage />
+        )}
+      </>
     </>
   );
 };

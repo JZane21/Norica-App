@@ -74,7 +74,7 @@ export const AddedProduct = memo(
             textColor={"text-white"}
             typeButton={"button"}
             width={"48px"}
-            height={"25px"}
+            height={"30px"}
             action={deleteProduct}
           />
           <AmountButton

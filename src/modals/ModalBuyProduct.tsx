@@ -16,8 +16,6 @@ export const ModalBuyProduct = ({
 }: Props) => {
   const { id, price, quantity, imageUrl, description, name } = product;
 
-  const [amount, setAmount] = useState<number>(1);
-
   const { addedProducts } = useStore();
 
   const verifyIfExists = () => {
@@ -28,6 +26,8 @@ export const ModalBuyProduct = ({
       setAmount(findedAddedProduct.quantityToBeBuyed || 1);
     }
   };
+
+  const [amount, setAmount] = useState<number>(1);
 
   useEffect(() => {
     verifyIfExists();
