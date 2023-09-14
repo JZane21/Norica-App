@@ -54,10 +54,8 @@ export const HomePage: React.FC = () => {
               <div
                 className={`flex ${
                   width >= 467 ? "flex-row" : "flex-col"
-                }  items-center flex-wrap mt-8`}
-              >
-                
-              </div>
+                }  items-center flex-wrap mt-10`}
+              ></div>
             </main>
           ) : (
             <Outlet />

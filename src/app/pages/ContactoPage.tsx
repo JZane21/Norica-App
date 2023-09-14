@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ModalLoading } from "../../modals/ModalLoading";
 import { ModalPage } from "../../modals/ModalPage";
+import { EditableImage } from "../components/EditableImage";
 
 const ContactoPage = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -18,23 +19,23 @@ const ContactoPage = () => {
           <ModalLoading />
         </ModalPage>
       )}
-      <div className="flex flex-col gap-14 w-full items-start" id="RootRoot">
-        <div
-          className="text-6xl font-['Bruno_Ace'] leading-[50px] ml-40"
+      <div className="flex flex-col w-full items-center" id="RootRoot">
+        <h1
+          className="text-6xl font-['Bruno_Ace'] leading-[50px] mb-10"
           id="Element7"
         >
           Comunicate con{" "}
-          <div
+          <span
             className=" text-right text-[#a40000]  contents content-center"
             id="Element5 text-1/2xl "
           >
             nosotros
-          </div>
+          </span>
           <div className="contents" id="Element6">
             {" "}
           </div>
-        </div>
-        <div className="self-stretch flex flex-row gap-12 items-start">
+        </h1>
+        <div className="self-stretch flex flex-row justify-around items-center">
           <div className="self-end flex flex-col gap-20 items-start">
             <div
               className=" text-1/2xl font-['Bruno_Ace'] leading-[25px] text-[#a40000] ml-1"
@@ -79,10 +80,10 @@ const ContactoPage = () => {
               </div>
             </div>
           </div>
-          <img
-            src="https://file.rendit.io/n/1cXR8kuXm4PX81Aj6s6W.png"
-            className="mb-4"
-            id="S"
+          <EditableImage
+            urlImg={"https://file.rendit.io/n/1cXR8kuXm4PX81Aj6s6W.png"}
+            styles={"rounded-lg shadow-md"}
+            imageTitle={""}
           />
         </div>
       </div>
