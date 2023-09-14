@@ -170,7 +170,10 @@ export const CarritoPage = () => {
             </div>
             <div className=" flex flex-wrap w-[90%] justify-center  ">
               <section className=" flex flex-row rounded-[40px] h-[650px] bg-neutral-200 w-[90%] ">
-                <section className=" w-[50%] flex flex-wrap max-h-[700px] overflow-auto justify-center bg-neutral-500 rounded-[40px] p-5">
+                <section
+                  className=" w-[50%] flex flex-wrap max-h-[700px] overflow-auto justify-center bg-neutral-500
+                rounded-tl-[40px] rounded-bl-[40px] p-5"
+                >
                   <ListAddedProducts
                     cartProducts={cartProducts}
                     setCartProducts={setCartProducts}
