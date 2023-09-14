@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { GuardRoute } from "../../guards/GuardRoute";
 import { useStore } from "../../store/StoreProvider";
 import { HomePage } from "../pages/HomePage";
-import { ContactoPage } from "../pages/ContactoPage";
+import ContactoPage from "../pages/ContactoPage";
 import { ProductosPage } from "../pages/ProductosPage";
 import { TrabajosPage } from "../pages/TrabajosPage";
 import { ContratanosPage } from "../pages/ContratanosPage";

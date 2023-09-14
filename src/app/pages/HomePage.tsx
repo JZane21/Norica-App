@@ -1,8 +1,6 @@
 // src/app/pages/HomePage.tsx
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ContactUs from "../components/ContactUs";
-import HireUs from "../components/HireUs";
 import BGHomePage from "../../assets/background-home-page.jpeg.jpg";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
@@ -51,15 +49,14 @@ export const HomePage: React.FC = () => {
         <Navbar width={width} />
         <div className="overflow-auto h-full m-3">
           {pathname === "/app/home" ? (
-            <main className="p-4 h-full flex flex-col">
-              <CompanyDescription />
+            <main className="p-4 h-[550px] flex flex-col overflow-y-auto">
+              <CompanyDescription width={width} />
               <div
                 className={`flex ${
                   width >= 467 ? "flex-row" : "flex-col"
                 }  items-center flex-wrap mt-8`}
               >
-                <HireUs width={width} />
-                <ContactUs width={width} />
+                
               </div>
             </main>
           ) : (

@@ -102,7 +102,9 @@ const Navbar = ({ width }: Props) => {
                   marginRight: "20px",
                 }}
               />
+              
             ))}
+           
           </ul>
           <Link
             to="/app/home/carrito"
@@ -129,6 +131,7 @@ const Navbar = ({ width }: Props) => {
       self-center"
       />
     </>
+    
   );
 };
 
