@@ -132,7 +132,12 @@ export const ProductosPage = () => {
           <div className=" p-5">
             <MultiSlider numItems={numProductsToShow}>
               {productsList.map((item) => {
-                if (item.quantity !== 0) {
+                if (
+                  item.quantity !== 0 &&
+                  item.quantity !== NaN &&
+                  item.quantity !== undefined &&
+                  item.quantity !== null
+                ) {
                   return (
                     <ProductCard
                       key={item.id}

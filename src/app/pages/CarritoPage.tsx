@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { BaseSyntheticEvent, useEffect, useMemo, useState } from "react";
 import { useDispatch, useStore } from "../../store/StoreProvider";
 import { Product } from "../../models/productModel";
 import { EmptyCartPage } from "./EmptyCartPage";
@@ -8,7 +8,12 @@ import { getProducts, setProducts } from "../../firebase/products";
 import { types } from "../../store/storeReducer";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { BuyForm } from "../components/BuyForm";
-import { FieldValues, useForm } from "react-hook-form";
+import {
+  FieldValues,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import { BuyFormInterface } from "../../models/buyForm";
 import { setDateToString } from "../../helpers/dateHireForm";
 import {
@@ -83,7 +88,8 @@ export const CarritoPage = () => {
     try {
       for (let index = 0; index < cartProducts.length; index++) {
         await setProducts(
-          cartProducts[index],
+          cartProducts[index].id,
+          cartProducts[index].quantity,
           cartProducts[index].quantityToBeBuyed || 1
         );
       }
@@ -108,10 +114,20 @@ export const CarritoPage = () => {
       const todayDate = new Date();
       const NEW_DATE: string = setDateToString(todayDate);
       const userProductsListData = await getUserProductList(userEmail);
-      const productsToSent = [...cartProducts];
-      productsToSent.map((item) => {
-        delete item.quantity;
-      });
+      const productsToSent = [
+        ...cartProducts.map((item) => {
+          const { description, id, name, imageUrl, price, quantityToBeBuyed } =
+            item;
+          return {
+            id: id,
+            description: description,
+            name: name,
+            imageUrl: imageUrl,
+            price: price,
+            quantityToBeBuyed: quantityToBeBuyed,
+          };
+        }),
+      ];
       if (userProductsListData !== null) {
         await updateUserProductsList(
           userProductsListData?.id,
@@ -142,6 +158,18 @@ export const CarritoPage = () => {
   const confirmSubmit = (data: FieldValues) => {
     setConfirmation(false);
     whenSubmit(data);
+  };
+
+  const sendingForm = (data: FieldValues) => {
+    if (
+      ![name, email, address, contactNumber, nit].includes("") &&
+      !findedError
+    ) {
+      setConfirmation(true);
+      setDataForm(data);
+    } else {
+      console.log("hola error");
+    }
   };
 
   return (
@@ -184,42 +212,22 @@ export const CarritoPage = () => {
                     Total: {totalPrice}Bs.
                   </h1>
                   <section className=" ml-8 mt-5 mb-0 p-5 h-max mr-8 bg-white rounded-[40px]">
-                    <form
-                      onSubmit={handleSubmit((data) => {
-                        setConfirmation(true);
-                        setDataForm(data);
-                      })}
-                    >
-                      <h3 className="text-2xl m-2 font-medium">Formulario</h3>
-                      <BuyForm
-                        setFindedError={setFindedError}
-                        register={register}
-                        setValue={setValue}
-                        name={name}
-                        email={email}
-                        address={address}
-                        contactNumber={contactNumber}
-                        nit={nit}
-                      />
-                    </form>
+                    <BuyForm
+                      setFindedError={setFindedError}
+                      register={register}
+                      setValue={setValue}
+                      name={name}
+                      email={email}
+                      address={address}
+                      contactNumber={contactNumber}
+                      nit={nit}
+                      handleSubmit={handleSubmit}
+                      sendingForm={sendingForm}
+                      cartProducts={cartProducts}
+                      findedError={findedError}
+                      setConfirmation={setConfirmation}
+                    />
                   </section>
-                  {cartProducts.length !== 0 && !findedError && (
-                    <div className="mr-6 flex flex-row justify-end mb-5">
-                      <CustomButton
-                        textButton={"Comprar"}
-                        normalBg={"bg-red-600 "}
-                        hoverBg={"hover:bg-black"}
-                        activeBg={"active:bg-gray-700"}
-                        textColor={"text-white"}
-                        typeButton={"submit"}
-                        width={"150px"}
-                        height={"45px"}
-                        action={() => {
-                          setConfirmation(true);
-                        }}
-                      />
-                    </div>
-                  )}
                 </section>
               </section>
             </div>
