@@ -16,10 +16,12 @@ import {
   updateUserFormDate,
 } from "../../firebase/usersForms";
 import {
+  descriptionValidator,
+  evaluateJustLetters,
   evaluateLenght,
   evaluateSpell,
-  evaluateWord,
 } from "../../helpers/validatorExpressionsHireForm";
+import { validateNumber } from "../../helpers/numberValidator";
 
 export const ContratanosPage = () => {
   const { register, handleSubmit, resetField, setValue, watch } =
@@ -219,8 +221,7 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (contactNumber) {
-      const expression = /^[0-9]{8}$/;
-      if (!expression.test(contactNumber)) {
+      if (!validateNumber(contactNumber, 8)) {
         formData[1].error = true;
         formData[1].messsageError =
           "* El número telefónico no es valido, debe ser boliviano";
@@ -238,19 +239,26 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (name) {
-      if (!evaluateWord(2, 100, name)) {
+      if (
+        !evaluateLenght(2, 100, name) ||
+        !evaluateJustLetters(name) ||
+        !evaluateSpell(name)
+      ) {
+        let auxErrorState: boolean = true;
+        let textError: string = "";
         if (!evaluateLenght(2, 100, name)) {
-          formData[2].error = true;
-          formData[2].messsageError = `* El nombre de la organizacion debe de tener
+          textError = `* El nombre del contacto debe de tener
           entre 2 - 100 caracteres`;
-        } else if (evaluateSpell(name)) {
-          formData[2].error = true;
-          formData[2].messsageError = `* El nombre no puede terminar con espacios al final`;
-        } else {
-          formData[2].error = true;
-          formData[2].messsageError = `* El nombre debe estar compuesto por letras del
+        }
+        if (!evaluateJustLetters(name)) {
+          textError = `* El nombre debe estar compuesto por letras del
             abecedario español, considerando que también puede agregar tildes`;
         }
+        if (!evaluateSpell(name)) {
+          textError = `* El nombre no puede terminar con espacios al final`;
+        }
+        formData[2].error = auxErrorState;
+        formData[2].messsageError = textError;
       } else {
         formData[2].error = false;
         formData[2].messsageError = "";
@@ -262,18 +270,24 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (organizationName) {
-      if (!evaluateWord(1, 100, organizationName)) {
+      if (
+        !evaluateLenght(1, 100, organizationName) ||
+        !evaluateJustLetters(organizationName) ||
+        !evaluateSpell(organizationName)
+      ) {
         if (!evaluateLenght(1, 100, organizationName)) {
           formData[3].error = true;
           formData[3].messsageError = `* El nombre de la organizacion debe de tener
           entre 1 - 100 caracteres`;
-        } else if (evaluateSpell(organizationName)) {
-          formData[3].error = true;
-          formData[3].messsageError = `* El nombre no puede terminar con espacios al final`;
-        } else {
+        }
+        if (!evaluateJustLetters(organizationName)) {
           formData[3].error = true;
           formData[3].messsageError = `* El nombre debe estar compuesto por letras del
-            abecedario español, considerando que también puede agregar tildes`;
+          abecedario español, considerando que también puede agregar tildes`;
+        }
+        if (!evaluateSpell(organizationName)) {
+          formData[3].error = true;
+          formData[3].messsageError = `* El nombre no puede terminar con espacios al final`;
         }
       } else {
         formData[3].error = false;
@@ -290,12 +304,18 @@ export const ContratanosPage = () => {
     const formData = [...dataHireForm];
     if (constructionDescription) {
       if (
-        constructionDescription.length < 2 ||
-        constructionDescription.length > 1000
+        !descriptionValidator(constructionDescription) ||
+        !evaluateLenght(2, 1000, constructionDescription)
       ) {
-        formData[4].error = true;
-        formData[4].messsageError =
-          "* La descripcion debe tener entre 2 - 1000 caracteres";
+        if (!evaluateLenght(2, 1000, constructionDescription)) {
+          formData[4].error = true;
+          formData[4].messsageError =
+            "* La descripcion debe tener entre 2 - 1000 caracteres";
+        } else {
+          formData[4].error = true;
+          formData[4].messsageError =
+            "* La descripcion no puede terminar con espacios al final";
+        }
       } else {
         formData[4].error = false;
         formData[4].messsageError = "";

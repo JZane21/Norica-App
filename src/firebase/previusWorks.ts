@@ -3,6 +3,13 @@ import { db } from "./firebase";
 
 const previusWorks = collection(db,"previus-works");
 
+/**
+ * El método que se encuentra en la parte inferior, ayuda a traer los trabajos en los
+ * que la empresa trabajó en el pasado de la BD. La forma en que lo hace es extrayendo la
+ * collection "previus-works" de la firestore, para luego establecer estos datos dentro
+ * de un arreglo, para luego ser retornado.
+ */
+
 export const getPreviusWorks = async () => {
   let data;
   try{

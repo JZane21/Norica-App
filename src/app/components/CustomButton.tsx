@@ -30,7 +30,7 @@ export const CustomButton = ({
   const DIMENSION: string = `w-[${width}] h-[${height}]`;
   const STYLES: string = `${DIMENSION} m-3 ${normalBg}
   ${hoverBg} ${activeBg} rounded-[40px] shadow justify-center items-center
-  flex ${textColor} text-base font-semibold m-2 shadow-lg p-2`;
+  flex ${textColor} text-base font-semibold m-2 shadow-lg p-2 text-center`;
   return (
     <button type={type} onClick={action} className={STYLES}>
       {textButton}

@@ -1,22 +1,36 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useStore } from "../../store/StoreProvider";
 import { Product } from "../../models/productModel";
-import { ModalPage } from "../../modals/ModalPage";
-import { ModalLoading } from "../../modals/ModalLoading";
 import { EmptyCartPage } from "./EmptyCartPage";
 import { ListAddedProducts } from "../components/ListAddedProducts";
 import { CustomButton } from "../components/CustomButton";
-import { ModalConfirmation } from "../../modals/ModalConfirmation";
 import { getProducts, setProducts } from "../../firebase/products";
 import { types } from "../../store/storeReducer";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { ModalMessage } from "../../modals/ModalMessage";
 import { BuyForm } from "../components/BuyForm";
+import { FieldValues, useForm } from "react-hook-form";
+import { BuyFormInterface } from "../../models/buyForm";
+import { setDateToString } from "../../helpers/dateHireForm";
+import {
+  getUserProductList,
+  postUserProductsList,
+  updateUserProductsList,
+} from "../../firebase/usersProducts";
+import { CarritoPageMessages } from "../components/CarritoPageMessages";
 
 export const CarritoPage = () => {
   const dispatch = useDispatch();
-  const { addedProducts } = useStore();
+  const { addedProducts, userEmail } = useStore();
   const { saveDataLS } = useLocalStorage();
+
+  const { register, handleSubmit, setValue, watch } =
+    useForm<BuyFormInterface>();
+
+  const name: string = watch("name");
+  const email: string = watch("email");
+  const address: string = watch("address");
+  const contactNumber: string = watch("contactNumber");
+  const nit: string = watch("nit");
 
   const [cartProducts, setCartProducts] = useState<Product[]>([]);
 
@@ -27,6 +41,12 @@ export const CarritoPage = () => {
   const [process, setProcess] = useState<boolean>(false);
 
   const [sucess, setSucess] = useState<boolean>(false);
+
+  const [findedError, setFindedError] = useState<boolean>(false);
+
+  const [errorUpdatingDB, setErrorUpdatingDB] = useState<boolean>(false);
+
+  const [dataForm, setDataForm] = useState<FieldValues>({});
 
   const messageText: string = useMemo(() => {
     let auxVar: string = "";
@@ -60,7 +80,6 @@ export const CarritoPage = () => {
   }, []);
 
   const buyProducts = async () => {
-    setProcess(true);
     try {
       for (let index = 0; index < cartProducts.length; index++) {
         await setProducts(
@@ -73,48 +92,83 @@ export const CarritoPage = () => {
       dispatch({ type: types.eraseAddedProducts });
       saveDataLS("addedProducts", { addedProducts: [] });
       setCartProducts([]);
+      setProcess(false);
+      setSucess(true);
     } catch (err) {
       console.error(err);
+      setErrorUpdatingDB(true);
+      setProcess(false);
+      setSucess(false);
     }
-    setProcess(false);
-    console.log("compra exitosa");
+  };
+
+  const whenSubmit = async (data: FieldValues) => {
+    setProcess(true);
+    try {
+      const todayDate = new Date();
+      const NEW_DATE: string = setDateToString(todayDate);
+      const userProductsListData = await getUserProductList(userEmail);
+      const productsToSent = [...cartProducts];
+      productsToSent.map((item) => {
+        delete item.quantity;
+      });
+      if (userProductsListData !== null) {
+        await updateUserProductsList(
+          userProductsListData?.id,
+          userEmail,
+          NEW_DATE,
+          {
+            ...data,
+            cartProducts: productsToSent,
+            totalPrice: totalPrice + " bs.",
+          }
+        );
+      } else {
+        await postUserProductsList(userEmail, NEW_DATE, {
+          ...data,
+          cartProducts: productsToSent,
+          totalPrice: totalPrice + " bs.",
+        });
+      }
+      await buyProducts();
+    } catch (err) {
+      console.error(err);
+      setErrorUpdatingDB(true);
+      setProcess(false);
+      setSucess(false);
+    }
+  };
+
+  const confirmSubmit = (data: FieldValues) => {
+    setConfirmation(false);
+    whenSubmit(data);
   };
 
   return (
     <>
-      {(loading || confirmation || process || sucess) && (
-        <ModalPage>
-          <>
-            {(loading || process) && <ModalLoading />}
-            {confirmation && (
-              <ModalConfirmation
-                actionOne={() => {
-                  setConfirmation(false);
-                  buyProducts();
-                }}
-                actionTwo={() => setConfirmation(false)}
-                title={"¿Confirmar Compra?"}
-                message={`Se comprarán los siguientes productos:
-              ${messageText}
-              Precio Total: ${totalPrice}
-              `}
-              />
-            )}
-            {sucess && (
-              <ModalMessage
-                action={() => setSucess(false)}
-                title={"Compra exitosa"}
-                message={"Los artículos fueron comprados exitosamente"}
-              />
-            )}
-          </>
-        </ModalPage>
-      )}
+      <CarritoPageMessages
+        loading={loading}
+        confirmation={confirmation}
+        process={process}
+        errorUpdatingDB={errorUpdatingDB}
+        sucess={sucess}
+        messageText={messageText}
+        totalPrice={totalPrice}
+        confirmSubmit={confirmSubmit}
+        dataForm={dataForm}
+        setConfirmation={setConfirmation}
+        setSucess={setSucess}
+        setErrorUpdatingDB={setErrorUpdatingDB}
+      />
       <>
         {cartProducts.length !== 0 ? (
           <div className=" flex flex-wrap  justify-center  ">
             <section className=" flex flex-row rounded-[40px] h-[650px] bg-neutral-200 w-[80%] ">
-              <section className=" w-[50%] flex flex-wrap max-h-[700px] overflow-auto justify-center bg-neutral-400 rounded-[40px] p-5">
+              <section
+                className=" w-[50%] flex flex-wrap max-h-[700px]
+              overflow-auto justify-center bg-neutral-400 rounded-[40px]
+              rounded-tr-none rounded-br-none p-5"
+              >
                 <ListAddedProducts
                   cartProducts={cartProducts}
                   setCartProducts={setCartProducts}
@@ -124,13 +178,27 @@ export const CarritoPage = () => {
                 <h1 className="text-3xl font-semibold mt-5 ml-8">
                   Total: {totalPrice}Bs.
                 </h1>
-                <section className=" ml-8 mt-5 mb-0 p-5 h-[500px] mr-8 bg-white rounded-[40px]">
-                  <h3 className="text-2xl">Formulario</h3>
-                  <form>
-                    <BuyForm />
+                <section className=" ml-8 mt-5 mb-0 p-5 h-max mr-8 bg-white rounded-[40px]">
+                  <form
+                    onSubmit={handleSubmit((data) => {
+                      setConfirmation(true);
+                      setDataForm(data);
+                    })}
+                  >
+                    <h3 className="text-2xl m-2 font-medium">Formulario</h3>
+                    <BuyForm
+                      setFindedError={setFindedError}
+                      register={register}
+                      setValue={setValue}
+                      name={name}
+                      email={email}
+                      address={address}
+                      contactNumber={contactNumber}
+                      nit={nit}
+                    />
                   </form>
                 </section>
-                {cartProducts.length !== 0 && (
+                {cartProducts.length !== 0 && !findedError && (
                   <div className="mr-6 flex flex-row justify-end mb-5">
                     <CustomButton
                       textButton={"Comprar"}
@@ -138,7 +206,7 @@ export const CarritoPage = () => {
                       hoverBg={"hover:bg-black"}
                       activeBg={"active:bg-gray-700"}
                       textColor={"text-white"}
-                      typeButton={"button"}
+                      typeButton={"submit"}
                       width={"150px"}
                       height={"45px"}
                       action={() => {
@@ -154,7 +222,6 @@ export const CarritoPage = () => {
           <EmptyCartPage />
         )}
       </>
-      \
     </>
   );
 };

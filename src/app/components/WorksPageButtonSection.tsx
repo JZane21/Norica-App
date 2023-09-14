@@ -21,11 +21,11 @@ export const WorksPageButtonSection = ({ setZoomedIndex }: Props) => {
   );
 
   return (
-    <div
-      className=" ml-10 -mt-5 w-[550px] "
-      style={{ display: "flex", justifyContent: "space-between" }}
-    >
-      <button className={buttonOneStyle} onClick={() => setZoomedIndex(null)}>
+    <div className="ml-10 -mt-5 w-[550px] flex flex-row justify-start">
+      <button
+        className={buttonOneStyle + "mr-10"}
+        onClick={() => setZoomedIndex(null)}
+      >
         Volver
       </button>
       <Link className="w-max h-max " to={`/app/home/contratanos`}>
