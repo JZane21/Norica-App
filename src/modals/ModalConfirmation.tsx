@@ -50,10 +50,10 @@ export const ModalConfirmation = ({
           </button>
         </div>
       </div>
-      <dl>
+      <dl className="max-h-[200px] overflow-y-auto">
         <dd
           className="mb-4 font-light text-gray-500 sm:mb-5
-        dark:text-gray-400"
+        dark:text-gray-400 whitespace-pre-line"
         >
           {message}
         </dd>

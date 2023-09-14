@@ -1,52 +1,123 @@
-function CompanyDescription() {
-  const SERVICIOS_EMPRESA = [
-    "Proyectos de Obras civiles",
-    "Desarrollo de Habilitaciones Urbanas",
-    "Cálculos estructurales",
-    "Diseño de Proyectos Arquitectónicos",
-    `Brindamos servicios especializados
-    (estructuras, instalaciones eléctricas, instalaciones sanitarias)`,
-    "Refacción de viviendas",
-    "Refuerzos y diagnósticos estructurales en general",
-    "Asesoría y gestión inmobiliaria",
-    "Asesoramiento financiero y legal",
-  ];
 
+import { EditableImage } from "./EditableImage";
+import HireUs from "./HireUs";
+import ContactUs from "./ContactUs";
+
+
+interface Props{
+  width:number;
+  }
+function CompanyDescription({width}:Props) {
   return (
-    <section className="flex flex-col m-3 text-white">
-      <h1 className="text-3xl font-bold mb-5">NORICA</h1>
-      <h2 className="text-xl font-semibold mb-3">¿Quienes somos?</h2>
-      <p className="text-center font-thin">
-        Somos una empresa comprometida en la satisfacción de las necesidades de
-        diseño y construcción de nuestros clientes, proponiendo soluciones no
-        solo viables y confiables, sino de calidad y al mejor precio; todo ello
-        con la finalidad de que el usuario obtenga el mejor provecho en su
-        inversión, dentro de un marco de transparencia, solidez y calidad que
-        fomentamos a través de nuestra cultura de servicio, desarrollando y
-        motivando a nuestros colaboradores, que por cierto son un equipo de
-        profesionales altamente calificados en las variadas especialidades en el
-        ámbito ingenieril y en el ramo dela construcción. ANTECEDENTES NORICA
-        S.R.L. es el resultado de una actividad empresarial iniciada el año 2006
-        a partir de un esfuerzo de sus socios por satisfacer las demandas de
-        tipo familiar, en el diseño, elaboración y ejecución de viviendas de
-        nivel social medio y residencial; que ha llegado a constituirse en una
-        empresa con 17 años de experiencia en el ramo de la construcción
-        compitiendo exitosamente a través de la calidad de sus construcciones
-        con los mejores precios del mercado, ampliando la oferta de servicio que
-        ofrece y desarrollando proyectos desde su concepción hasta su
-        comercialización, con experiencia suficiente para atender con capacidad
-        de gestión, solvencia técnica, y gran capital humano los requerimientos
-        de nuestros clientes.
-      </p>
-      <p className="font-bold mt-5 mb-3">¿QUE OFRECEMOS?</p>
-      <ul>
-        {SERVICIOS_EMPRESA.map((item) => (
-          <li className="m-3 font-thin" key={item}>
-            {item}
-          </li>
-        ))}
-      </ul>
-    </section>
+
+    <div className="font-['Bruno_Ace'] flex flex-col pb-32 gap-16 w-full" id="RootRoot ">
+    <div className="flex flex-row gap-8 items-start ml-3 mr-6">
+      <div className="flex flex-col mt-6 gap-5 w-1/2 items-start">
+        <div className="font-['Bruno_Ace'] leading-[22.4px]" id="Element4">
+          NORICA
+        </div>
+        <div
+          className="text-3xl font-['Bruno_Ace'] tracking-[5] leading-[35px] w-full"
+          id="Element3"
+        >
+          "Forjamos visiones a través del diseño y la construcción excepcional."
+          <br />
+          <br />
+        </div>
+        
+        <div className="flex flex-row justify-around p-1 m-1 w-max">
+        <HireUs width={width} />
+        <ContactUs width={width} />
+       <div/>
+      </div>
+      </div>
+     <EditableImage urlImg={"https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} styles={"  w-[579px] h-[347px] rounded-[24px]"} imageTitle={""}/>
+     
+    </div>
+    <div className="flex flex-row gap-12 items-start">
+      <div className="flex flex-col gap-16 w-1/2">
+        <div className="flex flex-col gap-4 items-start">
+          <div
+            className="text-3xl font-['Bruno_Ace'] tracking-[5] leading-[35px] text-[#a40000]"
+            id="Element5"
+          >
+            ¿QUIENES SOMOS?
+          </div>
+          <div className="self-stretch relative flex flex-col justify-end pt-[412px]">
+            <div
+              className="text-sm font-['Bruno_Ace'] tracking-[5] leading-[35px] absolute top-0 left-1 h-[525px] w-full"
+              id="Element1"
+            >
+              Somos una empresa comprometida con la satisfacción de las
+              necesidades de diseño y construcción de nuestros clientes. Ofrecemos
+              soluciones de calidad y al mejor precio, manteniendo la
+              transparencia y la excelencia en el servicio. Nuestro equipo está
+              formado por profesionales altamente calificados en diversas
+              especialidades de ingeniería y construcción.
+              <br />
+              <br />
+              <br />
+            </div>
+            <EditableImage urlImg={"https://images.pexels.com/photos/2760243/pexels-photo-2760243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} styles={"   w-[579px] 100 h-[347px] rounded-[24px]"} imageTitle={""}/>
+
+          </div>
+        </div>
+        <div className="relative flex flex-col justify-end mr-1 pt-16 items-start">
+          <div
+            className="text-3xl font-['Bruno_Ace'] tracking-[5] leading-[35px] text-[#a40000] absolute top-0 left-1 h-24 w-2/3"
+            id="Element7"
+          >
+            ¿QUE OFRECEMOS?
+            <br />
+          </div>
+          <div
+            className="text-sm font-['Bruno_Ace'] tracking-[5] leading-[35px] relative w-full"
+            id="Element8"
+          >
+            • Proyectos de Obras civiles.
+            <br />• Desarrollo de Habilitaciones Urbanas.
+            <br />• Cálculos estructurales.
+            <br />• Diseño de Proyectos Arquitectónicos.
+            <br />• Servicios especializados (estructuras, instalaciones
+            eléctricas, instalaciones sanitarias).
+            <br />• Refacción de viviendas.
+            <br />• Refuerzos y diagnósticos estructurales en general.
+            <br />• Asesoría y gestión inmobiliaria.
+            <br />• Asesoramiento financiero y legal.
+          </div>
+        </div>
+      </div>
+      <div className="self-end flex flex-col mb-16 gap-5 w-1/2 items-start">
+        <div
+          className="text-3xl font-['Bruno_Ace'] tracking-[5] leading-[35px] text-[#a40000] ml-2"
+          id="Element6"
+        >
+          ANTECEDENTES{" "}
+        </div>
+        <div className="self-stretch relative flex flex-col justify-end pt-[551px]">
+          <div
+            className="text-sm font-['Bruno_Ace'] tracking-[5] leading-[35px] absolute top-0 left-2 h-[630px] w-full"
+            id="Element2"
+          >
+            NORICA S.R.L. se inició en 2006 como una empresa enfocada en el diseño
+            y ejecución de viviendas de nivel social medio y residencial. Con 17
+            años de experiencia en el sector de la construcción, hemos competido
+            exitosamente gracias a la calidad de nuestras obras y precios
+            competitivos. Hemos ampliado nuestros servicios y desarrollado
+            proyectos desde su concepción hasta su comercialización, brindando
+            capacidad de gestión y solvencia técnica.
+            <br />
+            <br />
+            <br />
+            <br />
+          </div>
+          <EditableImage urlImg={"https://images.pexels.com/photos/448828/pexels-photo-448828.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"} styles={"  w-[579px] h-[347px] rounded-[24px]"} imageTitle={""}/>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  
   );
 }
 

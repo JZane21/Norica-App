@@ -1,12 +1,12 @@
 // src/app/pages/HomePage.tsx
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import ContactUs from "../components/ContactUs";
-import HireUs from "../components/HireUs";
-import CompanyDescription from "../components/CompanyDescription";
-import BGHomePage from "../../assets/background-home-page.jpeg";
+import BGHomePage from "../../assets/background-home-page.jpeg.jpg";
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import CompanyDescription from "../components/CompanyDescription";
+import { ModalPage } from "../../modals/ModalPage";
+import { ModalLoading } from "../../modals/ModalLoading";
 
 export const HomePage: React.FC = () => {
   const { pathname } = useLocation();
@@ -19,6 +19,18 @@ export const HomePage: React.FC = () => {
     window.addEventListener("resize", handleResizeWidth);
   }, [window.innerWidth]);
 
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (pathname !== "/app/home") {
+      setLoading(false);
+    } else {
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, []);
+
   return (
     <>
       <style>{`
@@ -28,19 +40,23 @@ export const HomePage: React.FC = () => {
           background-position: center;
         }
       `}</style>
-      <section className="flex flex-col HomePageBackground">
+      {loading && (
+        <ModalPage>
+          <ModalLoading />
+        </ModalPage>
+      )}
+      <section className="min-h-[825px] h-full flex flex-col HomePageBackground">
         <Navbar width={width} />
         <div className="overflow-auto h-full m-3">
           {pathname === "/app/home" ? (
-            <main className="p-4 flex flex-col">
-              <CompanyDescription />
+            <main className="p-4 h-[550px] flex flex-col overflow-y-auto">
+              <CompanyDescription width={width} />
               <div
                 className={`flex ${
                   width >= 467 ? "flex-row" : "flex-col"
-                } justify-center items-center flex-wrap mt-8`}
+                }  items-center flex-wrap mt-8`}
               >
-                <HireUs width={width} />
-                <ContactUs width={width} />
+                
               </div>
             </main>
           ) : (

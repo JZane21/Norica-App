@@ -1,8 +1,12 @@
-export const SoonPage = () => {
+interface Props {
+  errorText: string;
+}
+
+export const ErrorPage = ({ errorText }: Props) => {
   return (
     <section className="w-full h-[800px] flex justify-center items-center">
       <p className=" text-4xl text-white font-semibold text-center">
-        ¡Esta página pronto estará disponible para los usuarios!
+        {errorText}
       </p>
     </section>
   );
