@@ -1,13 +1,19 @@
+import { Action } from "../models/dataReducer";
+
 export const loginTypes = {
   login: "login user",
   logout: "logout user"
 };
 
+// global varaibles, 
 export const loginInitialValues = {
-  auth: false
-}
+  // asignando el valor inicial de las variables globales
+  // cuando se incia la aplicacion
+  auth: localStorage.getItem("userLogIn")!==null ? JSON.parse(localStorage.getItem("userLogIn") || "{}").auth : false
+};
 
-export const loginReducer = (state:any, type:string) => {
+export const loginReducer = (state:any, action:Action) => {
+  const type:string = action.type;
   if(type === loginTypes.login){
     return {
       ...state,
@@ -18,7 +24,7 @@ export const loginReducer = (state:any, type:string) => {
       ...state,
       auth: false
     };
-  }else{
+  } else{
     return state;
   }
 };

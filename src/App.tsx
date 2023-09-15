@@ -1,7 +1,10 @@
-import { BrowserRouter } from "react-router-dom";
-import { MainRouter } from "./router/MainRouter";
-import { StoreProvider } from "./store/StoreProvider";
 
+// Importar el StoreProvider
+import {StoreProvider} from './store/StoreProvider'; 
+import { BrowserRouter } from 'react-router-dom';
+
+// Componentes
+import {MainRouter} from './router/MainRouter'; 
 function App() {
   return (
     <>
