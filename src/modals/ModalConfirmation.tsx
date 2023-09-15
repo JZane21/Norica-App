@@ -13,6 +13,7 @@ export const ModalConfirmation = ({
 }: Props) => {
   return (
     <div
+      id="ModalConfirmationNorica"
       className="relative p-4 bg-white rounded-lg shadow
     dark:bg-gray-800 sm:p-5 max-[426px]:w-[280px] max-[769px]:w-[350px]
     w-[400px]"
@@ -60,6 +61,7 @@ export const ModalConfirmation = ({
       </dl>
       <div className="flex justify-start items-center flex-row">
         <button
+          id="ModalConfirmationButtonOneNorica"
           onClick={actionOne}
           type="button"
           className="inline-flex items-center text-white bg-red-600
