@@ -96,15 +96,8 @@ const Navbar = ({ width }: Props) => {
                 key={option.option}
                 option={option.option}
                 path={option.path}
-                style={{
-                  // Estilos individuales para cada elemento de la lista
-                  // Por ejemplo, puedes ajustar el margen derecho aquí
-                  marginRight: "20px",
-                }}
               />
-              
             ))}
-           
           </ul>
           <Link
             to="/app/home/carrito"
@@ -131,7 +124,6 @@ const Navbar = ({ width }: Props) => {
       self-center"
       />
     </>
-    
   );
 };
 

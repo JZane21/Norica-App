@@ -20,7 +20,7 @@ export const ModalBuyProduct = ({
 
   const verifyIfExists = () => {
     const findedAddedProduct: Product = addedProducts.find(
-      (item) => item.id === id
+      (item: Product) => item.id === id
     );
     if (findedAddedProduct !== undefined) {
       setAmount(findedAddedProduct.quantityToBeBuyed || 1);

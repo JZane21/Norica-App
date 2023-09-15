@@ -1,19 +1,13 @@
-import { BaseSyntheticEvent, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useStore } from "../../store/StoreProvider";
 import { Product } from "../../models/productModel";
 import { EmptyCartPage } from "./EmptyCartPage";
 import { ListAddedProducts } from "../components/ListAddedProducts";
-import { CustomButton } from "../components/CustomButton";
 import { getProducts, setProducts } from "../../firebase/products";
 import { types } from "../../store/storeReducer";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { BuyForm } from "../components/BuyForm";
-import {
-  FieldValues,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { BuyFormInterface } from "../../models/buyForm";
 import { setDateToString } from "../../helpers/dateHireForm";
 import {
@@ -225,7 +219,6 @@ export const CarritoPage = () => {
                       sendingForm={sendingForm}
                       cartProducts={cartProducts}
                       findedError={findedError}
-                      setConfirmation={setConfirmation}
                     />
                   </section>
                 </section>

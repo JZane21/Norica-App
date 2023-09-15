@@ -22,7 +22,7 @@ export const getProducts = async () => {
       ...doc.data(),
       id: doc.id
     }));
-    const productsGotten = [];
+    const productsGotten:any = [];
     if(filterData){
       filterData.map(item => productsGotten.push(productInterfaceMaker(item)));
       return productsGotten;

@@ -6,7 +6,7 @@ export const cartTypes = {
 };
 
 export const cartInitialValues = {
-  addedProducts: localStorage.getItem("addedProducts")!==null ? (JSON.parse(localStorage.getItem("addedProducts"))).addedProducts : []
+  addedProducts: localStorage.getItem("addedProducts")!==null ? (JSON.parse(localStorage.getItem("addedProducts") || "{}")).addedProducts : []
 };
 
 export const cartReducer = (state:any, action:Action) => {

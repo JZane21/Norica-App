@@ -78,7 +78,7 @@ export const ContratanosPage = () => {
     setValue("email", userEmail);
   }, []);
 
-  const form = useRef<HTMLFormElement>();
+  const form = useRef<any>();
   const [findedError, setFindedError] = useState<boolean>(false);
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [wrongInputData, setWrongInputData] = useState<boolean>(false);
@@ -173,10 +173,10 @@ export const ContratanosPage = () => {
     } else {
       const todayDate = new Date();
       const NEW_DATE: string = setDateToString(todayDate);
-      const userDataForm = await getFormDate();
+      const userDataForm: any = await getFormDate();
       if (userDataForm !== null) {
         const existFormDate: [] = userDataForm.userForms.filter(
-          (item) => item.dateSubmit === NEW_DATE
+          (item: any) => item.dateSubmit === NEW_DATE
         );
         if (existFormDate.length !== 0) {
           setLoading(false);

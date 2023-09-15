@@ -56,7 +56,7 @@ export const ProductosPage = () => {
     setProductToBuy(BASE_PRODUCT);
 
     const findedAddedProduct: number = addedProducts.findIndex(
-      (item) => item.id === product.id
+      (item: any) => item.id === product.id
     );
 
     let newListAddedProducts: Product[] = [...addedProducts];
@@ -134,7 +134,6 @@ export const ProductosPage = () => {
               {productsList.map((item) => {
                 if (
                   item.quantity !== 0 &&
-                  item.quantity !== NaN &&
                   item.quantity !== undefined &&
                   item.quantity !== null
                 ) {

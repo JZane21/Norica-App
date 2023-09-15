@@ -38,7 +38,6 @@ interface Props {
   sendingForm: (data: FieldValues) => void;
   cartProducts: Product[];
   findedError: boolean;
-  setConfirmation: (param: boolean) => void;
 }
 
 export const BuyForm = ({
@@ -54,7 +53,6 @@ export const BuyForm = ({
   sendingForm,
   cartProducts,
   findedError,
-  setConfirmation,
 }: Props) => {
   const STYLES_ON_CLASSNAME = `
     w-full p-3 text-black shadow-lg text-base
@@ -62,7 +60,7 @@ export const BuyForm = ({
     resize-none
   `;
 
-  const form = useRef<HTMLFormElement>();
+  const form = useRef<any>();
 
   const { userEmail } = useStore();
 
