@@ -24,12 +24,12 @@ export const TrabajosPage = () => {
     }
   };
 
-  const [projectData, setProjectData] = useState([]);
+  const [projectData, setProjectData] = useState<any>([]);
   const [errorLoading, setErrorLoading] = useState<boolean>(false);
 
   const getWorks = async () => {
     try {
-      const listWorks = await getPreviusWorks();
+      const listWorks: any = await getPreviusWorks();
       setProjectData(listWorks);
       dispatch({ type: types.setWorkList, value: listWorks });
     } catch (err) {
@@ -77,7 +77,7 @@ export const TrabajosPage = () => {
           </h2>
 
           <SimpleSlider>
-            {projectData.map((item, index) => (
+            {projectData.map((item: any, index: number) => (
               <FinishedProductCard
                 key={item.productName}
                 productName={item.productName}

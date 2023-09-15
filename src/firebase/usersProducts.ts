@@ -17,7 +17,7 @@ export const getUserProductList = async (userEmail:string) => {
       ...doc.data(),
       id: doc.id
     }));
-    const userGotten = filterData.find(item => item.userEmail === userEmail);
+    const userGotten = filterData.find((item:any) => item.userEmail === userEmail);
     if(userGotten){
       return userGotten;
     }else{
@@ -35,7 +35,7 @@ export const getUserProductList = async (userEmail:string) => {
  * uno o varios productos de la empresa. En este caso, se utiliza el método
  * "addDocs" de firebase para lograr este cometido
  */
-export const postUserProductsList = async (authEmail:string, dateSubmit:string, data) => {
+export const postUserProductsList = async (authEmail:string, dateSubmit:string, data:any) => {
   const newObject = {...data, date: dateSubmit};
   await addDoc(usersProducts,{
     userBuyedProductsRegistration: [newObject],
@@ -50,8 +50,8 @@ export const postUserProductsList = async (authEmail:string, dateSubmit:string, 
  * o varios productos con anterioridad, utilizando los métodos "doc" y "updateDoc"
  * de firebase
  */
-export const updateUserProductsList = async (id:string, authEmail:string, dateSubmit:string, data) => {
-  const user = await getUserProductList(authEmail);
+export const updateUserProductsList = async (id:string, authEmail:string, dateSubmit:string, data:any) => {
+  const user:any = await getUserProductList(authEmail);
   if(user!==null){
     const newObject = {...data, date: dateSubmit};
     const userProducts = doc(db,"users-products",id);

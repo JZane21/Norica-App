@@ -1,6 +1,6 @@
 import { Product } from "../models/productModel";
 
-export const productInterfaceMaker = (product) => {
+export const productInterfaceMaker = (product:any) => {
   const newProduct:Product = {
     id: product.id,
     name: product.name,

@@ -30,11 +30,11 @@ const gettingApp = () => {
   return initializeApp(firebaseConfig);
 }
 
-const instanceOfAuth = (app) => {
+const instanceOfAuth = (app:any) => {
   return getAuth(app);
 }
 
-const instanceOfFireStore = (app) => {
+const instanceOfFireStore = (app:any) => {
   return getFirestore(app);
 }
 

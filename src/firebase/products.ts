@@ -1,7 +1,6 @@
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import { productInterfaceMaker } from "../interfaces/productInterface";
-import { Product } from "../models/productModel";
 
 const products = collection(db,"products");
 
@@ -23,7 +22,7 @@ export const getProducts = async () => {
       ...doc.data(),
       id: doc.id
     }));
-    const productsGotten = [];
+    const productsGotten:any = [];
     if(filterData){
       filterData.map(item => productsGotten.push(productInterfaceMaker(item)));
       return productsGotten;
@@ -42,10 +41,10 @@ export const getProducts = async () => {
  * concretamente actualiza la cantidad de unidades que le restan a un producto
  */
 
-export const setProducts = async (product:Product, buyedQuantity:number) => {
+export const setProducts = async (productId:string,quantity:number, buyedQuantity:number) => {
   try{
-    const newProductQuantity:number = product.quantity - buyedQuantity;
-    const productDoc = doc(db, "products", product.id);
+    const newProductQuantity:number = quantity - buyedQuantity;
+    const productDoc = doc(db, "products", productId);
     await updateDoc(productDoc, { quantity:newProductQuantity });
   }catch(err){
     console.error(err);

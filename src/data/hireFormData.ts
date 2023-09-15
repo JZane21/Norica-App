@@ -1,6 +1,6 @@
 import { BooleanSetter } from "../helpers/voidSetter"
 
-const CLICK_EVENT:BooleanSetter = (param:boolean)=>{};
+const CLICK_EVENT:BooleanSetter = (param:boolean)=>{console.log(param)};
 
 export const questionsArrayHireForm = [
   {

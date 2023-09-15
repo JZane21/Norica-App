@@ -19,7 +19,7 @@ export const getUserFormDate = async (userEmail:string) => {
       ...doc.data(),
       id: doc.id
     }));
-    const userGotten = filterData.find(item => item.userEmail === userEmail);
+    const userGotten = filterData.find((item:any) => item.userEmail === userEmail);
     if(userGotten){
       return userGotten;
     }else{
@@ -38,7 +38,7 @@ export const getUserFormDate = async (userEmail:string) => {
  * "addDocs" de firebase para lograr este cometido
  */
 export const postUserFormDate = async (authEmail:string, dateSubmit:string, data:FieldValues) => {
-  const newObject = {...data, dateSubmit};
+  const newObject:any = {...data, dateSubmit};
   newObject.date = setDateToString(data.date);
   await addDoc(usersFormsDate,{
     userForms: [newObject],
@@ -53,11 +53,11 @@ export const postUserFormDate = async (authEmail:string, dateSubmit:string, data
  * formulario con anterioridad, utilizando los métodos "doc" y "updateDoc" de firebase
  */
 export const updateUserFormDate = async (id:string, authEmail:string, dateSubmit:string, data:FieldValues) => {
-  const user = await getUserFormDate(authEmail);
+  const user:any = await getUserFormDate(authEmail);
   if(user!==null){
-    const newObject = {...data,dateSubmit};
+    const newObject:any = {...data,dateSubmit};
     newObject.date = setDateToString(data.date);
-    const userForm = doc(db,"users-emails-date",id);
+    const userForm:any = doc(db,"users-emails-date",id);
     await updateDoc(userForm, { userForms:[...user.userForms,newObject] });
   }
 };

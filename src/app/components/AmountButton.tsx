@@ -15,13 +15,11 @@ export const AmountButton = ({
   amountAvailable,
 }: Props) => {
   const changeAmount = () => {
-    console.log("old: " + amount);
     if (type === "+") {
       if (amount < amountAvailable) setAmount(amount + 1);
     } else {
       if (amount > 1) setAmount(amount - 1);
     }
-    console.log("new: " + amount);
   };
 
   const STYLES =

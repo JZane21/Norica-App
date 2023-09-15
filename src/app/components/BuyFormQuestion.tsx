@@ -36,6 +36,7 @@ export const BuyFormQuestion = ({
           name={id}
           className={STYLES_ON_CLASSNAME}
           placeholder={placeHolder}
+          required={true}
         ></textarea>
       ) : (
         <input
@@ -53,6 +54,7 @@ export const BuyFormQuestion = ({
           name={id}
           className={STYLES_ON_CLASSNAME}
           placeholder={placeHolder}
+          required={true}
         />
       )}
     </div>

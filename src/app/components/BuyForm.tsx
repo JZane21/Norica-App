@@ -1,10 +1,15 @@
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import {
+  FieldValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import {
   BuyFormErrorSetterInterface,
   BuyFormInterface,
   BuyFormQuestionInterface,
 } from "../../models/buyForm";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BUY_FORM_DATA } from "../../data/buyFormData";
 import { BuyFormQuestion } from "./BuyFormQuestion";
 import {
@@ -17,6 +22,8 @@ import { ERRORS_BUY_FORM } from "../../helpers/errorsBuyForm";
 import { testEmail } from "../../helpers/testerEmail";
 import { validateNumber } from "../../helpers/numberValidator";
 import { useStore } from "../../store/StoreProvider";
+import { CustomButton } from "./CustomButton";
+import { Product } from "../../models/productModel";
 
 interface Props {
   setFindedError: (param: boolean) => void;
@@ -27,6 +34,10 @@ interface Props {
   address: string;
   contactNumber: string;
   nit: string;
+  handleSubmit: UseFormHandleSubmit<BuyFormInterface, undefined>;
+  sendingForm: (data: FieldValues) => void;
+  cartProducts: Product[];
+  findedError: boolean;
 }
 
 export const BuyForm = ({
@@ -38,12 +49,18 @@ export const BuyForm = ({
   address,
   contactNumber,
   nit,
+  handleSubmit,
+  sendingForm,
+  cartProducts,
+  findedError,
 }: Props) => {
   const STYLES_ON_CLASSNAME = `
     w-full p-3 text-black shadow-lg text-base
     bg-gray-100 outline-none rounded-2xl text-start
     resize-none
   `;
+
+  const form = useRef<any>();
 
   const { userEmail } = useStore();
 
@@ -202,35 +219,19 @@ export const BuyForm = ({
   }, [nit]);
 
   return (
-    <>
+    <form ref={form} onSubmit={handleSubmit((data) => sendingForm(data))}>
+      <h3 className="text-2xl m-2 font-medium">Formulario</h3>
       <>
-        {dataBuyForm.map((item, index) => {
-          if (index < 3) {
-            return (
-              <BuyFormQuestion
-                key={item.id}
-                dataQuestion={item}
-                STYLES_ON_CLASSNAME={STYLES_ON_CLASSNAME}
-                register={register}
-                BOX_QUESTION_STYLE={"mb-4"}
-                textError={ERROR_SETTER_ARRAY[index].value}
-                error={errorStates[index]}
-              />
-            );
-          }
-        })}
-      </>
-      <div className="flex flex-row justify-between items-end">
         <>
           {dataBuyForm.map((item, index) => {
-            if (index >= 3) {
+            if (index < 3) {
               return (
                 <BuyFormQuestion
                   key={item.id}
                   dataQuestion={item}
-                  STYLES_ON_CLASSNAME={STYLES_ON_CLASSNAME + "w-44"}
+                  STYLES_ON_CLASSNAME={STYLES_ON_CLASSNAME}
                   register={register}
-                  BOX_QUESTION_STYLE={"mb-4 w-44"}
+                  BOX_QUESTION_STYLE={"mb-4"}
                   textError={ERROR_SETTER_ARRAY[index].value}
                   error={errorStates[index]}
                 />
@@ -238,7 +239,41 @@ export const BuyForm = ({
             }
           })}
         </>
-      </div>
-    </>
+        <div className="flex flex-row justify-between items-end">
+          <>
+            {dataBuyForm.map((item, index) => {
+              if (index >= 3) {
+                return (
+                  <BuyFormQuestion
+                    key={item.id}
+                    dataQuestion={item}
+                    STYLES_ON_CLASSNAME={STYLES_ON_CLASSNAME + "w-44"}
+                    register={register}
+                    BOX_QUESTION_STYLE={"mb-4 w-44"}
+                    textError={ERROR_SETTER_ARRAY[index].value}
+                    error={errorStates[index]}
+                  />
+                );
+              }
+            })}
+          </>
+        </div>
+      </>
+      {cartProducts.length !== 0 && !findedError && (
+        <div className="mr-6 flex flex-row justify-end mb-5">
+          <CustomButton
+            textButton={"Comprar"}
+            normalBg={"bg-red-600 "}
+            hoverBg={"hover:bg-black"}
+            activeBg={"active:bg-gray-700"}
+            textColor={"text-white"}
+            typeButton={"submit"}
+            width={"150px"}
+            height={"45px"}
+            action={() => {}}
+          />
+        </div>
+      )}
+    </form>
   );
 };

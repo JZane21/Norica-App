@@ -7,6 +7,7 @@ interface Props {
 export const ModalMessage = ({ action, title, message }: Props) => {
   return (
     <div
+      id={"ModalMessageNorica"}
       className="relative p-4 bg-white rounded-lg shadow
     dark:bg-gray-800 sm:p-5 max-[426px]:w-[280px] max-[769px]:w-[350px]
     w-[400px]"
