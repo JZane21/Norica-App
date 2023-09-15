@@ -19,19 +19,19 @@ export const FinishedProductCard = ({
   return (
     <div
       onClick={onZoomToggle}
-      className={`p-5 bg-opacity-50 rounded-2xl hover:bg-gray-200 m-3
+      className={` flex flex-wrap justify-center p-3 h-[450px] bg-opacity-50 rounded-[40px] hover:bg-gray-300 m-3
       `}
     >
       <div>
         <Image urlImg={productImage} widthLogo={"big"} />
-      </div>
-      <div className={`mt-4`}>
-        <a href="#">
-          <h5 className="mb-2 text-2xl tracking-tight text-black dark:text-gray-900">
+        <h5 className=" text-xl mt-5 h-[50px] texto tracking-tight text-black dark:text-gray-900">
             {productName}
           </h5>
-        </a>
-        <div className={`flex flex-row-reverse -mb-7`}>
+          </div>
+        <section className ="flex flex-row justify-between  mt-0">
+        <p className=" font-normal w-[275px] texto text-black-400 dark:text-gray-700">
+          {productDescriptionDuration}
+        </p>
           <svg
             className="w-3.5 h-3.5 m-2"
             aria-hidden="true"
@@ -47,11 +47,7 @@ export const FinishedProductCard = ({
               d="M1 5h12m0 0L9 1m4 4L9 9"
             />
           </svg>
-        </div>
-        <p className=" font-normal text-black-400 dark:text-gray-700">
-          {productDescriptionDuration}
-        </p>
-      </div>
+          </section>
     </div>
   );
 };

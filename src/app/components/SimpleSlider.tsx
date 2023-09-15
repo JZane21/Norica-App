@@ -42,12 +42,12 @@ export default class SimpleSlider extends Component<SimpleSliderProps> {
       <div>
         <div style={{ textAlign: "right", margin: 10 }}>
           <button
-            className="w-[60px] h-[40px] text-gray-400 hover:bg-red-600 
-          active:bg-red-700 active:text-white hover:text-white text-base font-thin p-2 pl-3 pr-3 rounded-md m-2 "
+            className="w-[50px] h-[40px] text-gray-600 hover:bg-red-600 
+          active:bg-red-700 active:text-white hover:text-white text-base font-thin p-2 pl-3 pr-3 rounded-full m-2 "
             onClick={this.previous}
           >
             <svg
-              className="w-3.5 h-3.5 ml-2 transform rotate-180"
+              className="w-3.5 h-3.5 ml-1 transform rotate-180"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -63,8 +63,8 @@ export default class SimpleSlider extends Component<SimpleSliderProps> {
             </svg>
           </button>
           <button
-            className="w-[60px] h-[40px] text-gray-400 hover:bg-red-600 
-          active:bg-red-700 active:text-white hover:text-white text-base font-thin p-2 pl-3 pr-3 rounded-md"
+            className="w-[50px] h-[40px] text-gray-600 hover:bg-red-600 
+          active:bg-red-700 active:text-white hover:text-white text-base font-thin p-2 pl-3 pr-3 rounded-full"
             onClick={this.next}
           >
             <svg

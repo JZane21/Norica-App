@@ -1,6 +1,7 @@
 import { Product } from "../models/productModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ButtonAddChartSection } from "../app/components/ButtonAddChartSection";
+import { useStore } from "../store/StoreProvider";
 
 interface Props {
   product: Product;
@@ -13,9 +14,24 @@ export const ModalBuyProduct = ({
   setOpenModal,
   addToChart,
 }: Props) => {
-  const { price, quantity, imageUrl, description, name } = product;
+  const { id, price, quantity, imageUrl, description, name } = product;
+
+  const { addedProducts } = useStore();
+
+  const verifyIfExists = () => {
+    const findedAddedProduct: Product = addedProducts.find(
+      (item: Product) => item.id === id
+    );
+    if (findedAddedProduct !== undefined) {
+      setAmount(findedAddedProduct.quantityToBeBuyed || 1);
+    }
+  };
 
   const [amount, setAmount] = useState<number>(1);
+
+  useEffect(() => {
+    verifyIfExists();
+  }, []);
 
   return (
     <>

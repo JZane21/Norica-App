@@ -1,6 +1,5 @@
 import { FinishedProductCard } from "../components/FinishedProductCard";
 import SimpleSlider from "../components/SimpleSlider";
-import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useEffect, useState } from "react";
@@ -25,12 +24,12 @@ export const TrabajosPage = () => {
     }
   };
 
-  const [projectData, setProjectData] = useState([]);
+  const [projectData, setProjectData] = useState<any>([]);
   const [errorLoading, setErrorLoading] = useState<boolean>(false);
 
   const getWorks = async () => {
     try {
-      const listWorks = await getPreviusWorks();
+      const listWorks: any = await getPreviusWorks();
       setProjectData(listWorks);
       dispatch({ type: types.setWorkList, value: listWorks });
     } catch (err) {
@@ -73,12 +72,12 @@ export const TrabajosPage = () => {
       <WorksPageMessages loading={loading} errorLoading={errorLoading} />
       <section className={`w-full ${loading && "h-[800px]"}`}>
         <div className=" p-4 h-full w-full bg-gray rounded-3xl">
-          <h2 className="p-5 text-5xl font-bold -mb-20 text-black   ">
+          <h2 className="p-5 texto text-5xl font-bold -mb-20 text-black   ">
             Nuestros Trabajos
           </h2>
 
           <SimpleSlider>
-            {projectData.map((item, index) => (
+            {projectData.map((item: any, index: number) => (
               <FinishedProductCard
                 key={item.productName}
                 productName={item.productName}
@@ -92,8 +91,8 @@ export const TrabajosPage = () => {
             ))}
           </SimpleSlider>
           {zoomedIndex !== null && (
-            <div className="z-10 fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-90 backdrop-blur ">
-              <div className=" p-4 h-[95%] w-[90%] bg-white rounded-2xl flex flex-col ">
+            <div className="z-10 fixed inset-0 flex justify-center items-center bg-black bg-opacity-80 backdrop-blur ">
+              <div className=" h-[95%] w-[90%] bg-white rounded-[40px]  flex flex-col ">
                 <WorkInformation listProjectData={listProjectData} />
                 <WorksPageButtonSection setZoomedIndex={setZoomedIndex} />
               </div>

@@ -10,6 +10,7 @@ import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { getProducts } from "../../firebase/products";
 import { ErrorPage } from "./ErrorPage";
 import MultiSlider from "../components/MultiSlider";
+import { EmptyStorePage } from "./EmptyStorePage";
 
 export const ProductosPage = () => {
   const { addedProducts } = useStore();
@@ -19,107 +20,8 @@ export const ProductosPage = () => {
 
   const { saveDataLS } = useLocalStorage();
 
-  // const PRODUCTS_DATA = [
-  //   {
-  //     name: "producto 1",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description:
-  //       "descripcionhjrne  ijgbwibgfiebwdihgvbhi edhfebfgihgihgh bwihdbhisdbvifshd bvidsbivjb iuwreiugwrig buiwfuhewiufh iuuifegwifugbwuif sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 2",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 3",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 4",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 5",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 6",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 7",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 8",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 9",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 10",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 11",
-  //     price: 132,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  //   {
-  //     name: "producto 12",
-  //     price: 192,
-  //     quantity: 49,
-  //     available: true,
-  //     imageUrl: `https://images.pexels.com/photos/209235/pexels-photo-209235.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2`,
-  //     description: "descripcion sfgvsdfvsakhfj ewjfbwehfiweh wefhwebfih",
-  //   },
-  // ];
-
   const BASE_PRODUCT: Product = {
+    id: "",
     name: "",
     price: 0,
     quantity: 0,
@@ -152,12 +54,38 @@ export const ProductosPage = () => {
   const addToChat = (product: Product, quantity: number) => {
     setOpenModal(false);
     setProductToBuy(BASE_PRODUCT);
-    const NEW_LIST_ADDED_PRODUCTS: Product[] = [...addedProducts, product];
+
+    const findedAddedProduct: number = addedProducts.findIndex(
+      (item: any) => item.id === product.id
+    );
+
+    let newListAddedProducts: Product[] = [...addedProducts];
+
+    if (findedAddedProduct === -1) {
+      newListAddedProducts.push({
+        ...product,
+        quantityToBeBuyed: quantity,
+      });
+    } else if (
+      newListAddedProducts[findedAddedProduct].quantityToBeBuyed !== undefined
+    ) {
+      const newQuantity = quantity;
+
+      if (newQuantity > product.quantity) {
+        return;
+      } else {
+        newListAddedProducts[findedAddedProduct].quantityToBeBuyed = quantity;
+      }
+    } else {
+      // If the product is already in the cart but quantityToBeBuyed is undefined, set it to the specified quantity
+      newListAddedProducts[findedAddedProduct].quantityToBeBuyed = quantity;
+    }
+
     dispatch({
       type: types.setAddedProducts,
-      value: NEW_LIST_ADDED_PRODUCTS,
+      value: newListAddedProducts,
     });
-    saveDataLS("addedProducts", { addedProducts: NEW_LIST_ADDED_PRODUCTS });
+    saveDataLS("addedProducts", { addedProducts: newListAddedProducts });
   };
 
   useEffect(() => {
@@ -173,6 +101,10 @@ export const ProductosPage = () => {
       }, 1000);
     }
   }, []);
+
+  const numProductsToShow = productsList.filter(
+    (item) => item.quantity !== 0
+  ).length;
 
   return (
     <>
@@ -195,22 +127,32 @@ export const ProductosPage = () => {
           </>
         </ModalPage>
       )}
-      <div className=" p-5">
-        <MultiSlider>
-          {productsList.map((item) => {
-            if (item.quantity !== 0) {
-              return (
-                <ProductCard
-                  key={item.id}
-                  product={item}
-                  setProductToBuy={setProductToBuy}
-                  setOpenModal={setOpenModal}
-                />
-              );
-            }
-          })}
-        </MultiSlider>
-      </div>
+      <>
+        {numProductsToShow !== 0 ? (
+          <div className=" p-5">
+            <MultiSlider numItems={numProductsToShow}>
+              {productsList.map((item) => {
+                if (
+                  item.quantity !== 0 &&
+                  item.quantity !== undefined &&
+                  item.quantity !== null
+                ) {
+                  return (
+                    <ProductCard
+                      key={item.id}
+                      product={item}
+                      setProductToBuy={setProductToBuy}
+                      setOpenModal={setOpenModal}
+                    />
+                  );
+                }
+              })}
+            </MultiSlider>
+          </div>
+        ) : (
+          <EmptyStorePage />
+        )}
+      </>
     </>
   );
 };

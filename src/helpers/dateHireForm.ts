@@ -1,4 +1,4 @@
-export const setDateToString = (date:string | Date):string => {
+export const setDateToString = (date:string | Date | any):string => {
   const typeOf:string = typeof date;
   if(typeOf.toLowerCase() === "object"){
     const day = date.getDate().toString().padStart(2, '0');

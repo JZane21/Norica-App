@@ -2,20 +2,11 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth";
-import {
-  FieldValues,
-  RegisterOptions,
-  SubmitErrorHandler,
-  SubmitHandler,
-  UseFormRegisterReturn,
-  useForm,
-} from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { FieldValues, useForm } from "react-hook-form";
 import { auth } from "../../firebase/firebase";
-import { BaseSyntheticEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RegisterError } from "../../models/registerModels";
 import { formValuesRegister } from "../../models/registerModels";
-import { RegisterQuestion } from "../components/RegisterQuestion";
 import { testEmail } from "../../helpers/testerEmail";
 import {
   INITIAL_REGISTER_ERROR,
@@ -70,6 +61,7 @@ export const RegisterPage = () => {
                   setCreated(true);
                 })
                 .catch((err) => {
+                  console.error(err);
                   setExistError(true);
                 });
             }
@@ -78,6 +70,7 @@ export const RegisterPage = () => {
           }
         })
         .catch((err) => {
+          console.error(err);
           setExistError(true);
         });
     } else {
