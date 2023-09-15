@@ -1,20 +1,27 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { QuestionHireForm } from "../components/QuestionHireForm";
 import { HireForm } from "../../models/formHireModel";
-import { ButtonHireForm } from "../components/ButtonHireForm";
+import { CustomButton } from "../components/CustomButton";
 import { useStore } from "../../store/StoreProvider";
 import { useEffect, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { testEmail } from "../../helpers/testerEmail";
 import { setDateToString } from "../../helpers/dateHireForm";
+import { MessagesHireForm } from "../components/MessagesHireForm";
+import { questionsArrayHireForm } from "../../data/hireFormData";
+import { buttonsHireForm } from "../../helpers/buttonsHireForm";
 import {
   getUserFormDate,
   postUserFormDate,
   updateUserFormDate,
-} from "../../firebase/firebase";
-import { MessagesHireForm } from "../components/MessagesHireForm";
-import { questionsArrayHireForm } from "../../helpers/questionsHireForm";
-import { buttonsHireForm } from "../../helpers/buttonsHireForm";
+} from "../../firebase/usersForms";
+import {
+  descriptionValidator,
+  evaluateJustLetters,
+  evaluateLenght,
+  evaluateSpell,
+} from "../../helpers/validatorExpressionsHireForm";
+import { validateNumber } from "../../helpers/numberValidator";
 
 export const ContratanosPage = () => {
   const { register, handleSubmit, resetField, setValue, watch } =
@@ -71,7 +78,7 @@ export const ContratanosPage = () => {
     setValue("email", userEmail);
   }, []);
 
-  const form = useRef<HTMLFormElement>();
+  const form = useRef<any>();
   const [findedError, setFindedError] = useState<boolean>(false);
   const [emailSent, setEmailSent] = useState<boolean>(false);
   const [wrongInputData, setWrongInputData] = useState<boolean>(false);
@@ -166,12 +173,10 @@ export const ContratanosPage = () => {
     } else {
       const todayDate = new Date();
       const NEW_DATE: string = setDateToString(todayDate);
-
-      const userDataForm = await getFormDate();
-
+      const userDataForm: any = await getFormDate();
       if (userDataForm !== null) {
         const existFormDate: [] = userDataForm.userForms.filter(
-          (item) => item.dateSubmit === NEW_DATE
+          (item: any) => item.dateSubmit === NEW_DATE
         );
         if (existFormDate.length !== 0) {
           setLoading(false);
@@ -216,8 +221,7 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (contactNumber) {
-      const expression = /^[0-9]{8}$/;
-      if (!expression.test(contactNumber)) {
+      if (!validateNumber(contactNumber, 8)) {
         formData[1].error = true;
         formData[1].messsageError =
           "* El número telefónico no es valido, debe ser boliviano";
@@ -235,23 +239,26 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (name) {
-      const expression =
-        /^(?=.{2,100}$)[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/;
-      if (!expression.test(name)) {
-        const expr1 = /^.{2,100}$/;
-        const expr2 = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s)*$/;
-        if (!expr1.test(name)) {
-          formData[2].error = true;
-          formData[2].messsageError = `* El nombre de la organizacion debe de tener
+      if (
+        !evaluateLenght(2, 100, name) ||
+        !evaluateJustLetters(name) ||
+        !evaluateSpell(name)
+      ) {
+        let auxErrorState: boolean = true;
+        let textError: string = "";
+        if (!evaluateLenght(2, 100, name)) {
+          textError = `* El nombre del contacto debe de tener
           entre 2 - 100 caracteres`;
-        } else if (expr2.test(name)) {
-          formData[2].error = true;
-          formData[2].messsageError = `* El nombre no puede terminar con espacios al final`;
-        } else {
-          formData[2].error = true;
-          formData[2].messsageError = `* El nombre debe estar compuesto por letras del
+        }
+        if (!evaluateJustLetters(name)) {
+          textError = `* El nombre debe estar compuesto por letras del
             abecedario español, considerando que también puede agregar tildes`;
         }
+        if (!evaluateSpell(name)) {
+          textError = `* El nombre no puede terminar con espacios al final`;
+        }
+        formData[2].error = auxErrorState;
+        formData[2].messsageError = textError;
       } else {
         formData[2].error = false;
         formData[2].messsageError = "";
@@ -263,22 +270,24 @@ export const ContratanosPage = () => {
   useEffect(() => {
     const formData = [...dataHireForm];
     if (organizationName) {
-      const expression =
-        /^(?=.{1,100}$)[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+)*$/;
-      if (!expression.test(organizationName)) {
-        const expr1 = /^.{1,100}$/;
-        const expr2 = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ]+(?:\s)*$/;
-        if (!expr1.test(organizationName)) {
+      if (
+        !evaluateLenght(1, 100, organizationName) ||
+        !evaluateJustLetters(organizationName) ||
+        !evaluateSpell(organizationName)
+      ) {
+        if (!evaluateLenght(1, 100, organizationName)) {
           formData[3].error = true;
           formData[3].messsageError = `* El nombre de la organizacion debe de tener
           entre 1 - 100 caracteres`;
-        } else if (expr2.test(organizationName)) {
-          formData[3].error = true;
-          formData[3].messsageError = `* El nombre no puede terminar con espacios al final`;
-        } else {
+        }
+        if (!evaluateJustLetters(organizationName)) {
           formData[3].error = true;
           formData[3].messsageError = `* El nombre debe estar compuesto por letras del
-            abecedario español, considerando que también puede agregar tildes`;
+          abecedario español, considerando que también puede agregar tildes`;
+        }
+        if (!evaluateSpell(organizationName)) {
+          formData[3].error = true;
+          formData[3].messsageError = `* El nombre no puede terminar con espacios al final`;
         }
       } else {
         formData[3].error = false;
@@ -295,12 +304,18 @@ export const ContratanosPage = () => {
     const formData = [...dataHireForm];
     if (constructionDescription) {
       if (
-        constructionDescription.length < 2 ||
-        constructionDescription.length > 1000
+        !descriptionValidator(constructionDescription) ||
+        !evaluateLenght(2, 1000, constructionDescription)
       ) {
-        formData[4].error = true;
-        formData[4].messsageError =
-          "* La descripcion debe tener entre 2 - 1000 caracteres";
+        if (!evaluateLenght(2, 1000, constructionDescription)) {
+          formData[4].error = true;
+          formData[4].messsageError =
+            "* La descripcion debe tener entre 2 - 1000 caracteres";
+        } else {
+          formData[4].error = true;
+          formData[4].messsageError =
+            "* La descripcion no puede terminar con espacios al final";
+        }
       } else {
         formData[4].error = false;
         formData[4].messsageError = "";
@@ -395,7 +410,7 @@ export const ContratanosPage = () => {
           </div>
           <div className="flex flex-row m-1 mt-4">
             {BUTTONS.map((item) => (
-              <ButtonHireForm
+              <CustomButton
                 key={item.textButton}
                 action={item.action}
                 textButton={item.textButton}
@@ -404,6 +419,8 @@ export const ContratanosPage = () => {
                 activeBg={item.activeBg}
                 textColor={item.textColor}
                 typeButton={item.typeButton}
+                width={"128px"}
+                height={"48px"}
               />
             ))}
           </div>

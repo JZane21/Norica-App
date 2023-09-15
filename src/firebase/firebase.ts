@@ -1,9 +1,15 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, sendPasswordResetEmail } from "firebase/auth";
-import { addDoc, collection, doc, getDocs, getFirestore, updateDoc } from "firebase/firestore";
-import { FieldValues } from "react-hook-form";
-import { setDateToString } from "../helpers/dateHireForm";
-
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+/**
+ * Para la aplicación, se utilizó una BD creada con Firebase, debido a que se decidió
+ * usar los servicios de google para lograr realizar procesos como el registro de
+ * correo de los usuarios, contraseñas, recuperación de contraseña, al igual que tener
+ * la posibilidad de iniciar sesión por medio de una cuenta google.
+ * 
+ * En la parte inferior, se muestra como se realiza el proceso de conexión con la
+ * BD levantada en Firebase
+ */
 const firebaseConfig = {
   apiKey: "AIzaSyBZq76UZIrjhA1z6OGZuwxqyTOxW3jbk1Y",
   authDomain: "dpica-app.firebaseapp.com",
@@ -14,74 +20,24 @@ const firebaseConfig = {
   measurementId: "G-PL32BPCTG9"
 };
 
-const app = initializeApp(firebaseConfig);
+/**
+ * 
+ * Aquí se definen los respectivod métodos utilizando firebase, con el fin de iniciar
+ * la app en el modo local, al igual que establecer una conexión con la firestore
+ */
 
-export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
-export const db = getFirestore(app);
-export const passwordReset = async (email:string) => {
-  await sendPasswordResetEmail(auth,email);
-};
+const gettingApp = () => {
+  return initializeApp(firebaseConfig);
+}
 
-const usersFormsDate = collection(db,"users-emails-date");
+const instanceOfAuth = (app:any) => {
+  return getAuth(app);
+}
 
-export const getUserFormDate = async (userEmail:string) => {
-  let data;
-  try{
-    data = await getDocs(usersFormsDate);
-    const filterData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id
-    }));
-    const userGotten = filterData.find(item => item.userEmail === userEmail);
-    if(userGotten){
-      return userGotten;
-    }else{
-      return null;
-    }
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+const instanceOfFireStore = (app:any) => {
+  return getFirestore(app);
+}
 
-const previusWorks = collection(db,"previus-works");
-
-export const getPreviusWorks = async () => {
-  let data;
-  try{
-    data = await getDocs(previusWorks);
-    const filterData = data.docs.map((doc) => ({
-      ...doc.data(),
-      id: doc.id
-    }));
-    if(filterData){
-      return filterData;
-    }else{
-      return null;
-    }
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
-
-export const postUserFormDate = async (authEmail:string, dateSubmit:string, data:FieldValues) => {
-  const newObject = {...data, dateSubmit};
-  newObject.date = setDateToString(data.date);
-  await addDoc(usersFormsDate,{
-    userForms: [newObject],
-    userEmail: authEmail,
-    userId: auth?.currentUser?.uid,
-  });
-};
-
-export const updateUserFormDate = async (id:string, authEmail:string, dateSubmit:string, data:FieldValues) => {
-  const user = await getUserFormDate(authEmail);
-  if(user!==null){
-    const newObject = {...data,dateSubmit};
-    newObject.date = setDateToString(data.date);
-    const userForm = doc(db,"users-emails-date",id);
-    await updateDoc(userForm, { userForms:[...user.userForms,newObject] });
-  }
-};
+export const app = gettingApp();
+export const auth = instanceOfAuth(app);
+export const db = instanceOfFireStore(app);
